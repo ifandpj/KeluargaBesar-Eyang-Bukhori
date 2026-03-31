@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Family Tree Lengkap</title>
+  <style>
+    body { font-family: Arial; background:#f4f6f8; }
+
+    .tree ul {
+      padding-top: 20px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tree li {
+      list-style: none;
+      text-align: center;
+      position: relative;
+      padding: 20px 5px 0 5px;
+    }
+
+    .tree li::before, .tree li::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 50%;
+      border-top: 2px solid #ccc;
+      width: 50%;
+      height: 20px;
+    }
+
+    .tree li::after {
+      left: 50%;
+      border-left: 2px solid #ccc;
+    }
+
+    .tree li:only-child::before,
+    .tree li:only-child::after {
+      display: none;
+    }
+
+    .tree ul ul::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      border-left: 2px solid #ccc;
+      height: 20px;
+    }
+
+    .node {
+      border: 2px solid #2196f3;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #e3f2fd;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .children {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">🌳 Silsilah Keluarga Lengkap</h2>
+
+<div class="tree">
+  <ul id="tree"></ul>
+</div>
+
+<script>
+const data = {
+name:"Sarlam Raksamanggala",
+children:[{
+name:"Bukhari + Sawirah",
+children:[
+
+// ================= NASUHI =================
+{
+name:"Nasuhi",
+children:[
+{
+name:"Rusniah + Oding",
+children:[
+{
+name:"Kayim + Ecih",
+children:[
+{name:"Alfira Ramadhani"},
+{name:"Alfian Fahri Ramadhan"}
+]
+},
+{
+name:"Nani Suryani + Saphari",
+children:[
+{name:"Jenny Putra Nugraha"}
+]
+}
+]
+},
+{
+name:"Usadi + Dasmini",
+children:[
+{
+name:"Daryono + Rukmini",
+children:[
+{name:"Naomi Oktaviani Putri"},
+{name:"Naura Kanza Anida"},
+{name:"Maudi"}
+]
+},
+{
+name:"Meli + Kiki",
+children:[{name:"Salsa Ramadhanis"}]
+},
+{name:"Ipan Dwipriana Julistiya"}
+]
+},
+{
+name:"Mintarsih + Rohman",
+children:[
+{name:"Aip"},
+{
+name:"Amim Hermansyah + Sri Murtiningsih",
+children:[
+{name:"Jumadi Hermansyah"},
+{name:"Syarifudin Hermansyah"},
+{name:"Fazri Alfarizqi Hermansyah"},
+{name:"Humaira Yasmine Murtiningsih"}
+]
+},
+{name:"Tri Minarni"}
+]
+}
+]
+},
+
+// ================= SASMI =================
+{
+name:"Sasmi + Jumadi",
+children:[
+{
+name:"Imaesari",
+children:[
+{name:"Dede"},
+{name:"Henda"}
+]
+},
+{
+name:"Sumarno / Keno",
+children:[
+{name:"Ruli"},
+{name:"Julis"}
+]
+},
+{
+name:"Dana Sutoni / Suta",
+children:[
+{name:"Eva"},
+{name:"Widodo"},
+{name:"Agus"}
+]
+},
+{
+name:"Saidiman + Ruti",
+children:[
+{name:"Yusep"},
+{name:"Lukman"}
+]
+},
+{
+name:"Eti",
+children:[
+{name:"Lilis"},
+{name:"Wati"},
+{name:"Kiki"}
+]
+},
+{
+name:"Yayah",
+children:[
+{name:"Pian"},
+{name:"Hani"},
+{name:"Cici"}
+]
+},
+{
+name:"Umar",
+children:[
+{name:"Nazwa"}
+]
+}
+]
+},
+
+// ================= LASIH =================
+{
+name:"Lasih + Samji",
+children:[
+{
+name:"Sudani",
+children:[
+{name:"Andri"},
+{name:"Indra"}
+]
+},
+{
+name:"Kayung",
+children:[
+{name:"Kuyum"},
+{name:"Junawan"},
+{name:"Siti Aisah"},
+{name:"Ayu"}
+]
+}
+]
+},
+
+// ================= MAHLANA =================
+{
+name:"Mahlana + Empat",
+children:[
+{
+name:"Mulyeh",
+children:[
+{name:"Imas"},
+{name:"Marni"}
+]
+},
+{
+name:"Jumtipah",
+children:[
+{name:"Erna"}
+]
+}
+]
+},
+
+// ================= RUMTI =================
+{
+name:"Rumti + Dahlan",
+children:[
+{
+name:"Mianah + Sabu",
+children:[
+{name:"Oni"},
+{name:"Yeni"},
+{name:"Cici"}
+]
+},
+{
+name:"Asminah + Idrus",
+children:[
+{name:"Iwan"},
+{name:"Yuli"},
+{name:"Iyas"},
+{name:"Oyok"},
+{name:"Azid"}
+]
+},
+{name:"Suharmin"},
+{
+name:"Timi + Jaka",
+children:[
+{name:"Reno"},
+{name:"Iyan"}
+]
+},
+{
+name:"Jumiardi + Sawi",
+children:[
+{name:"Ani (alm)"},
+{name:"Maya (alm)"},
+{name:"Yuda"},
+{name:"Feri"}
+]
+},
+{
+name:"Dede + Rita (alm)",
+children:[
+{name:"Ridwan"},
+{name:"Nurlita"},
+{name:"Yoga"}
+]
+}
+]
+},
+
+// ================= ARMINI =================
+{
+name:"Armini + Naimin",
+children:[
+{
+name:"Iing + Iyas",
+children:[
+{name:"Rendi"},
+{name:"Raisa"},
+{name:"Ristiya Ferlita (alm)"}
+]
+},
+{
+name:"Cicih Sri Kurniasarih + Sutono",
+children:[
+{name:"Atik"},
+{name:"Alin"},
+{name:"Anggit"}
+]
+},
+{
+name:"Yaya + Heni",
+children:[
+{name:"Ibnu"},
+{name:"Adzra Aqila Kinanti"},
+{name:"Azkayra"},
+{name:"Sofia"}
+]
+},
+{name:"Titin Suprihatin (alm)"}
+]
+},
+
+// ================= SOHENI =================
+{
+name:"Soheni + Sainan",
+children:[
+{
+name:"Gandi",
+children:[
+{name:"Asri"},
+{name:"Asya"},
+{name:"Syifa"},
+{name:"Abidzar"}
+]
+},
+{
+name:"Enok Sugiarti",
+children:[
+{name:"Akbari"}
+]
+},
+{
+name:"Jajang Suhendar",
+children:[
+{name:"M. Amim"},
+{name:"Nabila"},
+{name:"Rizky"}
+]
+},
+{
+name:"Ida + Subana",
+children:[
+{name:"Euis"},
+{name:"Alma"}
+]
+},
+{
+name:"Samsul + Nita",
+children:[
+{name:"Qwina"},
+{name:"Qatan"}
+]
+},
+{
+name:"Dudi",
+children:[
+{name:"Chelsea"}
+]
+}
+]
+},
+
+// ================= SANUDI =================
+{
+name:"Sanudi + Awanti",
+children:[
+{
+name:"Ratih + Eka (alm)",
+children:[
+{name:"Bayu"},
+{name:"Gina"}
+]
+},
+{
+name:"Imas (alm) + Sartoyo",
+children:[
+{name:"Deden (alm)"},
+{name:"Yusril"}
+]
+},
+{
+name:"Nani + Sodikin",
+children:[
+{name:"Rizky"},
+{name:"Denisa"}
+]
+},
+{
+name:"Dodi + Atik",
+children:[
+{name:"Nenden"}
+]
+},
+{
+name:"Dian + Iin Juarsih",
+children:[
+{name:"Bambang Yoga"},
+{name:"Yoga"}
+]
+},
+{
+name:"Rita + Otib",
+children:[
+{name:"Rido"},
+{name:"Fathurohman / Ipay"},
+{name:"Raiga"}
+]
+},
+{name:"Linda + M. Andrianto"},
+{
+name:"Anita + Kipli",
+children:[
+{name:"Izalia"},
+{name:"Izan"}
+]
+}
+]
+},
+
+// ================= NURYAMAH =================
+{
+name:"Nuryamah + Rusja",
+children:[
+{
+name:"Nuryati + Dodo",
+children:[
+{name:"Rinda"},
+{name:"Vina"}
+]
+},
+{name:"Suhandi"},
+{
+name:"Royanti + Jupri",
+children:[
+{name:"Tia"},
+{name:"Tika"},
+{name:"Dewi"},
+{name:"Mega"},
+{name:"Kembar 1"},
+{name:"Kembar 2"}
+]
+},
+{
+name:"Iin + Suroto",
+children:[
+{name:"Gilang"},
+{name:"Davi"}
+]
+}
+]
+}
+
+]}]
+};
+
+// RENDER
+function createNode(node){
+const li=document.createElement("li");
+
+const div=document.createElement("div");
+div.className="node";
+div.textContent=node.name;
+
+li.appendChild(div);
+
+if(node.children){
+const ul=document.createElement("ul");
+ul.className="children";
+
+node.children.forEach(c=>ul.appendChild(createNode(c)));
+
+div.onclick=()=>{
+ul.style.display = ul.style.display==="none"?"flex":"none";
+};
+
+li.appendChild(ul);
+}
+
+return li;
+}
+
+document.getElementById("tree").appendChild(createNode(data));
+</script>
+
+</body>
+</html>
