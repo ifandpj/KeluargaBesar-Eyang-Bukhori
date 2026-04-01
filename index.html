@@ -1,85 +1,154 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Family Tree Lengkap</title>
-  <style>
-    body { font-family: Arial; background:#f4f6f8; }
+<title>Family Tree Lengkap</title>
 
-    .tree ul {
-      padding-top: 20px;
-      position: relative;
-      display: flex;
-      justify-content: center;
-    }
+<style>
+body { font-family: Arial; margin:0; background:#f4f6f8; }
+h2 { text-align:center; }
 
-    .tree li {
-      list-style: none;
-      text-align: center;
-      position: relative;
-      padding: 20px 5px 0 5px;
-    }
+/* container */
+.container {
+  width:100%;
+  height:90vh;
+  overflow:auto;
+  cursor:grab;
+}
 
-    .tree li::before, .tree li::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 50%;
-      border-top: 2px solid #ccc;
-      width: 50%;
-      height: 20px;
-    }
+/* tree */
+.tree {
+  min-width:max-content;
+  transform-origin: top left;
+  padding:40px;
+}
 
-    .tree li::after {
-      left: 50%;
-      border-left: 2px solid #ccc;
-    }
+/* layout */
+.tree ul {
+  display:flex;
+  justify-content:flex-start;
+  position:relative;
+  padding-top:20px;
+}
 
-    .tree li:only-child::before,
-    .tree li:only-child::after {
-      display: none;
-    }
+.tree li {
+  list-style:none;
+  text-align:center;
+  position:relative;
+  padding:20px 10px 0 10px;
+}
 
-    .tree ul ul::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      border-left: 2px solid #ccc;
-      height: 20px;
-    }
+/* garis */
+.tree li::before, .tree li::after {
+  content:'';
+  position:absolute;
+  top:0;
+  right:50%;
+  border-top:2px solid #666;
+  width:50%;
+}
 
-    .node {
-      border: 2px solid #2196f3;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: #e3f2fd;
-      display: inline-block;
-      cursor: pointer;
-    }
+.tree li::after {
+  left:50%;
+  border-left:2px solid #666;
+}
 
-    .children {
-      display: none;
-    }
-  </style>
+.tree ul ul::before {
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  border-left:3px solid #2196f3;
+  height:20px;
+}
+
+/* node */
+.node {
+  border:2px solid #2196f3;
+  padding:6px 10px;
+  border-radius:8px;
+  display:inline-block;
+  cursor:pointer;
+  white-space:nowrap;
+  font-size:13px;
+}
+
+/* grouping */
+.group {
+  border:2px dashed #ccc;
+  border-radius:10px;
+  padding:10px;
+}
+
+/* warna per anak */
+.color-0 > .node { background:#bbdefb; }
+.color-1 > .node { background:#c8e6c9; }
+.color-2 > .node { background:#ffe0b2; }
+.color-3 > .node { background:#f8bbd0; }
+.color-4 > .node { background:#d1c4e9; }
+.color-5 > .node { background:#b2dfdb; }
+.color-6 > .node { background:#fff9c4; }
+.color-7 > .node { background:#ffccbc; }
+
+/* controls */
+.controls { text-align:center; margin-bottom:10px; }
+
+button {
+  padding:8px 12px;
+  margin:5px;
+  border:none;
+  background:#2196f3;
+  color:white;
+  border-radius:5px;
+}
+</style>
 </head>
+
 <body>
 
-<h2 style="text-align:center;">🌳 Silsilah Keluarga Lengkap</h2>
+<h2>🌳 Silsilah Keluarga Besar Eyang Bukhori</h2>
 
-<div class="tree">
-  <ul id="tree"></ul>
+<div class="controls">
+<button onclick="zoomIn()">➕</button>
+<button onclick="zoomOut()">➖</button>
+</div>
+
+<div class="container" id="container">
+<div class="tree" id="tree"></div>
 </div>
 
 <script>
+let scale=1;
+function zoomIn(){ scale+=0.1; tree.style.transform=`scale(${scale})`; }
+function zoomOut(){ scale-=0.1; tree.style.transform=`scale(${scale})`; }
+
+/* drag */
+const container=document.getElementById('container');
+let isDown=false,startX,scrollLeft;
+
+container.onmousedown=e=>{
+isDown=true;
+startX=e.pageX-container.offsetLeft;
+scrollLeft=container.scrollLeft;
+};
+container.onmouseup=()=>isDown=false;
+container.onmouseleave=()=>isDown=false;
+container.onmousemove=e=>{
+if(!isDown)return;
+const x=e.pageX-container.offsetLeft;
+const walk=(x-startX)*2;
+container.scrollLeft=scrollLeft-walk;
+};
+
+/* ================= FULL DATA ================= */
 const data = {
 name:"Sarlam Raksamanggala",
 children:[{
 name:"Bukhari + Sawirah",
 children:[
 
-// ================= NASUHI =================
+/* 1 NASUHI */
 {
-name:"Nasuhi",
+name:"1. Nasuhi + Runti + Uni",
 children:[
 {
 name:"Rusniah + Oding",
@@ -111,18 +180,18 @@ children:[
 ]
 },
 {
-name:"Meli + Kiki",
-children:[{name:"Salsa Ramadhanis"}]
-},
-{name:"Ipan Dwipriana Julistiya"}
+name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",
+children:[
+{name:"Salsa Ramadhanis"}
 ]
 },
-{
-name:"Mintarsih + Rohman",
+{name:"Ifan Dwipriana Julistia"}
+]
+},
+{name:"Mintarsih + Rohman",
 children:[
 {name:"Aip"},
-{
-name:"Amim Hermansyah + Sri Murtiningsih",
+{name:"Amim Hermansyah + Sri Murtiningsih",
 children:[
 {name:"Jumadi Hermansyah"},
 {name:"Syarifudin Hermansyah"},
@@ -130,342 +199,119 @@ children:[
 {name:"Humaira Yasmine Murtiningsih"}
 ]
 },
-{name:"Tri Minarni"}
+{name:"Tri Minarni + Danil"
+,children:[
+{name:"Rita Ristiana Putri"},
+{name:"Moch Fardan Niats"}
+]
+}
 ]
 }
 ]
 },
 
-// ================= SASMI =================
+/* 2 SASMI */
 {
-name:"Sasmi + Jumadi",
+name:"2. Sasmi + Jumadi",
 children:[
-{
-name:"Imaesari",
-children:[
-{name:"Dede"},
-{name:"Henda"}
-]
-},
-{
-name:"Sumarno / Keno",
-children:[
-{name:"Ruli"},
-{name:"Julis"}
-]
-},
-{
-name:"Dana Sutoni / Suta",
-children:[
-{name:"Eva"},
-{name:"Widodo"},
-{name:"Agus"}
-]
-},
-{
-name:"Saidiman + Ruti",
-children:[
-{name:"Yusep"},
-{name:"Lukman"}
-]
-},
-{
-name:"Eti",
-children:[
-{name:"Lilis"},
-{name:"Wati"},
-{name:"Kiki"}
-]
-},
-{
-name:"Yayah",
-children:[
-{name:"Pian"},
-{name:"Hani"},
-{name:"Cici"}
-]
-},
-{
-name:"Umar",
-children:[
-{name:"Nazwa"}
-]
-}
+{name:"Imaesari",children:[{name:"Dede"},{name:"Henda"}]},
+{name:"Sumarno / Keno",children:[{name:"Ruli"},{name:"Julis"}]},
+{name:"Dana Sutoni / Suta",children:[{name:"Eva"},{name:"Widodo"},{name:"Agus"}]},
+{name:"Saidiman + Ruti",children:[{name:"Yusep"},{name:"Lukman"}]},
+{name:"Eti",children:[{name:"Lilis"},{name:"Wati"},{name:"Kiki"}]},
+{name:"Yayah",children:[{name:"Pian"},{name:"Hani"},{name:"Cici"}]},
+{name:"Umar",children:[{name:"Nazwa"}]}
 ]
 },
 
-// ================= LASIH =================
+/* 3 LASIH */
 {
-name:"Lasih + Samji",
+name:"3. Lasih + Samji",
 children:[
-{
-name:"Sudani",
-children:[
-{name:"Andri"},
-{name:"Indra"}
-]
-},
-{
-name:"Kayung",
-children:[
-{name:"Kuyum"},
-{name:"Junawan"},
-{name:"Siti Aisah"},
-{name:"Ayu"}
-]
-}
+{name:"Sudani",children:[{name:"Andri"},{name:"Indra"}]},
+{name:"Kayung",children:[{name:"Kuyum"},{name:"Junawan"},{name:"Siti Aisah"},{name:"Ayu"}]}
 ]
 },
 
-// ================= MAHLANA =================
+/* 4 MAHLANA */
 {
-name:"Mahlana + Empat",
+name:"4. Mahlana + Empat",
 children:[
-{
-name:"Mulyeh",
-children:[
-{name:"Imas"},
-{name:"Marni"}
-]
-},
-{
-name:"Jumtipah",
-children:[
-{name:"Erna"}
-]
-}
+{name:"Mulyeh",children:[{name:"Imas"},{name:"Marni"}]},
+{name:"Jumtipah",children:[{name:"Erna"}]}
 ]
 },
 
-// ================= RUMTI =================
+/* 5 RUMTI */
 {
-name:"Rumti + Dahlan",
+name:"5. Rumti + Dahlan",
 children:[
-{
-name:"Mianah + Sabu",
-children:[
-{name:"Oni"},
-{name:"Yeni"},
-{name:"Cici"}
-]
-},
-{
-name:"Asminah + Idrus",
-children:[
-{name:"Iwan"},
-{name:"Yuli"},
-{name:"Iyas"},
-{name:"Oyok"},
-{name:"Azid"}
-]
-},
+{name:"Mianah + Sabu",children:[{name:"Oni"},{name:"Yeni"},{name:"Cici"}]},
+{name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
 {name:"Suharmin"},
-{
-name:"Timi + Jaka",
-children:[
-{name:"Reno"},
-{name:"Iyan"}
-]
-},
-{
-name:"Jumiardi + Sawi",
-children:[
-{name:"Ani (alm)"},
-{name:"Maya (alm)"},
-{name:"Yuda"},
-{name:"Feri"}
-]
-},
-{
-name:"Dede + Rita (alm)",
-children:[
-{name:"Ridwan"},
-{name:"Nurlita"},
-{name:"Yoga"}
-]
-}
+{name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
+{name:"Jumiardi + Sawi",children:[{name:"Ani (alm)"},{name:"Maya (alm)"},{name:"Yuda"},{name:"Feri"}]},
+{name:"Dede + Rita (alm)",children:[{name:"Ridwan"},{name:"Nurlita"},{name:"Yoga"}]}
 ]
 },
 
-// ================= ARMINI =================
+/* 6 ARMINI */
 {
-name:"Armini + Naimin",
+name:"6. Armini + Naimin",
 children:[
-{
-name:"Iing + Iyas",
-children:[
-{name:"Rendi"},
-{name:"Raisa"},
-{name:"Ristiya Ferlita (alm)"}
-]
-},
-{
-name:"Cicih Sri Kurniasarih + Sutono",
-children:[
-{name:"Atik"},
-{name:"Alin"},
-{name:"Anggit"}
-]
-},
-{
-name:"Yaya + Heni",
-children:[
-{name:"Ibnu"},
-{name:"Adzra Aqila Kinanti"},
-{name:"Azkayra"},
-{name:"Sofia"}
-]
-},
+{name:"Iing + Iyas",children:[{name:"Rendi"},{name:"Raisa"},{name:"Ristiya Ferlita (alm)"}]},
+{name:"Cicih Sri Kurniasarih + Sutono",children:[{name:"Atik"},{name:"Alin"},{name:"Anggit"}]},
+{name:"Yaya + Heni",children:[{name:"Ibnu"},{name:"Adzra Aqila Kinanti"},{name:"Azkayra"},{name:"Sofia"}]},
 {name:"Titin Suprihatin (alm)"}
 ]
 },
 
-// ================= SOHENI =================
+/* 7 SOHENI */
 {
-name:"Soheni + Sainan",
+name:"7. Soheni + Sainan",
 children:[
-{
-name:"Gandi",
-children:[
-{name:"Asri"},
-{name:"Asya"},
-{name:"Syifa"},
-{name:"Abidzar"}
-]
-},
-{
-name:"Enok Sugiarti",
-children:[
-{name:"Akbari"}
-]
-},
-{
-name:"Jajang Suhendar",
-children:[
-{name:"M. Amim"},
-{name:"Nabila"},
-{name:"Rizky"}
-]
-},
-{
-name:"Ida + Subana",
-children:[
-{name:"Euis"},
-{name:"Alma"}
-]
-},
-{
-name:"Samsul + Nita",
-children:[
-{name:"Qwina"},
-{name:"Qatan"}
-]
-},
-{
-name:"Dudi",
-children:[
-{name:"Chelsea"}
-]
-}
+{name:"Gandi",children:[{name:"Asri"},{name:"Asya"},{name:"Syifa"},{name:"Abidzar"}]},
+{name:"Enok Sugiarti",children:[{name:"Akbari"}]},
+{name:"Jajang Suhendar",children:[{name:"M. Amim"},{name:"Nabila"},{name:"Rizky"}]},
+{name:"Ida + Subana",children:[{name:"Euis"},{name:"Alma"}]},
+{name:"Samsul + Nita",children:[{name:"Qwina"},{name:"Qatan"}]},
+{name:"Dudi",children:[{name:"Chelsea"}]}
 ]
 },
 
-// ================= SANUDI =================
+/* 8 SANUDI */
 {
-name:"Sanudi + Awanti",
+name:"8. Sanudi + Awanti",
 children:[
-{
-name:"Ratih + Eka (alm)",
-children:[
-{name:"Bayu"},
-{name:"Gina"}
-]
-},
-{
-name:"Imas (alm) + Sartoyo",
-children:[
-{name:"Deden (alm)"},
-{name:"Yusril"}
-]
-},
-{
-name:"Nani + Sodikin",
-children:[
-{name:"Rizky"},
-{name:"Denisa"}
-]
-},
-{
-name:"Dodi + Atik",
-children:[
-{name:"Nenden"}
-]
-},
-{
-name:"Dian + Iin Juarsih",
-children:[
-{name:"Bambang Yoga"},
-{name:"Yoga"}
-]
-},
-{
-name:"Rita + Otib",
-children:[
-{name:"Rido"},
-{name:"Fathurohman / Ipay"},
-{name:"Raiga"}
-]
-},
+{name:"Ratih + Eka (alm)",children:[{name:"Bayu"},{name:"Gina"}]},
+{name:"Imas (alm) + Sartoyo",children:[{name:"Deden (alm)"},{name:"Yusril"}]},
+{name:"Nani + Sodikin",children:[{name:"Rizky"},{name:"Denisa"}]},
+{name:"Dodi + Atik",children:[{name:"Nenden"}]},
+{name:"Dian + Iin Juarsih",children:[{name:"Bambang Yoga"},{name:"Yoga"}]},
+{name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
 {name:"Linda + M. Andrianto"},
-{
-name:"Anita + Kipli",
-children:[
-{name:"Izalia"},
-{name:"Izan"}
-]
-}
+{name:"Anita + Kipli",children:[{name:"Izalia"},{name:"Izan"}]}
 ]
 },
 
-// ================= NURYAMAH =================
+/* 9 NURYAMAH */
 {
-name:"Nuryamah + Rusja",
+name:"9. Nuryamah + Rusja",
 children:[
-{
-name:"Nuryati + Dodo",
-children:[
-{name:"Rinda"},
-{name:"Vina"}
-]
-},
+{name:"Nuryati + Dodo",children:[{name:"Rinda"},{name:"Vina"}]},
 {name:"Suhandi"},
-{
-name:"Royanti + Jupri",
-children:[
-{name:"Tia"},
-{name:"Tika"},
-{name:"Dewi"},
-{name:"Mega"},
-{name:"Kembar 1"},
-{name:"Kembar 2"}
-]
-},
-{
-name:"Iin + Suroto",
-children:[
-{name:"Gilang"},
-{name:"Davi"}
-]
-}
+{name:"Royanti + Jupri",children:[{name:"Tia"},{name:"Tika"},{name:"Dewi"},{name:"Mega"},{name:"Kembar 1"},{name:"Kembar 2"}]},
+{name:"Iin + Suroto",children:[{name:"Gilang"},{name:"Davi"}]}
 ]
 }
 
 ]}]
 };
 
-// RENDER
-function createNode(node){
+/* render */
+function createNode(node,index=0){
 const li=document.createElement("li");
+li.classList.add("color-"+(index%8));
 
 const div=document.createElement("div");
 div.className="node";
@@ -475,9 +321,9 @@ li.appendChild(div);
 
 if(node.children){
 const ul=document.createElement("ul");
-ul.className="children";
+ul.className="group";
 
-node.children.forEach(c=>ul.appendChild(createNode(c)));
+node.children.forEach((c,i)=>ul.appendChild(createNode(c,i)));
 
 div.onclick=()=>{
 ul.style.display = ul.style.display==="none"?"flex":"none";
@@ -489,7 +335,10 @@ li.appendChild(ul);
 return li;
 }
 
-document.getElementById("tree").appendChild(createNode(data));
+const root=document.createElement("ul");
+root.appendChild(createNode(data));
+tree.appendChild(root);
+
 </script>
 
 </body>
