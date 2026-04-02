@@ -336,14 +336,24 @@ children:[
 
 /* 5 RUMTI */
 {
-name:"5. Rumti + Jakim + Dahlan",
-children:[
-{name:"Mianah + Sabu",children:[{name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},{name:"Yeni"},{name:"Cici"}]},
-{name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
-{name:"Suharmin"},
-{name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
-{name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
-{name:"Dede + Rita (Alm)",children:[{name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},{name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},{name:"Yoga"}]}
+name:"5. Rumti",
+multiSpouse:[
+{
+  spouse:"Jakim",
+  children:[
+    {name:"Mianah + Sabu",children:[{name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},{name:"Yeni"},{name:"Cici"}]}
+  ]
+},
+{
+  spouse:"Dahlan",
+  children:[
+    {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
+    {name:"Suharmin"},
+    {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
+    {name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
+    {name:"Dede + Rita (Alm)",children:[{name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},{name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},{name:"Yoga"}]}
+  ]
+}
 ]
 },
 
@@ -437,29 +447,104 @@ function makeNodeEl(node, depth) {
 
 function buildTree(node, depth) {
   const li = document.createElement("li");
-
   const inner = document.createElement("div");
   inner.className = "li-inner";
 
-  // the node box
-  inner.appendChild(makeNodeEl(node, depth));
+  // ── MULTI-SPOUSE node (e.g. Rumti with Jakim & Dahlan) ──
+  if (node.multiSpouse) {
+    const role  = getRole(depth);
+    const label = getLabel(depth);
 
-  if (node.children && node.children.length > 0) {
-    // vertical stem from node down
-    const stem = document.createElement("div");
-    stem.className = "stem";
-    inner.appendChild(stem);
+    // Row: [Spouse1] + [Rumti] + [Spouse2]
+    const coupleRow = document.createElement("div");
+    coupleRow.style.cssText = "display:inline-flex;align-items:center;gap:0;";
 
-    // children row
-    const ul = document.createElement("ul");
-    ul.className = "children-wrap";
-    if (node.children.length === 1) ul.classList.add("single-child");
+    // Left spouse box
+    const sp1 = document.createElement("div");
+    sp1.className = "node menantu";
+    sp1.style.borderRadius = "8px 0 0 8px";
+    sp1.style.borderRight = "none";
+    sp1.innerHTML = `<div>${node.multiSpouse[0].spouse}</div><small>Pasangan 1</small>`;
 
-    node.children.forEach(child => {
-      ul.appendChild(buildTree(child, depth + 1));
+    const sep1 = document.createElement("div");
+    sep1.className = "couple-sep";
+    sep1.textContent = "+";
+
+    // Center: main person
+    const center = document.createElement("div");
+    center.className = `node ${role}`;
+    center.style.borderRadius = "0";
+    center.style.borderLeft = "none";
+    center.style.borderRight = "none";
+    center.innerHTML = `<div>${node.name}</div>${label ? `<small>${label}</small>` : ""}`;
+
+    const sep2 = document.createElement("div");
+    sep2.className = "couple-sep";
+    sep2.textContent = "+";
+
+    // Right spouse box
+    const sp2 = document.createElement("div");
+    sp2.className = "node menantu";
+    sp2.style.borderRadius = "0 8px 8px 0";
+    sp2.style.borderLeft = "none";
+    sp2.innerHTML = `<div>${node.multiSpouse[1].spouse}</div><small>Pasangan 2</small>`;
+
+    coupleRow.appendChild(sp1);
+    coupleRow.appendChild(sep1);
+    coupleRow.appendChild(center);
+    coupleRow.appendChild(sep2);
+    coupleRow.appendChild(sp2);
+    inner.appendChild(coupleRow);
+
+    // Two columns of children side by side
+    const colWrap = document.createElement("div");
+    colWrap.style.cssText = "display:flex;align-items:flex-start;justify-content:center;gap:40px;";
+
+    node.multiSpouse.forEach((s, idx) => {
+      const col = document.createElement("div");
+      col.style.cssText = "display:flex;flex-direction:column;align-items:center;";
+
+      // label which spouse's children
+      const lbl = document.createElement("div");
+      lbl.style.cssText = "font-size:10px;color:#888;margin-bottom:4px;font-style:italic;";
+      lbl.textContent = "Anak dari " + s.spouse;
+      col.appendChild(lbl);
+
+      // stem
+      const stem = document.createElement("div");
+      stem.className = "stem";
+      col.appendChild(stem);
+
+      const ul = document.createElement("ul");
+      ul.className = "children-wrap";
+      if (s.children.length === 1) ul.classList.add("single-child");
+      s.children.forEach(child => ul.appendChild(buildTree(child, depth + 1)));
+      col.appendChild(ul);
+
+      colWrap.appendChild(col);
     });
 
-    inner.appendChild(ul);
+    // stem from couple row to colWrap
+    const mainStem = document.createElement("div");
+    mainStem.className = "stem";
+    inner.appendChild(mainStem);
+    inner.appendChild(colWrap);
+
+  } else {
+    // ── NORMAL node ──
+    inner.appendChild(makeNodeEl(node, depth));
+
+    if (node.children && node.children.length > 0) {
+      const stem = document.createElement("div");
+      stem.className = "stem";
+      inner.appendChild(stem);
+
+      const ul = document.createElement("ul");
+      ul.className = "children-wrap";
+      if (node.children.length === 1) ul.classList.add("single-child");
+      node.children.forEach(child => ul.appendChild(buildTree(child, depth + 1)));
+      inner.appendChild(ul);
+    }
   }
 
   li.appendChild(inner);
