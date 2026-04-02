@@ -40,7 +40,8 @@ h2 {
 .menantu { background: #bbdefb;  border: 2px solid #1565c0; }
 .cucu    { background: #fff9c4;  border: 2px solid #f9a825; }
 .cicit   { background: #c8e6c9;  border: 2px solid #2e7d32; }
-.bao     { background: #e1bee7;  border: 2px solid #6a1b9a; }
+.bao          { background: #e1bee7;  border: 2px solid #6a1b9a; }
+.janggawareng { background: #e0e0e0;  border: 2px solid #757575; color: #333; }
 
 /* NODE */
 .node {
@@ -203,6 +204,7 @@ h2 {
   <span class="cucu">🟡 Cucu</span>
   <span class="cicit">🟢 Cicit</span>
   <span class="bao">🟣 Bao</span>
+  <span class="janggawareng">⚪ Janggawareng</span>
 </div>
 
 <div class="container">
@@ -225,7 +227,7 @@ function getLabel(depth) {
 }
 
 function getRole(depth) {
-  const roles = ["root","anak","cucu","cicit","bao","bao","bao"];
+  const roles = ["root","anak","cucu","cicit","bao","janggawareng","janggawareng"];
   return roles[Math.min(depth, roles.length-1)];
 }
 
@@ -287,7 +289,7 @@ children:[
 {name:"Humaira Yasmine Murtiningsih"}
 ]
 },
-{name:"Tri Minarni (Alm) + Danil",
+{name:"Tri Minarni + Danil",
 children:[
 {name:"Rita Ristiana Putri"},
 {name:"Moch Fardan Niats"}
@@ -302,8 +304,8 @@ children:[
 {
 name:"2. Sasmi + Jumadi",
 children:[
-{name:"Imaesari (Alm) + Aan Suparman (Alm)",children:[{name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"}]},{name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}]},
-{name:"Sumarno (Alm) + Siti",children:[{name:"Ruli + Zaenal",children:[{name:"Bimm"},{name:"Nadine"}]},{name:"Julis + Uday"},{name:"Nirma"}]},
+{name:"Imaesari + Aan Suparman",children:[{name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"}]},{name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}]},
+{name:"Sumarno + Siti",children:[{name:"Ruli + Zaenal",children:[{name:"Bimm"},{name:"Nadine"}]},{name:"Julis + Uday"},{name:"Nirma"}]},
 {name:"Dana Sutoni + Suparmiati",children:[{name:"Eva + Ario",children:[{name:"Abiyasa"}]},{name:"Widodo + Dewi",children:[{name:"Zahra"},{name:"Alisa (Alm)"},{name:"Faza"}]},{name:"Agus Tri Darmawanto + Oktaviana Mahmudah",children:[{name:"Muhammad Nadhif Arsyad Baihaqi"},{name:"Muhammad Farzan Hamid Alfarezi"}]}]},
 {name:"Saidiman + Ruti",children:[{name:"Yusep + Maya",children:[{name:"Adlie Fairuz"},{name:"Daniswara Aradhana"},{name:"Haura Shanum"}]},{name:"Lukmansah"}]},
 {name:"Eti + Waryudi",children:[{name:"Lilis + Adi",children:[{name:"Satria"},{name:"Cantika"}]},{name:"Atin Purnama Sari + Dori",children:[{name:"Dzihan Maulana Hadhori"},{name:"Zahran Hamizan Hadhor"}]},{name:"Apriyanto Nur Risqi + Astuti",children:[{name:"Abidzar Nur Risqi"}]}]},
@@ -316,7 +318,7 @@ children:[
 {
 name:"3. Lasih + Samji",
 children:[
-{name:"Sudani + Rum'aeni",children:[
+{name:"Sudani + Istri",children:[
 {name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},
 {name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]},
 {name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti Aisah"},{name:"Ayu"}]}
@@ -326,19 +328,19 @@ children:[
 {
 name:"4. Mahlana + Empat + Noeklim",
 children:[
-{name:"Mulyeh (Alm) + Wasmo (Alm)",children:[{name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},{name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}]},
-{name:"Jumtifah (Alm) + Komarudin",children:[{name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},{name:"Rafli Maladi Usman"},{name:"Arsakha Virendra Usman"}]}
+{name:"Mulyeh + Wasmo",children:[{name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},{name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}]},
+{name:"Jumtipah + Komarudin",children:[{name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},{name:"Rafli Maladi Usman"},{name:"Arsakha Virendra Usman"}]}
 ]}
 ]
 },
 
 /* 5 RUMTI */
 {
-name:"5. Rumti + Dahlan",
+name:"5. Rumti + Jakim + Dahlan",
 children:[
-{name:"Mianah + Sabu (Alm)",children:[{name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},{name:"Yeni"},{name:"Cici"}]},
+{name:"Mianah + Sabu",children:[{name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},{name:"Yeni"},{name:"Cici"}]},
 {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
-{name:"Suharmin (Alm)"},
+{name:"Suharmin"},
 {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
 {name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
 {name:"Dede + Rita (Alm)",children:[{name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},{name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},{name:"Yoga"}]}
@@ -349,7 +351,7 @@ children:[
 {
 name:"6. Armini + Naimin",
 children:[
-{name:"Iing Rosiin (Alm) + Iyas",children:[{name:"Rendi Septian + Nuraeni Septiawati",children:[{name:"Rania Artanya Rinjani"},{name:"Noureen Maulidya Rinjani"},{name:"Ready Noor Asyifa Rinjani"}]},{name:"Raisa Mutiarani + Bobby Septiansyah",children:[{name:"Saby Sakhi Salsabila"},{name:"Aisha Sabina Prameswari"}]},{name:"Ristiya Ferlita (Alm)"}]},
+{name:"Iing + Iyas",children:[{name:"Rendi Septian + Nuraeni Septiawati",children:[{name:"Rania Artanya Rinjani"},{name:"Noureen Maulidya Rinjani"},{name:"Ready Noor Asyifa Rinjani"}]},{name:"Raisa Mutiarani + Bobby Septiansyah",children:[{name:"Saby Sakhi Salsabila"},{name:"Aisha Sabina Prameswari"}]},{name:"Ristiya Ferlita (Alm)"}]},
 {name:"Cicih Sri Kurniasarih + Sutono",children:[{name:"Attik Elvattia + Ahmad Nur Ali",children:[{name:"Nailah Huwaida Alita"},{name:"Nafisah Khayyira Aliya"}]},{name:"Alin"},{name:"Anggit"}]},
 {name:"Yaya + Heni",children:[{name:"Ibnu"},{name:"Adzra Aqila Kinanti"},{name:"Azkayra"},{name:"Sofia"}]},
 {name:"Titin Suprihatin (Alm)"}
@@ -360,10 +362,10 @@ children:[
 {
 name:"7. Soheni + Sainan",
 children:[
-{name:"Dadang Sugandi (Alm) + Kartini",children:[{name:"Ashri Salassidini + Amin",children:[{name:"Alifah"},{name:"Alif"}]},{name:"Annissa Asyahida"},{name:"Asy Syifa Mujahidah"},{name:"Abizar Riski Azha"}]},
-{name:"Enok Sugiarti (Alm) + Suami",children:[{name:"Alwasri Nur Akbar"}]},
-{name:"Jajang Suhendar (Alm) + Eka",children:[{name:"M. Amim"},{name:"Nabila"},{name:"Rizky"}]},
-{name:"Ida + tuban (Alm)",children:[{name:"Euis + Andika Enggal Prakoso",children:[{name:"Naura Annanta Prakoso"},{name:"Euis Wulan Dari"}]},{name:"Alma"}]},
+{name:"Dadang Sugandi + Kartini",children:[{name:"Ashri Salassidini + Amin",children:[{name:"Alifah"},{name:"Alif"}]},{name:"Annissa Asyahida"},{name:"Asy Syifa Mujahidah"},{name:"Abizar Riski Azha"}]},
+{name:"Enok Sugiarti + Suami",children:[{name:"Alwasri Nur Akbar"}]},
+{name:"Jajang Suhendar + Eka",children:[{name:"M. Amim"},{name:"Nabila"},{name:"Rizky"}]},
+{name:"Ida + Subana",children:[{name:"Euis + Andika Enggal Prakoso",children:[{name:"Naura Annanta Prakoso"},{name:"Euis Wulan Dari"}]},{name:"Alma"}]},
 {name:"Samsul + Nita",children:[{name:"Qwina"},{name:"Qatan"}]},
 {name:"Dudi + Lisnawati",children:[{name:"Chelsea Rahma Putri"}]}
 ]
@@ -375,7 +377,7 @@ name:"8. Sanudi + Awanti",
 children:[
 {name:"Ratih (Alm) + Eka (Alm)",children:[{name:"Bayu + Revi Nur Fitriani"},{name:"Gina"}]},
 {name:"Imas (Alm) + Sartoyo",children:[{name:"Deden (Alm)"},{name:"Yusril"}]},
-{name:"Nani + Sodikin (Alm)",children:[{name:"Rizky"},{name:"Denisa"}]},
+{name:"Nani + Sodikin",children:[{name:"Rizky"},{name:"Denisa"}]},
 {name:"Dodi + Atik",children:[{name:"Nenden"}]},
 {name:"Dian Udayan + Iin Juarsih",children:[{name:"Bambang Yoga Mahesa"},{name:"Sudha Lingga Buana"},{name:"Giandra Arka Prawira"}]},
 {name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
@@ -388,9 +390,9 @@ children:[
 {
 name:"9. Nuryamah + Rusja",
 children:[
-{name:"Nuryati (Alm) + Dodo (Alm)",children:[{name:"Rinda Deliani + Ari Juhari",children:[{name:"Arda Athaya Arsenio"},{name:"Airi Ebrahim Abhinara"}]},{name:"Novianti + Hary Robiansah",children:[{name:"Ghavi Firzand Arrobiansah"}]}]},
-{name:"Suhandi (Alm)"},
-{name:"Royanti (Alm) + Jupri",children:[{name:"Septia Ningsih + Ryan",children:[{name:"Nasya"},{name:"Rafka"}]},{name:"Rosita Dewi + Faisal",children:[{name:"Muhammad Kenzo Farode"}]},{name:"Tika + Iqbal"},{name:"Mega"},{name:"Gina"},{name:"Gita"}]},
+{name:"Nuryati + Dodo",children:[{name:"Rinda Deliani + Ari Juhari",children:[{name:"Arda Athaya Arsenio"},{name:"Airi Ebrahim Abhinara"}]},{name:"Novianti + Hary Robiansah",children:[{name:"Ghavi Firzand Arrobiansah"}]}]},
+{name:"Suhandi"},
+{name:"Royanti + Jupri",children:[{name:"Septia Ningsih + Ryan",children:[{name:"Nasya"},{name:"Rafka"}]},{name:"Rosita Dewi + Faisal",children:[{name:"Muhammad Kenzo Farode"}]},{name:"Tika + Iqbal"},{name:"Mega"},{name:"Gina"},{name:"Gita"}]},
 {name:"Iin + Suroto",children:[{name:"Muhammad Gilang Pratama"},{name:"Muhammad Davi Putranto"},{name:"Adisya Khanza Almira"}]}
 ]
 }
