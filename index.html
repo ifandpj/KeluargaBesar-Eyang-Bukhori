@@ -20,7 +20,6 @@ h2 {
   color: #2c3e50;
 }
 
-/* LEGEND */
 .legend {
   text-align: center;
   margin-bottom: 14px;
@@ -34,7 +33,6 @@ h2 {
   font-weight: 600;
 }
 
-/* ROLE COLORS */
 .root    { background: #fff;     border: 2px solid #2c3e50; color: #2c3e50; }
 .anak    { background: #ffcdd2;  border: 2px solid #c62828; }
 .menantu { background: #bbdefb;  border: 2px solid #1565c0; }
@@ -43,7 +41,6 @@ h2 {
 .bao          { background: #e1bee7;  border: 2px solid #6a1b9a; }
 .janggawareng { background: #e0e0e0;  border: 2px solid #757575; color: #333; }
 
-/* NODE */
 .node {
   padding: 6px 11px;
   border-radius: 8px;
@@ -62,7 +59,6 @@ h2 {
   margin-top: 1px;
 }
 
-/* COUPLE WRAPPER */
 .couple {
   display: inline-flex;
   align-items: center;
@@ -89,21 +85,18 @@ h2 {
   font-weight: bold;
 }
 
-/* SCROLL CONTAINER */
 .container {
   width: 100%;
   height: 90vh;
   overflow: auto;
 }
 
-/* TREE LAYOUT */
 .tree {
   min-width: max-content;
   padding: 30px 40px 60px;
   display: inline-block;
 }
 
-/* UL = horizontal row of children */
 .tree ul {
   display: flex;
   justify-content: center;
@@ -114,7 +107,6 @@ h2 {
   padding: 0;
 }
 
-/* LI = one child column */
 .tree li {
   display: flex;
   flex-direction: column;
@@ -123,13 +115,11 @@ h2 {
   padding: 0 8px;
 }
 
-/* ── vertical line from parent node DOWN to horizontal bar ── */
 .tree ul.children-wrap {
   margin-top: 0;
-  padding-top: 28px; /* space for vertical stem */
+  padding-top: 28px;
 }
 
-/* Horizontal line connecting siblings (top border of children-wrap) */
 .tree ul.children-wrap::before {
   content: '';
   position: absolute;
@@ -138,10 +128,8 @@ h2 {
   right: 0;
   height: 0;
   border-top: 2px solid #888;
-  /* only span between first and last child center */
 }
 
-/* Vertical drop from horizontal bar to each li's node */
 .tree ul.children-wrap > li::before {
   content: '';
   position: absolute;
@@ -153,14 +141,12 @@ h2 {
   transform: translateX(-50%);
 }
 
-/* ── li wrapper: vertical stem from node down to children row ── */
 .li-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* stem from node to children-wrap */
 .stem {
   width: 2px;
   background: #888;
@@ -168,29 +154,49 @@ h2 {
   flex-shrink: 0;
 }
 
-/* trim horizontal line for single child */
 .tree ul.children-wrap.single-child::before {
   display: none;
 }
-.tree ul.children-wrap.single-child > li::before {
-  /* still show vertical drop */
+
+/* ── Pemisah antara kolom istri/suami pertama & kedua ── */
+.spouse-columns-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
 }
 
-/* trim start/end of horizontal bar to child centers */
-.tree ul.children-wrap > li:first-child {
-  /* mask left half of horizontal line before first child */
-}
-.tree ul.children-wrap > li:last-child {
-  /* mask right half after last child */
-}
-
-/* We handle the horizontal line clip via pseudo on the ul */
-/* Clip left: cover area left of first child's center */
-.tree ul.children-wrap::after {
-  content: '';
-  display: none; /* handled differently below */
+.spouse-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
 }
 
+.spouse-divider {
+  width: 3px;
+  align-self: stretch;
+  background: repeating-linear-gradient(
+    to bottom,
+    #aaa 0px,
+    #aaa 8px,
+    transparent 8px,
+    transparent 14px
+  );
+  margin: 0 4px;
+  border-radius: 2px;
+  min-height: 60px;
+}
+
+.col-label {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 6px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -205,6 +211,7 @@ h2 {
   <span class="cicit">🟢 Cicit</span>
   <span class="bao">🟣 Bao</span>
   <span class="janggawareng">⚪ Janggawareng</span>
+  <span style="background:#f5f5f5;border:2px dashed #aaa;color:#555;">┆ Garis pemisah istri/suami 1 & 2</span>
 </div>
 
 <div class="container">
@@ -212,7 +219,6 @@ h2 {
 </div>
 
 <script>
-/* ─── helpers ─── */
 function splitCouple(name) {
   if (name.includes("+")) {
     const parts = name.split("+");
@@ -231,7 +237,6 @@ function getRole(depth) {
   return roles[Math.min(depth, roles.length-1)];
 }
 
-/* ─── data ─── */
 const data = {
 name:"Eyang Buhari + Nenek Sawirah",
 children:[
@@ -240,63 +245,9 @@ children:[
 {
 name:"1. Nasuhi + Runti + Uni",
 children:[
-{
-name:"Rusniah + Oding",
-children:[
-{
-name:"Kayim + Ecih",
-children:[
-{name:"Alfira Ramadhani"},
-{name:"Alfian Fahri Ramadhan"}
-]
-},
-{
-name:"Nani Suryani + Saphari",
-children:[
-{name:"Jenny Putra Nugraha"}
-]
-}
-]
-},
-{
-name:"Usadi + Dasmini",
-children:[
-{
-name:"Daryono + Rukmini",
-children:[
-{name:"Naomi Oktaviani Putri"},
-{name:"Naura Kanza Anida"},
-{name:"Maudi"}
-]
-},
-{
-name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",
-children:[
-{name:"Salsa Ramadhanis"}
-]
-},
-{name:"Ifan Dwipriana Julistia"}
-]
-},
-{name:"Mintarsih + Rohman",
-children:[
-{name:"Ayiep Nurmansyah + Suminem",children:[{name:"Bagas P.R"}]},
-{name:"Amim Hermansyah + Sri Murtiningsih",
-children:[
-{name:"Jumadi Hermansyah"},
-{name:"Syarifudin Hermansyah"},
-{name:"Fazri Alfarizqi Hermansyah"},
-{name:"Humaira Yasmine Murtiningsih"}
-]
-},
-{name:"Tri Minarni + Danil",
-children:[
-{name:"Rita Ristiana Putri"},
-{name:"Moch Fardan Niats"}
-]
-}
-]
-}
+{name:"Rusniah + Oding",children:[{name:"Kayim + Ecih",children:[{name:"Alfira Ramadhani"},{name:"Alfian Fahri Ramadhan"}]},{name:"Nani Suryani + Saphari",children:[{name:"Jenny Putra Nugraha"}]}]},
+{name:"Usadi + Dasmini",children:[{name:"Daryono + Rukmini",children:[{name:"Naomi Oktaviani Putri"},{name:"Naura Kanza Anida"},{name:"Maudi"}]},{name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",children:[{name:"Salsa Ramadhanis"}]},{name:"Ifan Dwipriana Julistia"}]},
+{name:"Mintarsih + Rohman",children:[{name:"Ayiep Nurmansyah + Suminem",children:[{name:"Bagas P.R"}]},{name:"Amim Hermansyah + Sri Murtiningsih",children:[{name:"Jumadi Hermansyah"},{name:"Syarifudin Hermansyah"},{name:"Fazri Alfarizqi Hermansyah"},{name:"Humaira Yasmine Murtiningsih"}]},{name:"Tri Minarni + Danil",children:[{name:"Rita Ristiana Putri"},{name:"Moch Fardan Niats"}]}]}
 ]
 },
 
@@ -319,42 +270,56 @@ children:[
 name:"3. Lasih + Samji",
 children:[
 {name:"Sudani + Istri",children:[
-{name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},
-{name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]},
-{name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti Aisah"},{name:"Ayu"}]}
-]},
-
-/* 4 MAHLANA — di-nest dalam Lasih sesuai data asli */
-{
-name:"4. Mahlana + Empat + Noeklim",
-children:[
-{name:"Mulyeh + Wasmo",children:[{name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},{name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}]},
-{name:"Jumtipah + Komarudin",children:[{name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},{name:"Rafli Maladi Usman"},{name:"Arsakha Virendra Usman"}]}
+  {name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},
+  {name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]},
+  {name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti Aisah"},{name:"Ayu"}]}
 ]}
 ]
 },
 
-/* 5 RUMTI */
+/* 4 MAHLANA */
 {
-name:"5. Rumti",
-multiSpouse:[
-{
-  spouse:"Jakim",
-  children:[
-    {name:"Mianah + Sabu",children:[{name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},{name:"Yeni"},{name:"Cici"}]}
+  name:"4. Mahlana",
+  multiSpouse:[
+    { spouse:"Empat",   spouseLabel:"Istri Pertama", children:[
+        {name:"Mulyeh + Wasmo",children:[
+          {name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},
+          {name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}
+        ]}
+    ]},
+    { spouse:"Noeklim", spouseLabel:"Istri Kedua",  children:[
+        {name:"Jumtipah + Komarudin",children:[
+          {name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},
+          {name:"Rafli Maladi Usman"},
+          {name:"Arsakha Virendra Usman"}
+        ]}
+    ]}
   ]
 },
+
+/* 5 RUMTI */
 {
-  spouse:"Dahlan",
-  children:[
-    {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
-    {name:"Suharmin"},
-    {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
-    {name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
-    {name:"Dede + Rita (Alm)",children:[{name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},{name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},{name:"Yoga"}]}
+  name:"5. Rumti",
+  multiSpouse:[
+    { spouse:"Jakim",  spouseLabel:"Suami Pertama", children:[
+        {name:"Mianah + Sabu",children:[
+          {name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
+          {name:"Yeni"},
+          {name:"Cici"}
+        ]}
+    ]},
+    { spouse:"Dahlan", spouseLabel:"Suami Kedua",  children:[
+        {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
+        {name:"Suharmin"},
+        {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
+        {name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
+        {name:"Dede + Rita (Alm)",children:[
+          {name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},
+          {name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},
+          {name:"Yoga"}
+        ]}
+    ]}
   ]
-}
-]
 },
 
 /* 6 ARMINI */
@@ -410,14 +375,13 @@ children:[
 ]
 };
 
-/* ─── render ─── */
+/* ─── helpers ─── */
 function makeNodeEl(node, depth) {
   const split = (depth === 0) ? null : splitCouple(node.name);
   const role  = getRole(depth);
   const label = getLabel(depth);
 
   if (split) {
-    // couple: left node + separator + right node
     const wrapper = document.createElement("div");
     wrapper.className = "couple";
 
@@ -450,27 +414,25 @@ function buildTree(node, depth) {
   const inner = document.createElement("div");
   inner.className = "li-inner";
 
-  // ── MULTI-SPOUSE node (e.g. Rumti with Jakim & Dahlan) ──
   if (node.multiSpouse) {
     const role  = getRole(depth);
     const label = getLabel(depth);
 
-    // Row: [Spouse1] + [Rumti] + [Spouse2]
+    /* ── Baris nama: [Pasangan1] + [NAMA] + [Pasangan2] ── */
     const coupleRow = document.createElement("div");
     coupleRow.style.cssText = "display:inline-flex;align-items:center;gap:0;";
 
-    // Left spouse box
+    const sp1Label = node.multiSpouse[0].spouseLabel;
     const sp1 = document.createElement("div");
     sp1.className = "node menantu";
     sp1.style.borderRadius = "8px 0 0 8px";
     sp1.style.borderRight = "none";
-    sp1.innerHTML = `<div>${node.multiSpouse[0].spouse}</div><small>Pasangan 1</small>`;
+    sp1.innerHTML = `<div>${node.multiSpouse[0].spouse}</div><small>${sp1Label}</small>`;
 
     const sep1 = document.createElement("div");
     sep1.className = "couple-sep";
     sep1.textContent = "+";
 
-    // Center: main person
     const center = document.createElement("div");
     center.className = `node ${role}`;
     center.style.borderRadius = "0";
@@ -482,12 +444,12 @@ function buildTree(node, depth) {
     sep2.className = "couple-sep";
     sep2.textContent = "+";
 
-    // Right spouse box
+    const sp2Label = node.multiSpouse[1].spouseLabel;
     const sp2 = document.createElement("div");
     sp2.className = "node menantu";
     sp2.style.borderRadius = "0 8px 8px 0";
     sp2.style.borderLeft = "none";
-    sp2.innerHTML = `<div>${node.multiSpouse[1].spouse}</div><small>Pasangan 2</small>`;
+    sp2.innerHTML = `<div>${node.multiSpouse[1].spouse}</div><small>${sp2Label}</small>`;
 
     coupleRow.appendChild(sp1);
     coupleRow.appendChild(sep1);
@@ -496,21 +458,31 @@ function buildTree(node, depth) {
     coupleRow.appendChild(sp2);
     inner.appendChild(coupleRow);
 
-    // Two columns of children side by side
+    /* ── Batang turun ── */
+    const mainStem = document.createElement("div");
+    mainStem.className = "stem";
+    inner.appendChild(mainStem);
+
+    /* ── Dua kolom anak, dipisah garis putus-putus ── */
     const colWrap = document.createElement("div");
-    colWrap.style.cssText = "display:flex;align-items:flex-start;justify-content:center;gap:40px;";
+    colWrap.className = "spouse-columns-wrap";
 
     node.multiSpouse.forEach((s, idx) => {
-      const col = document.createElement("div");
-      col.style.cssText = "display:flex;flex-direction:column;align-items:center;";
+      if (idx === 1) {
+        /* Garis pemisah vertikal putus-putus di antara dua kolom */
+        const divider = document.createElement("div");
+        divider.className = "spouse-divider";
+        colWrap.appendChild(divider);
+      }
 
-      // label which spouse's children
+      const col = document.createElement("div");
+      col.className = "spouse-col";
+
       const lbl = document.createElement("div");
-      lbl.style.cssText = "font-size:10px;color:#888;margin-bottom:4px;font-style:italic;";
-      lbl.textContent = "Anak dari " + s.spouse;
+      lbl.className = "col-label";
+      lbl.textContent = "Anak dari " + s.spouseLabel;
       col.appendChild(lbl);
 
-      // stem
       const stem = document.createElement("div");
       stem.className = "stem";
       col.appendChild(stem);
@@ -524,14 +496,9 @@ function buildTree(node, depth) {
       colWrap.appendChild(col);
     });
 
-    // stem from couple row to colWrap
-    const mainStem = document.createElement("div");
-    mainStem.className = "stem";
-    inner.appendChild(mainStem);
     inner.appendChild(colWrap);
 
   } else {
-    // ── NORMAL node ──
     inner.appendChild(makeNodeEl(node, depth));
 
     if (node.children && node.children.length > 0) {
@@ -551,13 +518,6 @@ function buildTree(node, depth) {
   return li;
 }
 
-// Fix: horizontal line should span only between first and last child centers
-// We do this with a CSS trick: make the ul position relative,
-// and use a full-width ::before, but clip via li padding.
-// Better: inject a style that clips using JS after render.
-
-// Override UL ::before to be a line at top of children-wrap
-// and clip it to span from center-of-first to center-of-last child
 function fixHorizontalLines() {
   document.querySelectorAll(".children-wrap").forEach(ul => {
     if (ul.classList.contains("single-child")) return;
@@ -577,20 +537,14 @@ function fixHorizontalLines() {
     const leftPct  = ((fRect.left + fRect.width/2) - ulRect.left) / ulRect.width * 100;
     const rightPct = ((lRect.left + lRect.width/2) - ulRect.left) / ulRect.width * 100;
 
-    // use a ::before via an inserted div
     const line = document.createElement("div");
     line.style.cssText = `
-      position:absolute;
-      top:0;
-      left:${leftPct}%;
-      right:${100-rightPct}%;
-      height:2px;
-      background:#888;
-      pointer-events:none;
+      position:absolute;top:0;
+      left:${leftPct}%;right:${100-rightPct}%;
+      height:2px;background:#888;pointer-events:none;
     `;
     ul.appendChild(line);
 
-    // also fix per-li vertical drops: top of li::before should align to this line
     lis.forEach(li => {
       const liNode = li.querySelector(".node, .couple");
       if (!liNode) return;
@@ -599,31 +553,21 @@ function fixHorizontalLines() {
 
       const drop = document.createElement("div");
       drop.style.cssText = `
-        position:absolute;
-        top:0;
-        left:${center}%;
-        width:2px;
-        height:28px;
-        background:#888;
-        transform:translateX(-50%);
-        pointer-events:none;
+        position:absolute;top:0;
+        left:${center}%;width:2px;height:28px;
+        background:#888;transform:translateX(-50%);pointer-events:none;
       `;
       ul.appendChild(drop);
     });
   });
 }
 
-// Build root
 const rootUl = document.createElement("ul");
 rootUl.appendChild(buildTree(data, 0));
 document.getElementById("tree").appendChild(rootUl);
 
-// Apply precise horizontal lines after layout
-requestAnimationFrame(() => {
-  requestAnimationFrame(fixHorizontalLines);
-});
+requestAnimationFrame(() => requestAnimationFrame(fixHorizontalLines));
 
-// Remove the CSS ::before on children-wrap (we handle it in JS)
 const style = document.createElement("style");
 style.textContent = `
   .children-wrap { position: relative; }
@@ -632,6 +576,5 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 </script>
-
 </body>
 </html>
