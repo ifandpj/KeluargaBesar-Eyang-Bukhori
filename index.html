@@ -256,7 +256,7 @@ children:[
 name:"2. Sasmi + Jumadi",
 children:[
 {name:"Imaesari (Alm) + Aan Suparman (Alm)",children:[{name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"}]},{name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}]},
-{name:"Sumarno (Alm)+ Siti",children:[{name:"Ruli + Zaenal",children:[{name:"Bimm"},{name:"Nadine"}]},{name:"Julis + Uday"},{name:"Nirma"}]},
+{name:"Sumarno (Alm)+ Siti",children:[{name:"Rully Susilowati + Zaina",children:[{name:"Bimm"},{name:"Nadine"}]},{name:"Julis Sundawan + Uday",children:[{name:"Zivana Khanza Azzahra"}]},{name:"Nirma"}]},
 {name:"Dana Sutoni + Suparmiati",children:[{name:"Eva + Ario",children:[{name:"Abiyasa"}]},{name:"Widodo + Dewi",children:[{name:"Zahra"},{name:"Alisa (Alm)"},{name:"Faza"}]},{name:"Agus Tri Darmawanto + Oktaviana Mahmudah",children:[{name:"Muhammad Nadhif Arsyad Baihaqi"},{name:"Muhammad Farzan Hamid Alfarezi"}]}]},
 {name:"Saidiman + Ruti",children:[{name:"Yusep + Maya",children:[{name:"Adlie Fairuz"},{name:"Daniswara Aradhana"},{name:"Haura Shanum"}]},{name:"Lukmansah"}]},
 {name:"Eti + Waryudi (Alm)",children:[{name:"Lilis + Adi",children:[{name:"Satria"},{name:"Cantika"}]},{name:"Atin Purnama Sari + Dori",children:[{name:"Dzihan Maulana Hadhori"},{name:"Zahran Hamizan Hadhor"}]},{name:"Apriyanto Nur Risqi + Astuti",children:[{name:"Abidzar Nur Risqi"}]}]},
@@ -269,11 +269,9 @@ children:[
 {
 name:"3. Lasih + Samji",
 children:[
-{name:"Sudani + Rum'aeni",children:[
-  {name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},
-  {name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]},
-  {name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti Aisah"},{name:"Ayu"}]}
-]}
+{name:"Sudani + Rum'aeni",children:[{name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},{name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]}
+]},
+ {name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti Aisah"},{name:"Ayu"}]}
 ]
 },
 
@@ -302,10 +300,10 @@ children:[
   name:"5. Rumti",
   multiSpouse:[
     { spouse:"Jakim",  spouseLabel:"Suami Pertama", children:[
-        {name:"Mianah + Sabu (Alm)",children:[
-          {name:"Ruslanioni + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
-          {name:"Yeni"},
-          {name:"Cici"}
+        {name:"Mianah + Sabur (Alm)",children:[
+          {name:"Oni Ruslani + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
+          {name:"Junaeni Meniasih + Suami",children:[{name:"Najmah Mufidah"},{name:"Wulan Maulida"},{name:"Khalisa Almeera"}]},
+          {name:"Icih Minarsih + Hery Setia Budi",children:[{name:"Ifra Faiha Mikayla"},{name:"Hadzkadina Faiha Nashira"}]}
         ]}
     ]},
     { spouse:"Dahlan", spouseLabel:"Suami Kedua",  children:[
@@ -333,7 +331,6 @@ children:[
 ]
 },
 
-
 /* 7 SOHENI */
 {
 name:"7. Soheni + Sainan",
@@ -358,7 +355,20 @@ children:[
 {name:"Dian Udayan + Iin Juarsih",children:[{name:"Bambang Yoga Mahesa"},{name:"Sudha Lingga Buana"},{name:"Giandra Arka Prawira"}]},
 {name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
 {name:"Linda + M. Andrianto"},
-{name:"Anita + Kipli",children:[{name:"Izalia"},{name:"Izan"}]}
+
+/* ANITA — 2 suami */
+{
+  name:"Anita",
+  multiSpouse:[
+    { spouse:"Muhammad Dwi Arifianto (Alm)", spouseLabel:"Suami Pertama", children:[
+        {name:"Azalia Fadhillah Arifianto"}
+    ]},
+    { spouse:"Kifli", spouseLabel:"Suami Kedua", children:[
+        {name:"Mufti Farizan Thaqif"}
+    ]}
+  ]
+}
+
 ]
 },
 
@@ -470,7 +480,6 @@ function buildTree(node, depth) {
 
     node.multiSpouse.forEach((s, idx) => {
       if (idx === 1) {
-        /* Garis pemisah vertikal putus-putus di antara dua kolom */
         const divider = document.createElement("div");
         divider.className = "spouse-divider";
         colWrap.appendChild(divider);
