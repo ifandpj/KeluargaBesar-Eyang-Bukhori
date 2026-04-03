@@ -20,19 +20,169 @@ h2 {
   color: #2c3e50;
 }
 
+/* ── Legend tombol ── */
 .legend {
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
 }
-.legend span {
-  padding: 5px 12px;
+.legend-btn {
+  padding: 7px 16px;
   margin: 4px;
   border-radius: 20px;
   display: inline-block;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid transparent;
+  user-select: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+}
+.legend-btn:hover { transform: scale(1.07); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.legend-btn.active { box-shadow: 0 0 0 3px #2c3e50; transform: scale(1.05); }
+
+.btn-root    { background:#fff;     border-color:#2c3e50; color:#2c3e50; }
+.btn-anak    { background:#ffcdd2;  border-color:#c62828; color:#7b1212; }
+.btn-menantu { background:#bbdefb;  border-color:#1565c0; color:#0d3c6e; }
+.btn-cucu    { background:#fff9c4;  border-color:#f9a825; color:#7a5a00; }
+.btn-cicit   { background:#c8e6c9;  border-color:#2e7d32; color:#1b4a1e; }
+.btn-bao     { background:#e1bee7;  border-color:#6a1b9a; color:#3e0d5c; }
+.btn-janggawareng { background:#e0e0e0; border-color:#757575; color:#333; }
+
+.hint {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 8px;
 }
 
+/* ── Panel list generasi ── */
+#gen-panel {
+  display: none;
+  position: fixed;
+  top: 0; right: 0;
+  width: 340px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  z-index: 1000;
+  flex-direction: column;
+  overflow: hidden;
+}
+#gen-panel.open { display: flex; }
+
+#panel-header {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+#panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+#panel-count {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+#panel-close {
+  cursor: pointer;
+  font-size: 20px;
+  color: #888;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  border: none;
+  background: none;
+}
+#panel-close:hover { background: #f0f0f0; color: #333; }
+
+#panel-search {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+#panel-search input {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 13px;
+  outline: none;
+}
+#panel-search input:focus { border-color: #888; }
+
+#panel-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 0;
+}
+
+.panel-item {
+  padding: 10px 18px;
+  font-size: 13px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  transition: background 0.1s;
+}
+.panel-item:hover { background: #f7f9fb; }
+.panel-item:last-child { border-bottom: none; }
+
+.item-num {
+  font-size: 11px;
+  color: #bbb;
+  font-weight: 600;
+  min-width: 24px;
+  padding-top: 1px;
+}
+.item-name {
+  font-weight: 600;
+  color: #222;
+  line-height: 1.4;
+}
+.item-parent {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.panel-color-bar {
+  width: 4px;
+  border-radius: 2px;
+  align-self: stretch;
+  min-height: 32px;
+  flex-shrink: 0;
+}
+
+/* Overlay klik di luar panel */
+#panel-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.18);
+  z-index: 999;
+}
+#panel-overlay.open { display: block; }
+
+/* ── Tree ── */
+.container {
+  width: 100%;
+  height: 85vh;
+  overflow: auto;
+}
+.tree {
+  min-width: max-content;
+  padding: 30px 40px 60px;
+  display: inline-block;
+}
 .root    { background: #fff;     border: 2px solid #2c3e50; color: #2c3e50; }
 .anak    { background: #ffcdd2;  border: 2px solid #c62828; }
 .menantu { background: #bbdefb;  border: 2px solid #1565c0; }
@@ -48,182 +198,66 @@ h2 {
   white-space: nowrap;
   font-size: 12.5px;
   line-height: 1.4;
-  position: relative;
   z-index: 1;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 }
-.node small {
-  display: block;
-  font-size: 10px;
-  color: #555;
-  margin-top: 1px;
-}
+.node small { display:block; font-size:10px; color:#555; margin-top:1px; }
 
-.couple {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  position: relative;
-}
-.couple .node:first-child {
-  border-right: none;
-  border-radius: 8px 0 0 8px;
-}
-.couple .node:last-child {
-  border-left: none;
-  border-radius: 0 8px 8px 0;
-}
+.couple { display:inline-flex; align-items:center; gap:0; }
+.couple .node:first-child { border-right:none; border-radius:8px 0 0 8px; }
+.couple .node:last-child  { border-left:none;  border-radius:0 8px 8px 0; }
 .couple-sep {
-  display: inline-flex;
-  align-items: center;
-  background: #888;
-  color: #fff;
-  font-size: 11px;
-  padding: 0 5px;
-  align-self: stretch;
-  z-index: 1;
-  font-weight: bold;
+  display:inline-flex; align-items:center;
+  background:#888; color:#fff; font-size:11px;
+  padding:0 5px; align-self:stretch; z-index:1; font-weight:bold;
 }
+.tree ul { display:flex; justify-content:center; position:relative; list-style:none; margin:0; padding:0; }
+.tree li { display:flex; flex-direction:column; align-items:center; position:relative; padding:0 8px; }
+.tree ul.children-wrap { padding-top:28px; }
+.li-inner { display:flex; flex-direction:column; align-items:center; }
+.stem { width:2px; background:#888; height:22px; flex-shrink:0; }
 
-.container {
-  width: 100%;
-  height: 90vh;
-  overflow: auto;
-}
-
-.tree {
-  min-width: max-content;
-  padding: 30px 40px 60px;
-  display: inline-block;
-}
-
-.tree ul {
-  display: flex;
-  justify-content: center;
-  padding-top: 0;
-  position: relative;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.tree li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding: 0 8px;
-}
-
-.tree ul.children-wrap {
-  margin-top: 0;
-  padding-top: 28px;
-}
-
-.li-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stem {
-  width: 2px;
-  background: #888;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.tree ul.children-wrap.single-child::before {
-  display: none;
-}
-
-/* ── multiSpouse layout ── */
-.multi-spouse-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Wrapper semua kolom anak + garis atas */
-.multi-children-outer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Garis horizontal penghubung semua kolom ke orang tua */
-.multi-h-line {
-  height: 2px;
-  background: #888;
-  /* lebar & posisi diset via JS */
-  position: absolute;
-  top: 0;
-}
-
-/* Kolom per pasangan */
-.spouse-columns-wrap {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0;
-  position: relative;
-}
-
-.spouse-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 20px;
-  position: relative;
-}
-
-/* Batang turun dari garis horizontal ke label kolom */
-.col-stem {
-  width: 2px;
-  background: #888;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-/* Garis putus-putus vertikal pemisah antar pasangan */
+.multi-children-outer { position:relative; display:flex; flex-direction:column; align-items:center; }
+.multi-h-line { height:2px; background:#888; position:absolute; top:0; pointer-events:none; }
+.spouse-columns-wrap { display:flex; align-items:flex-start; justify-content:center; gap:0; position:relative; }
+.spouse-col { display:flex; flex-direction:column; align-items:center; padding:0 20px; }
+.col-stem { width:2px; background:#888; height:22px; flex-shrink:0; }
 .spouse-divider {
-  width: 3px;
-  align-self: stretch;
-  background: repeating-linear-gradient(
-    to bottom,
-    #bbb 0px, #bbb 7px,
-    transparent 7px, transparent 13px
-  );
-  margin: 0 6px;
-  border-radius: 2px;
-  min-height: 60px;
+  width:3px; align-self:stretch;
+  background:repeating-linear-gradient(to bottom,#bbb 0px,#bbb 7px,transparent 7px,transparent 13px);
+  margin:0 6px; border-radius:2px; min-height:60px;
 }
-
-.col-label {
-  font-size: 10px;
-  color: #999;
-  margin-bottom: 5px;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
-}
+.col-label { font-size:10px; color:#999; margin-bottom:5px; font-style:italic; font-weight:600; white-space:nowrap; }
 </style>
 </head>
 <body>
 
 <h2>🌳 Silsilah Keluarga Besar Eyang Bukhori</h2>
 
-<div class="legend">
-  <span class="root">👴 Eyang / Akar</span>
-  <span class="anak">🔴 Anak</span>
-  <span class="menantu">🔵 Menantu</span>
-  <span class="cucu">🟡 Cucu</span>
-  <span class="cicit">🟢 Cicit</span>
-  <span class="bao">🟣 Bao</span>
-  <span class="janggawareng">⚪ Janggawareng</span>
-  <span style="background:#f5f5f5;border:2px dashed #bbb;color:#666;">┆ Beda ibu/ayah, satu keturunan</span>
+<div class="legend" id="legend">
+  <span class="legend-btn btn-anak"    data-role="anak"         >🔴 Anak</span>
+  <span class="legend-btn btn-menantu" data-role="menantu"      >🔵 Menantu</span>
+  <span class="legend-btn btn-cucu"    data-role="cucu"         >🟡 Cucu</span>
+  <span class="legend-btn btn-cicit"   data-role="cicit"        >🟢 Cicit</span>
+  <span class="legend-btn btn-bao"     data-role="bao"          >🟣 Bao</span>
+  <span class="legend-btn btn-janggawareng" data-role="janggawareng">⚪ Janggawareng</span>
+</div>
+<p class="hint">💡 Klik tombol untuk melihat daftar lengkap per generasi</p>
+
+<!-- Overlay -->
+<div id="panel-overlay"></div>
+
+<!-- Panel samping -->
+<div id="gen-panel">
+  <div id="panel-header">
+    <div>
+      <div id="panel-title">Daftar Anak</div>
+      <div id="panel-count"></div>
+    </div>
+    <button id="panel-close">✕</button>
+  </div>
+  <div id="panel-search"><input type="text" id="search-input" placeholder="🔍  Cari nama..."></div>
+  <div id="panel-list"></div>
 </div>
 
 <div class="container">
@@ -231,36 +265,17 @@ h2 {
 </div>
 
 <script>
-function splitCouple(name) {
-  if (name.includes("+")) {
-    const parts = name.split("+");
-    return { left: parts[0].trim(), right: parts.slice(1).join("+").trim() };
-  }
-  return null;
-}
-
-function getLabel(depth) {
-  const labels = ["","Anak","Cucu","Cicit","Bao","Janggawareng","Udeg-udeg"];
-  return labels[depth] || "Turunan";
-}
-
-function getRole(depth) {
-  const roles = ["root","anak","cucu","cicit","bao","janggawareng","janggawareng"];
-  return roles[Math.min(depth, roles.length-1)];
-}
-
+/* ════════════════════════════════════
+   DATA
+════════════════════════════════════ */
 const data = {
 name:"Eyang Buhari + Nenek Sawirah",
 children:[
-
-/* 1 NASUHI */
 {name:"1. Nasuhi + Runti + Uni",children:[
   {name:"Rusniah + Oding (Alm)",children:[{name:"Kayim + Ecih",children:[{name:"Alfira Ramadhani"},{name:"Alfian Fahri Ramadhan"}]},{name:"Nani Suryani + Saphari",children:[{name:"Jenny Putra Nugraha"}]}]},
   {name:"Usadi + Dasmini",children:[{name:"Daryono + Rukmini",children:[{name:"Naomi Oktaviani Putri"},{name:"Naura Kanza Anida"},{name:"Maudi"}]},{name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",children:[{name:"Salsa Ramadhanis"}]},{name:"Ifan Dwipriana Julistia"}]},
   {name:"Mintarsih + Rohman (Alm)",children:[{name:"Ayiep Nurmansyah + Suminem",children:[{name:"Bagas P.R"}]},{name:"Amim Hermansyah + Sri Murtiningsih",children:[{name:"Jumadi Hermansyah"},{name:"Syarifudin Hermansyah"},{name:"Fazri Alfarizqi Hermansyah"},{name:"Humaira Yasmine Murtiningsih"}]},{name:"Tri Minarni (Alm) + Danil",children:[{name:"Rita Ristiana Putri"},{name:"Moch Fardan Niats"}]}]}
 ]},
-
-/* 2 SASMI */
 {name:"2. Sasmi + Jumadi",children:[
   {name:"Imaesari (Alm) + Aan Suparman (Alm)",children:[{name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"}]},{name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}]},
   {name:"Sumarno (Alm) + Siti",children:[{name:"Rully Susilowati + Zainal",children:[{name:"Bima"},{name:"Nadine"}]},{name:"Julis Sundawan + Uday",children:[{name:"Zivana Khanza Azzahra"}]},{name:"Nirma"}]},
@@ -270,26 +285,21 @@ children:[
   {name:"Yayah + Hari",children:[{name:"Pian Setianto + Siska Fransiska",children:[{name:"Zainul Abidin"},{name:"Avika Khoirul Nisa"},{name:"Aviva Khayra"}]},{name:"Hani Mulyati + Iskandar Hadi Winata",children:[{name:"Averroes Mulia Ishwinata"}]},{name:"Cici Halicia + Sutiyono Budiyanto"}]},
   {name:"Umaryadi + Yulia Asih",children:[{name:"Nasywaa Ananda Nurmalia"}]}
 ]},
-
-/* 3 LASIH */
-{
-name:"3. Lasih + Samji",
-children:[
-{name:"Sudani + Rum'aeni",children:[{name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},{name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]}
+{name:"3. Lasih + Samji",children:[
+  {name:"Sudani + Rum'aeni",children:[
+    {name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},
+    {name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]},
+    {name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti Aisah"},{name:"Ayu"}]}
+  ]}
 ]},
- {name:"Kayung + Suami",children:[{name:"Kuyum"},{name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},{name:"Siti nurhayani + Muhammad Umar Baehaqi", children:[{name:"Zara emila Humaira"}]},{name:"Ayu"}]}
-]
-},
-
-/* 4 MAHLANA */
 {name:"4. Mahlana", multiSpouse:[
-  { spouse:"Empat",   spouseLabel:"Istri Pertama", children:[
+  {spouse:"Empat",spouseLabel:"Istri Pertama",children:[
     {name:"Mulyeh (Alm) + Wasmo (Alm)",children:[
       {name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},
       {name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}
     ]}
   ]},
-  { spouse:"Noeklim", spouseLabel:"Istri Kedua", children:[
+  {spouse:"Noeklim",spouseLabel:"Istri Kedua",children:[
     {name:"Jumtifah (Alm) + Komarudin",children:[
       {name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},
       {name:"Rafli Maladi Usman"},
@@ -297,17 +307,15 @@ children:[
     ]}
   ]}
 ]},
-
-/* 5 RUMTI */
 {name:"5. Rumti", multiSpouse:[
-  { spouse:"Jakim",  spouseLabel:"Suami Pertama", children:[
+  {spouse:"Jakim",spouseLabel:"Suami Pertama",children:[
     {name:"Mianah + Sabur (Alm)",children:[
       {name:"Oni Ruslani + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
       {name:"Junaeni Meniasih + Suami",children:[{name:"Najmah Mufidah"},{name:"Wulan Maulida"},{name:"Khalisa Almeera"}]},
       {name:"Icih Minarsih + Hery Setia Budi",children:[{name:"Ifra Faiha Mikayla"},{name:"Hadzkadina Faiha Nashira"}]}
     ]}
   ]},
-  { spouse:"Dahlan", spouseLabel:"Suami Kedua", children:[
+  {spouse:"Dahlan",spouseLabel:"Suami Kedua",children:[
     {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
     {name:"Suharmin (Alm)"},
     {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
@@ -319,16 +327,12 @@ children:[
     ]}
   ]}
 ]},
-
-/* 6 ARMINI */
 {name:"6. Armini + Naimin",children:[
   {name:"Iing Rosiin (Alm) + Iyas",children:[{name:"Rendi Septian + Nuraeni Septiawati",children:[{name:"Rania Artanya Rinjani"},{name:"Noureen Maulidya Rinjani"},{name:"Ready Noor Asyifa Rinjani"}]},{name:"Raisa Mutiarani + Bobby Septiansyah",children:[{name:"Saby Sakhi Salsabila"},{name:"Aisha Sabina Prameswari"}]},{name:"Ristiya Ferlita (Alm)"}]},
   {name:"Cicih Sri Kurniasarih + Sutono",children:[{name:"Attik Elvattia + Ahmad Nur Ali",children:[{name:"Nailah Huwaida Alita"},{name:"Nafisah Khayyira Aliya"}]},{name:"Alin"},{name:"Anggit"}]},
   {name:"Yaya + Heni",children:[{name:"Ibnu"},{name:"Adzra Aqila Kinanti"},{name:"Azkayra"},{name:"Sofia"}]},
   {name:"Titin Suprihatin (Alm)"}
 ]},
-
-/* 7 SOHENI */
 {name:"7. Soheni + Sainan",children:[
   {name:"Dadang Sugandi (Alm) + Kartini",children:[{name:"Ashri Salassidini + Amin",children:[{name:"Alifah"},{name:"Alif"}]},{name:"Annissa Asyahida"},{name:"Asy Syifa Mujahidah"},{name:"Abizar Riski Azha"}]},
   {name:"Enok Sugiarti (Alm) + Suami",children:[{name:"Alwasri Nur Akbar"}]},
@@ -337,8 +341,6 @@ children:[
   {name:"Samsul + Nita",children:[{name:"Qwina"},{name:"Qatan"}]},
   {name:"Dudi + Lisnawati",children:[{name:"Chelsea Rahma Putri"}]}
 ]},
-
-/* 8 SANUDI */
 {name:"8. Sanudi + Awanti",children:[
   {name:"Ratih (Alm) + Eka (Alm)",children:[{name:"Bayu + Revi Nur Fitriani"},{name:"Gina"}]},
   {name:"Imas (Alm) + Sartoyo",children:[{name:"Deden (Alm)"},{name:"Yusril"}]},
@@ -348,259 +350,270 @@ children:[
   {name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
   {name:"Linda + M. Andrianto"},
   {name:"Anita", multiSpouse:[
-    { spouse:"Muhammad Dwi Arifianto (Alm)", spouseLabel:"Suami Pertama", children:[
-      {name:"Azalia Fadhillah Arifianto"}
-    ]},
-    { spouse:"Kifli", spouseLabel:"Suami Kedua", children:[
-      {name:"Mufti Farizan Thaqif"}
-    ]}
+    {spouse:"Muhammad Dwi Arifianto (Alm)",spouseLabel:"Suami Pertama",children:[{name:"Azalia Fadhillah Arifianto"}]},
+    {spouse:"Kifli",spouseLabel:"Suami Kedua",children:[{name:"Mufti Farizan Thaqif"}]}
   ]}
 ]},
-
-/* 9 NURYAMAH */
 {name:"9. Nuryamah + Rusja",children:[
   {name:"Nuryati (Alm) + Dodo (Alm)",children:[{name:"Rinda Deliani + Ari Juhari",children:[{name:"Arda Athaya Arsenio"},{name:"Airi Ebrahim Abhinara"}]},{name:"Novianti + Hary Robiansah",children:[{name:"Ghavi Firzand Arrobiansah"}]}]},
   {name:"Suhandi (Alm)"},
   {name:"Royanti (Alm) + Jupri",children:[{name:"Septia Ningsih + Ryan",children:[{name:"Nasya"},{name:"Rafka"}]},{name:"Rosita Dewi + Faisal",children:[{name:"Muhammad Kenzo Farode"}]},{name:"Tika + Iqbal"},{name:"Mega"},{name:"Gina"},{name:"Gita"}]},
   {name:"Iin + Suroto",children:[{name:"Muhammad Gilang Pratama"},{name:"Muhammad Davi Putranto"},{name:"Adisya Khanza Almira"}]}
 ]}
-
 ]};
 
-/* ═══════════════════════════════════════════════════
-   BUILD TREE
-═══════════════════════════════════════════════════ */
+/* ════════════════════════════════════
+   COLLECT MEMBERS PER GENERASI
+   depth: 0=root, 1=anak, 2=cucu, 3=cicit, 4=bao, 5=janggawareng
+   role khusus: menantu (pasangan anak/cucu/dst)
+════════════════════════════════════ */
+const genData = { anak:[], menantu:[], cucu:[], cicit:[], bao:[], janggawareng:[] };
+
+function collectMembers(node, depth, parentName) {
+  const roleMap = {1:"anak",2:"cucu",3:"cicit",4:"bao",5:"janggawareng"};
+
+  if (node.multiSpouse) {
+    // node utama
+    const role = roleMap[depth];
+    if (role && genData[role]) {
+      genData[role].push({ name: node.name, parent: parentName });
+    }
+    // pasangan = menantu
+    node.multiSpouse.forEach(s => {
+      genData.menantu.push({ name: s.spouse + " (" + s.spouseLabel + ")", parent: "Pasangan " + node.name });
+      s.children.forEach(child => collectMembers(child, depth + 1, node.name));
+    });
+    return;
+  }
+
+  if (depth === 0) {
+    // root — skip
+    if (node.children) node.children.forEach(child => collectMembers(child, 1, node.name));
+    return;
+  }
+
+  // pisahkan nama + pasangan jika ada "+"
+  const plus = node.name.indexOf("+");
+  if (plus !== -1) {
+    const selfName    = node.name.slice(0, plus).trim();
+    const spouseName  = node.name.slice(plus + 1).trim();
+    const role = roleMap[depth];
+    if (role && genData[role]) {
+      genData[role].push({ name: selfName, parent: parentName });
+    }
+    if (spouseName) {
+      genData.menantu.push({ name: spouseName, parent: "Pasangan " + selfName });
+    }
+  } else {
+    const role = roleMap[depth];
+    if (role && genData[role]) {
+      genData[role].push({ name: node.name, parent: parentName });
+    }
+  }
+
+  if (node.children) {
+    const selfName = plus !== -1 ? node.name.slice(0, node.name.indexOf("+")).trim() : node.name;
+    node.children.forEach(child => collectMembers(child, depth + 1, selfName));
+  }
+}
+
+collectMembers(data, 0, "");
+
+/* ════════════════════════════════════
+   PANEL
+════════════════════════════════════ */
+const roleConfig = {
+  anak:         { label:"🔴 Daftar Anak",         color:"#c62828", bg:"#ffcdd2" },
+  menantu:      { label:"🔵 Daftar Menantu",       color:"#1565c0", bg:"#bbdefb" },
+  cucu:         { label:"🟡 Daftar Cucu",          color:"#f9a825", bg:"#fff9c4" },
+  cicit:        { label:"🟢 Daftar Cicit",         color:"#2e7d32", bg:"#c8e6c9" },
+  bao:          { label:"🟣 Daftar Bao",           color:"#6a1b9a", bg:"#e1bee7" },
+  janggawareng: { label:"⚪ Daftar Janggawareng",  color:"#757575", bg:"#e0e0e0" },
+};
+
+let currentRole = null;
+
+function openPanel(role) {
+  currentRole = role;
+  const cfg    = roleConfig[role];
+  const items  = genData[role];
+
+  document.getElementById("panel-title").textContent  = cfg.label;
+  document.getElementById("panel-count").textContent  = items.length + " orang";
+  document.getElementById("search-input").value       = "";
+  renderList(items, cfg);
+
+  document.getElementById("gen-panel").classList.add("open");
+  document.getElementById("panel-overlay").classList.add("open");
+
+  // mark active button
+  document.querySelectorAll(".legend-btn").forEach(b => b.classList.remove("active"));
+  document.querySelector(`.legend-btn[data-role="${role}"]`).classList.add("active");
+}
+
+function closePanel() {
+  document.getElementById("gen-panel").classList.remove("open");
+  document.getElementById("panel-overlay").classList.remove("open");
+  document.querySelectorAll(".legend-btn").forEach(b => b.classList.remove("active"));
+  currentRole = null;
+}
+
+function renderList(items, cfg) {
+  const list = document.getElementById("panel-list");
+  list.innerHTML = "";
+  if (items.length === 0) {
+    list.innerHTML = '<div style="padding:24px;text-align:center;color:#aaa;font-size:13px;">Tidak ada data</div>';
+    return;
+  }
+  items.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.className = "panel-item";
+    div.innerHTML = `
+      <div class="panel-color-bar" style="background:${cfg.color};"></div>
+      <div>
+        <div class="item-num">${i + 1}</div>
+      </div>
+      <div>
+        <div class="item-name">${item.name}</div>
+        ${item.parent ? `<div class="item-parent">↳ ${item.parent}</div>` : ""}
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+// Search
+document.getElementById("search-input").addEventListener("input", function() {
+  if (!currentRole) return;
+  const q   = this.value.toLowerCase();
+  const cfg = roleConfig[currentRole];
+  const filtered = genData[currentRole].filter(item =>
+    item.name.toLowerCase().includes(q) || (item.parent && item.parent.toLowerCase().includes(q))
+  );
+  document.getElementById("panel-count").textContent = filtered.length + " orang";
+  renderList(filtered, cfg);
+});
+
+document.getElementById("panel-close").addEventListener("click", closePanel);
+document.getElementById("panel-overlay").addEventListener("click", closePanel);
+
+document.querySelectorAll(".legend-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const role = btn.dataset.role;
+    if (currentRole === role) { closePanel(); return; }
+    openPanel(role);
+  });
+});
+
+/* ════════════════════════════════════
+   BUILD TREE (sama seperti sebelumnya)
+════════════════════════════════════ */
+function splitCouple(name) {
+  if (!name.includes("+")) return null;
+  const parts = name.split("+");
+  return { left: parts[0].trim(), right: parts.slice(1).join("+").trim() };
+}
+function getLabel(d) { return ["","Anak","Cucu","Cicit","Bao","Janggawareng","Udeg-udeg"][d]||"Turunan"; }
+function getRole(d)  { return ["root","anak","cucu","cicit","bao","janggawareng","janggawareng"][Math.min(d,6)]; }
+
 function makeNodeEl(node, depth) {
-  const split = (depth === 0) ? null : splitCouple(node.name);
+  const split = depth === 0 ? null : splitCouple(node.name);
   const role  = getRole(depth);
   const label = getLabel(depth);
-
   if (split) {
-    const wrapper = document.createElement("div");
-    wrapper.className = "couple";
-    const left = document.createElement("div");
-    left.className = `node ${role}`;
-    left.innerHTML = `<div>${split.left}</div><small>${label}</small>`;
-    const sep = document.createElement("div");
-    sep.className = "couple-sep";
-    sep.textContent = "+";
-    const right = document.createElement("div");
-    right.className = "node menantu";
-    right.innerHTML = `<div>${split.right}</div><small>Menantu</small>`;
-    wrapper.appendChild(left); wrapper.appendChild(sep); wrapper.appendChild(right);
-    return wrapper;
-  } else {
-    const div = document.createElement("div");
-    div.className = `node ${role}`;
-    div.innerHTML = `<div>${node.name}</div>${label ? `<small>${label}</small>` : ""}`;
-    return div;
+    const w = document.createElement("div"); w.className = "couple";
+    const l = document.createElement("div"); l.className = `node ${role}`; l.innerHTML = `<div>${split.left}</div><small>${label}</small>`;
+    const s = document.createElement("div"); s.className = "couple-sep"; s.textContent = "+";
+    const r = document.createElement("div"); r.className = "node menantu"; r.innerHTML = `<div>${split.right}</div><small>Menantu</small>`;
+    w.appendChild(l); w.appendChild(s); w.appendChild(r); return w;
   }
+  const d = document.createElement("div"); d.className = `node ${role}`;
+  d.innerHTML = `<div>${node.name}</div>${label?`<small>${label}</small>`:""}`;
+  return d;
 }
 
 function buildTree(node, depth) {
   const li = document.createElement("li");
-  const inner = document.createElement("div");
-  inner.className = "li-inner";
+  const inner = document.createElement("div"); inner.className = "li-inner";
 
   if (node.multiSpouse) {
-    const role  = getRole(depth);
-    const label = getLabel(depth);
-
-    /* ── Baris nama pasangan ── */
-    const coupleRow = document.createElement("div");
-    coupleRow.style.cssText = "display:inline-flex;align-items:center;gap:0;";
-
-    const sp1 = document.createElement("div");
-    sp1.className = "node menantu";
-    sp1.style.cssText = "border-radius:8px 0 0 8px;border-right:none;";
-    sp1.innerHTML = `<div>${node.multiSpouse[0].spouse}</div><small>${node.multiSpouse[0].spouseLabel}</small>`;
-
-    const sep1 = document.createElement("div");
-    sep1.className = "couple-sep"; sep1.textContent = "+";
-
-    const center = document.createElement("div");
-    center.className = `node ${role}`;
-    center.style.cssText = "border-radius:0;border-left:none;border-right:none;";
-    center.innerHTML = `<div>${node.name}</div>${label ? `<small>${label}</small>` : ""}`;
-
-    const sep2 = document.createElement("div");
-    sep2.className = "couple-sep"; sep2.textContent = "+";
-
-    const sp2 = document.createElement("div");
-    sp2.className = "node menantu";
-    sp2.style.cssText = "border-radius:0 8px 8px 0;border-left:none;";
-    sp2.innerHTML = `<div>${node.multiSpouse[1].spouse}</div><small>${node.multiSpouse[1].spouseLabel}</small>`;
-
-    coupleRow.appendChild(sp1); coupleRow.appendChild(sep1);
-    coupleRow.appendChild(center);
-    coupleRow.appendChild(sep2); coupleRow.appendChild(sp2);
-    inner.appendChild(coupleRow);
-
-    /* ── Batang turun dari orang tua ── */
-    const mainStem = document.createElement("div");
-    mainStem.className = "stem";
-    inner.appendChild(mainStem);
-
-    /* ── Wrapper luar untuk garis horizontal + kolom anak ── */
-    const outerWrap = document.createElement("div");
-    outerWrap.className = "multi-children-outer";
-
-    /* Garis horizontal (lebar & posisi diset oleh fixMultiLines setelah render) */
-    const hLine = document.createElement("div");
-    hLine.className = "multi-h-line";
-    outerWrap.appendChild(hLine);
-
-    /* ── Dua kolom anak + pemisah ── */
-    const colWrap = document.createElement("div");
-    colWrap.className = "spouse-columns-wrap";
-    colWrap.style.marginTop = "0";
-
-    node.multiSpouse.forEach((s, idx) => {
-      if (idx === 1) {
-        const divider = document.createElement("div");
-        divider.className = "spouse-divider";
-        colWrap.appendChild(divider);
-      }
-
-      const col = document.createElement("div");
-      col.className = "spouse-col";
-
-      /* Batang dari garis horizontal ke label */
-      const colStem = document.createElement("div");
-      colStem.className = "col-stem";
-      col.appendChild(colStem);
-
-      const lbl = document.createElement("div");
-      lbl.className = "col-label";
-      lbl.textContent = "Anak dari " + s.spouseLabel;
-      col.appendChild(lbl);
-
-      const ul = document.createElement("ul");
-      ul.className = "children-wrap";
-      if (s.children.length === 1) ul.classList.add("single-child");
-      s.children.forEach(child => ul.appendChild(buildTree(child, depth + 1)));
-      col.appendChild(ul);
-
-      colWrap.appendChild(col);
+    const role = getRole(depth), label = getLabel(depth);
+    const row = document.createElement("div"); row.style.cssText = "display:inline-flex;align-items:center;gap:0;";
+    const sp1 = document.createElement("div"); sp1.className="node menantu"; sp1.style.cssText="border-radius:8px 0 0 8px;border-right:none;";
+    sp1.innerHTML=`<div>${node.multiSpouse[0].spouse}</div><small>${node.multiSpouse[0].spouseLabel}</small>`;
+    const s1 = document.createElement("div"); s1.className="couple-sep"; s1.textContent="+";
+    const cn = document.createElement("div"); cn.className=`node ${role}`; cn.style.cssText="border-radius:0;border-left:none;border-right:none;";
+    cn.innerHTML=`<div>${node.name}</div>${label?`<small>${label}</small>`:""}`;
+    const s2 = document.createElement("div"); s2.className="couple-sep"; s2.textContent="+";
+    const sp2 = document.createElement("div"); sp2.className="node menantu"; sp2.style.cssText="border-radius:0 8px 8px 0;border-left:none;";
+    sp2.innerHTML=`<div>${node.multiSpouse[1].spouse}</div><small>${node.multiSpouse[1].spouseLabel}</small>`;
+    row.appendChild(sp1);row.appendChild(s1);row.appendChild(cn);row.appendChild(s2);row.appendChild(sp2);
+    inner.appendChild(row);
+    const ms = document.createElement("div"); ms.className="stem"; inner.appendChild(ms);
+    const ow = document.createElement("div"); ow.className="multi-children-outer";
+    const hl = document.createElement("div"); hl.className="multi-h-line"; ow.appendChild(hl);
+    const cw = document.createElement("div"); cw.className="spouse-columns-wrap";
+    node.multiSpouse.forEach((s,i)=>{
+      if(i===1){const dv=document.createElement("div");dv.className="spouse-divider";cw.appendChild(dv);}
+      const col=document.createElement("div");col.className="spouse-col";
+      const cs=document.createElement("div");cs.className="col-stem";col.appendChild(cs);
+      const lb=document.createElement("div");lb.className="col-label";lb.textContent="Anak dari "+s.spouseLabel;col.appendChild(lb);
+      const ul=document.createElement("ul");ul.className="children-wrap";
+      if(s.children.length===1)ul.classList.add("single-child");
+      s.children.forEach(c=>ul.appendChild(buildTree(c,depth+1)));
+      col.appendChild(ul);cw.appendChild(col);
     });
-
-    outerWrap.appendChild(colWrap);
-    inner.appendChild(outerWrap);
-
+    ow.appendChild(cw);inner.appendChild(ow);
   } else {
     inner.appendChild(makeNodeEl(node, depth));
-
     if (node.children && node.children.length > 0) {
-      const stem = document.createElement("div");
-      stem.className = "stem";
-      inner.appendChild(stem);
-
-      const ul = document.createElement("ul");
-      ul.className = "children-wrap";
-      if (node.children.length === 1) ul.classList.add("single-child");
-      node.children.forEach(child => ul.appendChild(buildTree(child, depth + 1)));
+      const st = document.createElement("div"); st.className="stem"; inner.appendChild(st);
+      const ul = document.createElement("ul"); ul.className="children-wrap";
+      if(node.children.length===1)ul.classList.add("single-child");
+      node.children.forEach(c=>ul.appendChild(buildTree(c,depth+1)));
       inner.appendChild(ul);
     }
   }
-
-  li.appendChild(inner);
-  return li;
+  li.appendChild(inner); return li;
 }
 
-/* ═══════════════════════════════════════════════════
-   FIX LINES AFTER RENDER
-═══════════════════════════════════════════════════ */
-function fixHorizontalLines() {
-  /* Garis pohon biasa */
-  document.querySelectorAll(".children-wrap").forEach(ul => {
-    if (ul.classList.contains("single-child")) return;
-    const lis = Array.from(ul.querySelectorAll(":scope > li"));
-    if (lis.length < 2) return;
-
-    const ulRect = ul.getBoundingClientRect();
-    const firstN = lis[0].querySelector(".node, .couple");
-    const lastN  = lis[lis.length-1].querySelector(".node, .couple");
-    if (!firstN || !lastN) return;
-
-    const fR = firstN.getBoundingClientRect();
-    const lR = lastN.getBoundingClientRect();
-    const lPct = ((fR.left + fR.width/2) - ulRect.left) / ulRect.width * 100;
-    const rPct = ((lR.left + lR.width/2) - ulRect.left) / ulRect.width * 100;
-
-    const line = document.createElement("div");
-    line.style.cssText = `position:absolute;top:0;left:${lPct}%;right:${100-rPct}%;height:2px;background:#888;pointer-events:none;`;
+function fixLines() {
+  document.querySelectorAll(".children-wrap").forEach(ul=>{
+    if(ul.classList.contains("single-child"))return;
+    const lis=Array.from(ul.querySelectorAll(":scope > li"));
+    if(lis.length<2)return;
+    const ur=ul.getBoundingClientRect();
+    const fn=lis[0].querySelector(".node,.couple"),ln=lis[lis.length-1].querySelector(".node,.couple");
+    if(!fn||!ln)return;
+    const fr=fn.getBoundingClientRect(),lr=ln.getBoundingClientRect();
+    const lp=((fr.left+fr.width/2)-ur.left)/ur.width*100,rp=((lr.left+lr.width/2)-ur.left)/ur.width*100;
+    const line=document.createElement("div");
+    line.style.cssText=`position:absolute;top:0;left:${lp}%;right:${100-rp}%;height:2px;background:#888;pointer-events:none;`;
     ul.appendChild(line);
-
-    lis.forEach(li => {
-      const n = li.querySelector(".node, .couple");
-      if (!n) return;
-      const nR = n.getBoundingClientRect();
-      const c  = ((nR.left + nR.width/2) - ulRect.left) / ulRect.width * 100;
-      const drop = document.createElement("div");
-      drop.style.cssText = `position:absolute;top:0;left:${c}%;width:2px;height:28px;background:#888;transform:translateX(-50%);pointer-events:none;`;
-      ul.appendChild(drop);
+    lis.forEach(li=>{
+      const n=li.querySelector(".node,.couple");if(!n)return;
+      const nr=n.getBoundingClientRect(),c=((nr.left+nr.width/2)-ur.left)/ur.width*100;
+      const d=document.createElement("div");
+      d.style.cssText=`position:absolute;top:0;left:${c}%;width:2px;height:28px;background:#888;transform:translateX(-50%);pointer-events:none;`;
+      ul.appendChild(d);
     });
   });
-
-  /* Garis horizontal untuk multiSpouse — sambungkan kedua kolom ke orang tua */
-  document.querySelectorAll(".multi-children-outer").forEach(outer => {
-    const hLine  = outer.querySelector(".multi-h-line");
-    const cols   = outer.querySelectorAll(".spouse-col");
-    if (cols.length < 2 || !hLine) return;
-
-    const outerRect = outer.getBoundingClientRect();
-
-    /* Cari titik tengah masing-masing kolom */
-    const centers = Array.from(cols).map(col => {
-      const r = col.getBoundingClientRect();
-      return r.left + r.width / 2 - outerRect.left;
-    });
-
-    const leftPx  = Math.min(...centers);
-    const rightPx = Math.max(...centers);
-
-    hLine.style.cssText = `
-      position:absolute;
-      top:0;
-      left:${leftPx}px;
-      width:${rightPx - leftPx}px;
-      height:2px;
-      background:#888;
-      pointer-events:none;
-    `;
-
-    /* Drop dari garis horizontal ke setiap col-stem */
-    cols.forEach(col => {
-      const colRect = col.getBoundingClientRect();
-      const cx = colRect.left + colRect.width / 2 - outerRect.left;
-
-      /* col-stem sudah ada di dalam col, tinggal pastikan posisinya */
-      const stem = col.querySelector(".col-stem");
-      if (stem) {
-        stem.style.cssText = "width:2px;background:#888;height:22px;flex-shrink:0;";
-      }
-    });
+  document.querySelectorAll(".multi-children-outer").forEach(outer=>{
+    const hl=outer.querySelector(".multi-h-line"),cols=outer.querySelectorAll(".spouse-col");
+    if(cols.length<2||!hl)return;
+    const or=outer.getBoundingClientRect();
+    const centers=Array.from(cols).map(c=>{const r=c.getBoundingClientRect();return r.left+r.width/2-or.left;});
+    hl.style.cssText=`position:absolute;top:0;left:${Math.min(...centers)}px;width:${Math.max(...centers)-Math.min(...centers)}px;height:2px;background:#888;pointer-events:none;`;
   });
 }
 
-/* ── Bootstrap ── */
 const rootUl = document.createElement("ul");
 rootUl.appendChild(buildTree(data, 0));
 document.getElementById("tree").appendChild(rootUl);
+requestAnimationFrame(()=>requestAnimationFrame(fixLines));
 
-requestAnimationFrame(() => requestAnimationFrame(() => {
-  fixHorizontalLines();
-}));
-
-/* Sembunyikan pseudo-element bawaan */
-const style = document.createElement("style");
-style.textContent = `
-  .children-wrap { position: relative; }
-  .children-wrap::before { display: none !important; }
-  .children-wrap > li::before { display: none !important; }
-  .multi-children-outer { position: relative; }
-`;
-document.head.appendChild(style);
+const s = document.createElement("style");
+s.textContent=`.children-wrap{position:relative;}.children-wrap::before{display:none!important;}.children-wrap>li::before{display:none!important;}.multi-children-outer{position:relative;}`;
+document.head.appendChild(s);
 </script>
 </body>
 </html>
