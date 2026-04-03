@@ -120,27 +120,6 @@ h2 {
   padding-top: 28px;
 }
 
-.tree ul.children-wrap::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0;
-  border-top: 2px solid #888;
-}
-
-.tree ul.children-wrap > li::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 28px;
-  border-left: 2px solid #888;
-  transform: translateX(-50%);
-}
-
 .li-inner {
   display: flex;
   flex-direction: column;
@@ -158,40 +137,73 @@ h2 {
   display: none;
 }
 
-/* ── Pemisah antara kolom istri/suami pertama & kedua ── */
+/* ── multiSpouse layout ── */
+.multi-spouse-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Wrapper semua kolom anak + garis atas */
+.multi-children-outer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Garis horizontal penghubung semua kolom ke orang tua */
+.multi-h-line {
+  height: 2px;
+  background: #888;
+  /* lebar & posisi diset via JS */
+  position: absolute;
+  top: 0;
+}
+
+/* Kolom per pasangan */
 .spouse-columns-wrap {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 0;
+  position: relative;
 }
 
 .spouse-col {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 24px;
+  padding: 0 20px;
+  position: relative;
 }
 
+/* Batang turun dari garis horizontal ke label kolom */
+.col-stem {
+  width: 2px;
+  background: #888;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* Garis putus-putus vertikal pemisah antar pasangan */
 .spouse-divider {
   width: 3px;
   align-self: stretch;
   background: repeating-linear-gradient(
     to bottom,
-    #aaa 0px,
-    #aaa 8px,
-    transparent 8px,
-    transparent 14px
+    #bbb 0px, #bbb 7px,
+    transparent 7px, transparent 13px
   );
-  margin: 0 4px;
+  margin: 0 6px;
   border-radius: 2px;
   min-height: 60px;
 }
 
 .col-label {
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 6px;
+  font-size: 10px;
+  color: #999;
+  margin-bottom: 5px;
   font-style: italic;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -211,7 +223,7 @@ h2 {
   <span class="cicit">🟢 Cicit</span>
   <span class="bao">🟣 Bao</span>
   <span class="janggawareng">⚪ Janggawareng</span>
-  <span style="background:#f5f5f5;border:2px dashed #aaa;color:#555;">┆ Garis pemisah istri/suami 1 & 2</span>
+  <span style="background:#f5f5f5;border:2px dashed #bbb;color:#666;">┆ Beda ibu/ayah, satu keturunan</span>
 </div>
 
 <div class="container">
@@ -242,28 +254,22 @@ name:"Eyang Buhari + Nenek Sawirah",
 children:[
 
 /* 1 NASUHI */
-{
-name:"1. Nasuhi + Runti + Uni",
-children:[
-{name:"Rusniah + Oding (Alm)",children:[{name:"Kayim + Ecih",children:[{name:"Alfira Ramadhani"},{name:"Alfian Fahri Ramadhan"}]},{name:"Nani Suryani + Saphari",children:[{name:"Jenny Putra Nugraha"}]}]},
-{name:"Usadi + Dasmini",children:[{name:"Daryono + Rukmini",children:[{name:"Naomi Oktaviani Putri"},{name:"Naura Kanza Anida"},{name:"Maudi"}]},{name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",children:[{name:"Salsa Ramadhanis"}]},{name:"Ifan Dwipriana Julistia"}]},
-{name:"Mintarsih + Rohman (Alm)",children:[{name:"Ayiep Nurmansyah + Suminem",children:[{name:"Bagas P.R"}]},{name:"Amim Hermansyah + Sri Murtiningsih",children:[{name:"Jumadi Hermansyah"},{name:"Syarifudin Hermansyah"},{name:"Fazri Alfarizqi Hermansyah"},{name:"Humaira Yasmine Murtiningsih"}]},{name:"Tri Minarni (Alm) + Danil",children:[{name:"Rita Ristiana Putri"},{name:"Moch Fardan Niats"}]}]}
-]
-},
+{name:"1. Nasuhi + Runti + Uni",children:[
+  {name:"Rusniah + Oding (Alm)",children:[{name:"Kayim + Ecih",children:[{name:"Alfira Ramadhani"},{name:"Alfian Fahri Ramadhan"}]},{name:"Nani Suryani + Saphari",children:[{name:"Jenny Putra Nugraha"}]}]},
+  {name:"Usadi + Dasmini",children:[{name:"Daryono + Rukmini",children:[{name:"Naomi Oktaviani Putri"},{name:"Naura Kanza Anida"},{name:"Maudi"}]},{name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",children:[{name:"Salsa Ramadhanis"}]},{name:"Ifan Dwipriana Julistia"}]},
+  {name:"Mintarsih + Rohman (Alm)",children:[{name:"Ayiep Nurmansyah + Suminem",children:[{name:"Bagas P.R"}]},{name:"Amim Hermansyah + Sri Murtiningsih",children:[{name:"Jumadi Hermansyah"},{name:"Syarifudin Hermansyah"},{name:"Fazri Alfarizqi Hermansyah"},{name:"Humaira Yasmine Murtiningsih"}]},{name:"Tri Minarni (Alm) + Danil",children:[{name:"Rita Ristiana Putri"},{name:"Moch Fardan Niats"}]}]}
+]},
 
 /* 2 SASMI */
-{
-name:"2. Sasmi + Jumadi",
-children:[
-{name:"Imaesari (Alm) + Aan Suparman (Alm)",children:[{name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"}]},{name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}]},
-{name:"Sumarno (Alm)+ Siti",children:[{name:"Rully Susilowati + Zaina",children:[{name:"Bimm"},{name:"Nadine"}]},{name:"Julis Sundawan + Uday",children:[{name:"Zivana Khanza Azzahra"}]},{name:"Nirma"}]},
-{name:"Dana Sutoni + Suparmiati",children:[{name:"Eva + Ario",children:[{name:"Abiyasa"}]},{name:"Widodo + Dewi",children:[{name:"Zahra"},{name:"Alisa (Alm)"},{name:"Faza"}]},{name:"Agus Tri Darmawanto + Oktaviana Mahmudah",children:[{name:"Muhammad Nadhif Arsyad Baihaqi"},{name:"Muhammad Farzan Hamid Alfarezi"}]}]},
-{name:"Saidiman + Ruti",children:[{name:"Yusep + Maya",children:[{name:"Adlie Fairuz"},{name:"Daniswara Aradhana"},{name:"Haura Shanum"}]},{name:"Lukmansah"}]},
-{name:"Eti + Waryudi (Alm)",children:[{name:"Lilis + Adi",children:[{name:"Satria"},{name:"Cantika"}]},{name:"Atin Purnama Sari + Dori",children:[{name:"Dzihan Maulana Hadhori"},{name:"Zahran Hamizan Hadhor"}]},{name:"Apriyanto Nur Risqi + Astuti",children:[{name:"Abidzar Nur Risqi"}]}]},
-{name:"Yayah + Hari",children:[{name:"Pian Setianto + Siska Fransiska",children:[{name:"Zainul Abidin"},{name:"Avika Khoirul Nisa"},{name:"Aviva Khayra"}]},{name:"Hani Mulyati + Iskandar Hadi Winata",children:[{name:"Averroes Mulia Ishwinata"}]},{name:"Cici Halicia + Sutiyono Budiyanto"}]},
-{name:"Umaryadi + Yulia Asih",children:[{name:"Nasywaa Ananda Nurmalia"}]}
-]
-},
+{name:"2. Sasmi + Jumadi",children:[
+  {name:"Imaesari (Alm) + Aan Suparman (Alm)",children:[{name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"}]},{name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}]},
+  {name:"Sumarno (Alm) + Siti",children:[{name:"Rully Susilowati + Zainal",children:[{name:"Bima"},{name:"Nadine"}]},{name:"Julis Sundawan + Uday",children:[{name:"Zivana Khanza Azzahra"}]},{name:"Nirma"}]},
+  {name:"Dana Sutoni + Suparmiati",children:[{name:"Eva + Ario",children:[{name:"Abiyasa"}]},{name:"Widodo + Dewi",children:[{name:"Zahra"},{name:"Alisa (Alm)"},{name:"Faza"}]},{name:"Agus Tri Darmawanto + Oktaviana Mahmudah",children:[{name:"Muhammad Nadhif Arsyad Baihaqi"},{name:"Muhammad Farzan Hamid Alfarezi"}]}]},
+  {name:"Saidiman + Ruti",children:[{name:"Yusep + Maya",children:[{name:"Adlie Fairuz"},{name:"Daniswara Aradhana"},{name:"Haura Shanum"}]},{name:"Lukmansah"}]},
+  {name:"Eti + Waryudi (Alm)",children:[{name:"Lilis + Adi",children:[{name:"Satria"},{name:"Cantika"}]},{name:"Atin Purnama Sari + Dori",children:[{name:"Dzihan Maulana Hadhori"},{name:"Zahran Hamizan Hadhor"}]},{name:"Apriyanto Nur Risqi + Astuti",children:[{name:"Abidzar Nur Risqi"}]}]},
+  {name:"Yayah + Hari",children:[{name:"Pian Setianto + Siska Fransiska",children:[{name:"Zainul Abidin"},{name:"Avika Khoirul Nisa"},{name:"Aviva Khayra"}]},{name:"Hani Mulyati + Iskandar Hadi Winata",children:[{name:"Averroes Mulia Ishwinata"}]},{name:"Cici Halicia + Sutiyono Budiyanto"}]},
+  {name:"Umaryadi + Yulia Asih",children:[{name:"Nasywaa Ananda Nurmalia"}]}
+]},
 
 /* 3 LASIH */
 {
@@ -276,117 +282,94 @@ children:[
 },
 
 /* 4 MAHLANA */
-{
-  name:"4. Mahlana",
-  multiSpouse:[
-    { spouse:"Empat",   spouseLabel:"Istri Pertama", children:[
-        {name:"Mulyeh (Alm) + Wasmo (Alm)",children:[
-          {name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},
-          {name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}
-        ]}
-    ]},
-    { spouse:"Noeklim", spouseLabel:"Istri Kedua",  children:[
-        {name:"Jumtifah (Alm) + Komarudin",children:[
-          {name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},
-          {name:"Rafli Maladi Usman"},
-          {name:"Arsakha Virendra Usman"}
-        ]}
+{name:"4. Mahlana", multiSpouse:[
+  { spouse:"Empat",   spouseLabel:"Istri Pertama", children:[
+    {name:"Mulyeh (Alm) + Wasmo (Alm)",children:[
+      {name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},
+      {name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}
     ]}
-  ]
-},
+  ]},
+  { spouse:"Noeklim", spouseLabel:"Istri Kedua", children:[
+    {name:"Jumtifah (Alm) + Komarudin",children:[
+      {name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rifki Maladi Usman"}]},
+      {name:"Rafli Maladi Usman"},
+      {name:"Arsakha Virendra Usman"}
+    ]}
+  ]}
+]},
 
 /* 5 RUMTI */
-{
-  name:"5. Rumti",
-  multiSpouse:[
-    { spouse:"Jakim",  spouseLabel:"Suami Pertama", children:[
-        {name:"Mianah + Sabur (Alm)",children:[
-          {name:"Oni Ruslani + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
-          {name:"Junaeni Meniasih + Suami",children:[{name:"Najmah Mufidah"},{name:"Wulan Maulida"},{name:"Khalisa Almeera"}]},
-          {name:"Icih Minarsih + Hery Setia Budi",children:[{name:"Ifra Faiha Mikayla"},{name:"Hadzkadina Faiha Nashira"}]}
-        ]}
-    ]},
-    { spouse:"Dahlan", spouseLabel:"Suami Kedua",  children:[
-        {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
-        {name:"Suharmin (Alm)"},
-        {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
-        {name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
-        {name:"Dede + Rita (Alm)",children:[
-          {name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},
-          {name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},
-          {name:"Yoga"}
-        ]}
+{name:"5. Rumti", multiSpouse:[
+  { spouse:"Jakim",  spouseLabel:"Suami Pertama", children:[
+    {name:"Mianah + Sabur (Alm)",children:[
+      {name:"Oni Ruslani + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
+      {name:"Junaeni Meniasih + Suami",children:[{name:"Najmah Mufidah"},{name:"Wulan Maulida"},{name:"Khalisa Almeera"}]},
+      {name:"Icih Minarsih + Hery Setia Budi",children:[{name:"Ifra Faiha Mikayla"},{name:"Hadzkadina Faiha Nashira"}]}
     ]}
-  ]
-},
+  ]},
+  { spouse:"Dahlan", spouseLabel:"Suami Kedua", children:[
+    {name:"Asminah + Idrus",children:[{name:"Iwan"},{name:"Yuli"},{name:"Iyas"},{name:"Oyok"},{name:"Azid"}]},
+    {name:"Suharmin (Alm)"},
+    {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
+    {name:"Jumiardi + Sawi",children:[{name:"Ani (Alm)"},{name:"Maya (Alm)"},{name:"Yuda"},{name:"Feri"}]},
+    {name:"Dede + Rita (Alm)",children:[
+      {name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},
+      {name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},
+      {name:"Yoga"}
+    ]}
+  ]}
+]},
 
 /* 6 ARMINI */
-{
-name:"6. Armini + Naimin",
-children:[
-{name:"Iing Rosiin (Alm) + Iyas",children:[{name:"Rendi Septian + Nuraeni Septiawati",children:[{name:"Rania Artanya Rinjani"},{name:"Noureen Maulidya Rinjani"},{name:"Ready Noor Asyifa Rinjani"}]},{name:"Raisa Mutiarani + Bobby Septiansyah",children:[{name:"Saby Sakhi Salsabila"},{name:"Aisha Sabina Prameswari"}]},{name:"Ristiya Ferlita (Alm)"}]},
-{name:"Cicih Sri Kurniasarih + Sutono",children:[{name:"Attik Elvattia + Ahmad Nur Ali",children:[{name:"Nailah Huwaida Alita"},{name:"Nafisah Khayyira Aliya"}]},{name:"Alin"},{name:"Anggit"}]},
-{name:"Yaya + Heni",children:[{name:"Ibnu"},{name:"Adzra Aqila Kinanti"},{name:"Azkayra"},{name:"Sofia"}]},
-{name:"Titin Suprihatin (Alm)"}
-]
-},
+{name:"6. Armini + Naimin",children:[
+  {name:"Iing Rosiin (Alm) + Iyas",children:[{name:"Rendi Septian + Nuraeni Septiawati",children:[{name:"Rania Artanya Rinjani"},{name:"Noureen Maulidya Rinjani"},{name:"Ready Noor Asyifa Rinjani"}]},{name:"Raisa Mutiarani + Bobby Septiansyah",children:[{name:"Saby Sakhi Salsabila"},{name:"Aisha Sabina Prameswari"}]},{name:"Ristiya Ferlita (Alm)"}]},
+  {name:"Cicih Sri Kurniasarih + Sutono",children:[{name:"Attik Elvattia + Ahmad Nur Ali",children:[{name:"Nailah Huwaida Alita"},{name:"Nafisah Khayyira Aliya"}]},{name:"Alin"},{name:"Anggit"}]},
+  {name:"Yaya + Heni",children:[{name:"Ibnu"},{name:"Adzra Aqila Kinanti"},{name:"Azkayra"},{name:"Sofia"}]},
+  {name:"Titin Suprihatin (Alm)"}
+]},
 
 /* 7 SOHENI */
-{
-name:"7. Soheni + Sainan",
-children:[
-{name:"Dadang Sugandi (Alm) + Kartini",children:[{name:"Ashri Salassidini + Amin",children:[{name:"Alifah"},{name:"Alif"}]},{name:"Annissa Asyahida"},{name:"Asy Syifa Mujahidah"},{name:"Abizar Riski Azha"}]},
-{name:"Enok Sugiarti (Alm) + Suami",children:[{name:"Alwasri Nur Akbar"}]},
-{name:"Jajang Suhendar (Alm) + Eka",children:[{name:"M. Amim"},{name:"Nabila"},{name:"Rizky"}]},
-{name:"Ida + Subana",children:[{name:"Euis + Andika Enggal Prakoso",children:[{name:"Naura Annanta Prakoso"},{name:"Euis Wulan Dari"}]},{name:"Alma"}]},
-{name:"Samsul + Nita",children:[{name:"Qwina"},{name:"Qatan"}]},
-{name:"Dudi + Lisnawati",children:[{name:"Chelsea Rahma Putri"}]}
-]
-},
+{name:"7. Soheni + Sainan",children:[
+  {name:"Dadang Sugandi (Alm) + Kartini",children:[{name:"Ashri Salassidini + Amin",children:[{name:"Alifah"},{name:"Alif"}]},{name:"Annissa Asyahida"},{name:"Asy Syifa Mujahidah"},{name:"Abizar Riski Azha"}]},
+  {name:"Enok Sugiarti (Alm) + Suami",children:[{name:"Alwasri Nur Akbar"}]},
+  {name:"Jajang Suhendar (Alm) + Eka",children:[{name:"M. Amim"},{name:"Nabila"},{name:"Rizky"}]},
+  {name:"Ida + Subana",children:[{name:"Euis + Andika Enggal Prakoso",children:[{name:"Naura Annanta Prakoso"},{name:"Euis Wulan Dari"}]},{name:"Alma"}]},
+  {name:"Samsul + Nita",children:[{name:"Qwina"},{name:"Qatan"}]},
+  {name:"Dudi + Lisnawati",children:[{name:"Chelsea Rahma Putri"}]}
+]},
 
 /* 8 SANUDI */
-{
-name:"8. Sanudi + Awanti",
-children:[
-{name:"Ratih (Alm) + Eka (Alm)",children:[{name:"Bayu + Revi Nur Fitriani"},{name:"Gina"}]},
-{name:"Imas (Alm) + Sartoyo",children:[{name:"Deden (Alm)"},{name:"Yusril"}]},
-{name:"Nani + Sodikin (Alm)",children:[{name:"Rizky"},{name:"Denisa"}]},
-{name:"Dodi + Atik",children:[{name:"Nenden"}]},
-{name:"Dian Udayan + Iin Juarsih",children:[{name:"Bambang Yoga Mahesa"},{name:"Yudha Lingga Buana"},{name:"Giandra Arka Prawira"}]},
-{name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
-{name:"Linda + M. Andrianto"},
-
-/* ANITA — 2 suami */
-{
-  name:"Anita",
-  multiSpouse:[
+{name:"8. Sanudi + Awanti",children:[
+  {name:"Ratih (Alm) + Eka (Alm)",children:[{name:"Bayu + Revi Nur Fitriani"},{name:"Gina"}]},
+  {name:"Imas (Alm) + Sartoyo",children:[{name:"Deden (Alm)"},{name:"Yusril"}]},
+  {name:"Nani + Sodikin (Alm)",children:[{name:"Rizky"},{name:"Denisa"}]},
+  {name:"Dodi + Atik",children:[{name:"Nenden"}]},
+  {name:"Dian Udayan + Iin Juarsih",children:[{name:"Bambang Yoga Mahesa"},{name:"Yudha Lingga Buana"},{name:"Giandra Arka Prawira"}]},
+  {name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
+  {name:"Linda + M. Andrianto"},
+  {name:"Anita", multiSpouse:[
     { spouse:"Muhammad Dwi Arifianto (Alm)", spouseLabel:"Suami Pertama", children:[
-        {name:"Azalia Fadhillah Arifianto"}
+      {name:"Azalia Fadhillah Arifianto"}
     ]},
     { spouse:"Kifli", spouseLabel:"Suami Kedua", children:[
-        {name:"Mufti Farizan Thaqif"}
+      {name:"Mufti Farizan Thaqif"}
     ]}
-  ]
-}
-
-]
-},
+  ]}
+]},
 
 /* 9 NURYAMAH */
-{
-name:"9. Nuryamah + Rusja",
-children:[
-{name:"Nuryati (Alm) + Dodo (Alm)",children:[{name:"Rinda Deliani + Ari Juhari",children:[{name:"Arda Athaya Arsenio"},{name:"Airi Ebrahim Abhinara"}]},{name:"Novianti + Hary Robiansah",children:[{name:"Ghavi Firzand Arrobiansah"}]}]},
-{name:"Suhandi (Alm)"},
-{name:"Royanti (Alm) + Jupri",children:[{name:"Septia Ningsih + Ryan",children:[{name:"Nasya"},{name:"Rafka"}]},{name:"Rosita Dewi + Faisal",children:[{name:"Muhammad Kenzo Farode"}]},{name:"Tika + Iqbal"},{name:"Mega"},{name:"Gina"},{name:"Gita"}]},
-{name:"Iin + Suroto",children:[{name:"Muhammad Gilang Pratama"},{name:"Muhammad Davi Putranto"},{name:"Adisya Khanza Almira"}]}
-]
-}
+{name:"9. Nuryamah + Rusja",children:[
+  {name:"Nuryati (Alm) + Dodo (Alm)",children:[{name:"Rinda Deliani + Ari Juhari",children:[{name:"Arda Athaya Arsenio"},{name:"Airi Ebrahim Abhinara"}]},{name:"Novianti + Hary Robiansah",children:[{name:"Ghavi Firzand Arrobiansah"}]}]},
+  {name:"Suhandi (Alm)"},
+  {name:"Royanti (Alm) + Jupri",children:[{name:"Septia Ningsih + Ryan",children:[{name:"Nasya"},{name:"Rafka"}]},{name:"Rosita Dewi + Faisal",children:[{name:"Muhammad Kenzo Farode"}]},{name:"Tika + Iqbal"},{name:"Mega"},{name:"Gina"},{name:"Gita"}]},
+  {name:"Iin + Suroto",children:[{name:"Muhammad Gilang Pratama"},{name:"Muhammad Davi Putranto"},{name:"Adisya Khanza Almira"}]}
+]}
 
-]
-};
+]};
 
-/* ─── helpers ─── */
+/* ═══════════════════════════════════════════════════
+   BUILD TREE
+═══════════════════════════════════════════════════ */
 function makeNodeEl(node, depth) {
   const split = (depth === 0) ? null : splitCouple(node.name);
   const role  = getRole(depth);
@@ -395,22 +378,16 @@ function makeNodeEl(node, depth) {
   if (split) {
     const wrapper = document.createElement("div");
     wrapper.className = "couple";
-
     const left = document.createElement("div");
     left.className = `node ${role}`;
     left.innerHTML = `<div>${split.left}</div><small>${label}</small>`;
-
     const sep = document.createElement("div");
     sep.className = "couple-sep";
     sep.textContent = "+";
-
     const right = document.createElement("div");
     right.className = "node menantu";
     right.innerHTML = `<div>${split.right}</div><small>Menantu</small>`;
-
-    wrapper.appendChild(left);
-    wrapper.appendChild(sep);
-    wrapper.appendChild(right);
+    wrapper.appendChild(left); wrapper.appendChild(sep); wrapper.appendChild(right);
     return wrapper;
   } else {
     const div = document.createElement("div");
@@ -429,54 +406,54 @@ function buildTree(node, depth) {
     const role  = getRole(depth);
     const label = getLabel(depth);
 
-    /* ── Baris nama: [Pasangan1] + [NAMA] + [Pasangan2] ── */
+    /* ── Baris nama pasangan ── */
     const coupleRow = document.createElement("div");
     coupleRow.style.cssText = "display:inline-flex;align-items:center;gap:0;";
 
-    const sp1Label = node.multiSpouse[0].spouseLabel;
     const sp1 = document.createElement("div");
     sp1.className = "node menantu";
-    sp1.style.borderRadius = "8px 0 0 8px";
-    sp1.style.borderRight = "none";
-    sp1.innerHTML = `<div>${node.multiSpouse[0].spouse}</div><small>${sp1Label}</small>`;
+    sp1.style.cssText = "border-radius:8px 0 0 8px;border-right:none;";
+    sp1.innerHTML = `<div>${node.multiSpouse[0].spouse}</div><small>${node.multiSpouse[0].spouseLabel}</small>`;
 
     const sep1 = document.createElement("div");
-    sep1.className = "couple-sep";
-    sep1.textContent = "+";
+    sep1.className = "couple-sep"; sep1.textContent = "+";
 
     const center = document.createElement("div");
     center.className = `node ${role}`;
-    center.style.borderRadius = "0";
-    center.style.borderLeft = "none";
-    center.style.borderRight = "none";
+    center.style.cssText = "border-radius:0;border-left:none;border-right:none;";
     center.innerHTML = `<div>${node.name}</div>${label ? `<small>${label}</small>` : ""}`;
 
     const sep2 = document.createElement("div");
-    sep2.className = "couple-sep";
-    sep2.textContent = "+";
+    sep2.className = "couple-sep"; sep2.textContent = "+";
 
-    const sp2Label = node.multiSpouse[1].spouseLabel;
     const sp2 = document.createElement("div");
     sp2.className = "node menantu";
-    sp2.style.borderRadius = "0 8px 8px 0";
-    sp2.style.borderLeft = "none";
-    sp2.innerHTML = `<div>${node.multiSpouse[1].spouse}</div><small>${sp2Label}</small>`;
+    sp2.style.cssText = "border-radius:0 8px 8px 0;border-left:none;";
+    sp2.innerHTML = `<div>${node.multiSpouse[1].spouse}</div><small>${node.multiSpouse[1].spouseLabel}</small>`;
 
-    coupleRow.appendChild(sp1);
-    coupleRow.appendChild(sep1);
+    coupleRow.appendChild(sp1); coupleRow.appendChild(sep1);
     coupleRow.appendChild(center);
-    coupleRow.appendChild(sep2);
-    coupleRow.appendChild(sp2);
+    coupleRow.appendChild(sep2); coupleRow.appendChild(sp2);
     inner.appendChild(coupleRow);
 
-    /* ── Batang turun ── */
+    /* ── Batang turun dari orang tua ── */
     const mainStem = document.createElement("div");
     mainStem.className = "stem";
     inner.appendChild(mainStem);
 
-    /* ── Dua kolom anak, dipisah garis putus-putus ── */
+    /* ── Wrapper luar untuk garis horizontal + kolom anak ── */
+    const outerWrap = document.createElement("div");
+    outerWrap.className = "multi-children-outer";
+
+    /* Garis horizontal (lebar & posisi diset oleh fixMultiLines setelah render) */
+    const hLine = document.createElement("div");
+    hLine.className = "multi-h-line";
+    outerWrap.appendChild(hLine);
+
+    /* ── Dua kolom anak + pemisah ── */
     const colWrap = document.createElement("div");
     colWrap.className = "spouse-columns-wrap";
+    colWrap.style.marginTop = "0";
 
     node.multiSpouse.forEach((s, idx) => {
       if (idx === 1) {
@@ -488,14 +465,15 @@ function buildTree(node, depth) {
       const col = document.createElement("div");
       col.className = "spouse-col";
 
+      /* Batang dari garis horizontal ke label */
+      const colStem = document.createElement("div");
+      colStem.className = "col-stem";
+      col.appendChild(colStem);
+
       const lbl = document.createElement("div");
       lbl.className = "col-label";
       lbl.textContent = "Anak dari " + s.spouseLabel;
       col.appendChild(lbl);
-
-      const stem = document.createElement("div");
-      stem.className = "stem";
-      col.appendChild(stem);
 
       const ul = document.createElement("ul");
       ul.className = "children-wrap";
@@ -506,7 +484,8 @@ function buildTree(node, depth) {
       colWrap.appendChild(col);
     });
 
-    inner.appendChild(colWrap);
+    outerWrap.appendChild(colWrap);
+    inner.appendChild(outerWrap);
 
   } else {
     inner.appendChild(makeNodeEl(node, depth));
@@ -528,61 +507,98 @@ function buildTree(node, depth) {
   return li;
 }
 
+/* ═══════════════════════════════════════════════════
+   FIX LINES AFTER RENDER
+═══════════════════════════════════════════════════ */
 function fixHorizontalLines() {
+  /* Garis pohon biasa */
   document.querySelectorAll(".children-wrap").forEach(ul => {
     if (ul.classList.contains("single-child")) return;
-    const lis = ul.querySelectorAll(":scope > li");
+    const lis = Array.from(ul.querySelectorAll(":scope > li"));
     if (lis.length < 2) return;
 
-    const ulRect  = ul.getBoundingClientRect();
-    const firstLi = lis[0];
-    const lastLi  = lis[lis.length - 1];
-    const firstNode = firstLi.querySelector(".node, .couple");
-    const lastNode  = lastLi.querySelector(".node, .couple");
-    if (!firstNode || !lastNode) return;
+    const ulRect = ul.getBoundingClientRect();
+    const firstN = lis[0].querySelector(".node, .couple");
+    const lastN  = lis[lis.length-1].querySelector(".node, .couple");
+    if (!firstN || !lastN) return;
 
-    const fRect = firstNode.getBoundingClientRect();
-    const lRect = lastNode.getBoundingClientRect();
-
-    const leftPct  = ((fRect.left + fRect.width/2) - ulRect.left) / ulRect.width * 100;
-    const rightPct = ((lRect.left + lRect.width/2) - ulRect.left) / ulRect.width * 100;
+    const fR = firstN.getBoundingClientRect();
+    const lR = lastN.getBoundingClientRect();
+    const lPct = ((fR.left + fR.width/2) - ulRect.left) / ulRect.width * 100;
+    const rPct = ((lR.left + lR.width/2) - ulRect.left) / ulRect.width * 100;
 
     const line = document.createElement("div");
-    line.style.cssText = `
-      position:absolute;top:0;
-      left:${leftPct}%;right:${100-rightPct}%;
-      height:2px;background:#888;pointer-events:none;
-    `;
+    line.style.cssText = `position:absolute;top:0;left:${lPct}%;right:${100-rPct}%;height:2px;background:#888;pointer-events:none;`;
     ul.appendChild(line);
 
     lis.forEach(li => {
-      const liNode = li.querySelector(".node, .couple");
-      if (!liNode) return;
-      const nRect  = liNode.getBoundingClientRect();
-      const center = ((nRect.left + nRect.width/2) - ulRect.left) / ulRect.width * 100;
-
+      const n = li.querySelector(".node, .couple");
+      if (!n) return;
+      const nR = n.getBoundingClientRect();
+      const c  = ((nR.left + nR.width/2) - ulRect.left) / ulRect.width * 100;
       const drop = document.createElement("div");
-      drop.style.cssText = `
-        position:absolute;top:0;
-        left:${center}%;width:2px;height:28px;
-        background:#888;transform:translateX(-50%);pointer-events:none;
-      `;
+      drop.style.cssText = `position:absolute;top:0;left:${c}%;width:2px;height:28px;background:#888;transform:translateX(-50%);pointer-events:none;`;
       ul.appendChild(drop);
+    });
+  });
+
+  /* Garis horizontal untuk multiSpouse — sambungkan kedua kolom ke orang tua */
+  document.querySelectorAll(".multi-children-outer").forEach(outer => {
+    const hLine  = outer.querySelector(".multi-h-line");
+    const cols   = outer.querySelectorAll(".spouse-col");
+    if (cols.length < 2 || !hLine) return;
+
+    const outerRect = outer.getBoundingClientRect();
+
+    /* Cari titik tengah masing-masing kolom */
+    const centers = Array.from(cols).map(col => {
+      const r = col.getBoundingClientRect();
+      return r.left + r.width / 2 - outerRect.left;
+    });
+
+    const leftPx  = Math.min(...centers);
+    const rightPx = Math.max(...centers);
+
+    hLine.style.cssText = `
+      position:absolute;
+      top:0;
+      left:${leftPx}px;
+      width:${rightPx - leftPx}px;
+      height:2px;
+      background:#888;
+      pointer-events:none;
+    `;
+
+    /* Drop dari garis horizontal ke setiap col-stem */
+    cols.forEach(col => {
+      const colRect = col.getBoundingClientRect();
+      const cx = colRect.left + colRect.width / 2 - outerRect.left;
+
+      /* col-stem sudah ada di dalam col, tinggal pastikan posisinya */
+      const stem = col.querySelector(".col-stem");
+      if (stem) {
+        stem.style.cssText = "width:2px;background:#888;height:22px;flex-shrink:0;";
+      }
     });
   });
 }
 
+/* ── Bootstrap ── */
 const rootUl = document.createElement("ul");
 rootUl.appendChild(buildTree(data, 0));
 document.getElementById("tree").appendChild(rootUl);
 
-requestAnimationFrame(() => requestAnimationFrame(fixHorizontalLines));
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  fixHorizontalLines();
+}));
 
+/* Sembunyikan pseudo-element bawaan */
 const style = document.createElement("style");
 style.textContent = `
   .children-wrap { position: relative; }
   .children-wrap::before { display: none !important; }
   .children-wrap > li::before { display: none !important; }
+  .multi-children-outer { position: relative; }
 `;
 document.head.appendChild(style);
 </script>
