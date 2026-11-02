@@ -1,16 +1,13 @@
-// API silsilah: GET mengambil data terbaru, PUT menyimpan data baru.
+// API silsilah: GET mengambil data terbaru, PUT menyimpan data baru dan mencatatnya di log.
 // Data disimpan di Upstash Redis (pasang dari Vercel → Storage / Marketplace).
 
-const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const { redis, KEYS, configured } = require("./_redis");
+const { describeChanges } = require("./_diff");
 
-const KEY_VERSION = "{silsilah}:version";
-const KEY_DATA = "{silsilah}:data";
-const KEY_HISTORY = "{silsilah}:history";
 const MAX_BYTES = 1000000;
 
 // Simpan hanya kalau versi belum berubah sejak pengedit membuka halaman,
-// dan sisihkan data lama ke riwayat (50 versi terakhir) untuk jaga-jaga.
+// sisihkan data lama ke riwayat (50 versi terakhir), lalu tambahkan catatan ke log.
 const SAVE_SCRIPT = `
 local v = tonumber(redis.call('GET', KEYS[1]) or '0')
 if v ~= tonumber(ARGV[1]) then return {0, v} end
@@ -21,19 +18,10 @@ if old then
 end
 redis.call('SET', KEYS[2], ARGV[2])
 redis.call('SET', KEYS[1], v + 1)
+redis.call('LPUSH', KEYS[4], ARGV[3])
+redis.call('LTRIM', KEYS[4], 0, 1999)
 return {1, v + 1}
 `;
-
-async function redis(command) {
-  const res = await fetch(REDIS_URL, {
-    method: "POST",
-    headers: { Authorization: "Bearer " + REDIS_TOKEN, "Content-Type": "application/json" },
-    body: JSON.stringify(command),
-  });
-  const body = await res.json();
-  if (!res.ok || body.error) throw new Error(body.error || "HTTP " + res.status);
-  return body.result;
-}
 
 function isText(v, max) {
   return typeof v === "string" && v.length <= max;
@@ -54,9 +42,20 @@ function isValidPerson(node, depth) {
   );
 }
 
+function deviceName(ua) {
+  ua = ua || "";
+  if (/iPhone/.test(ua)) return "iPhone";
+  if (/iPad/.test(ua)) return "iPad";
+  if (/Android/.test(ua)) return "Android";
+  if (/Windows/.test(ua)) return "Windows";
+  if (/Mac OS X/.test(ua)) return "Mac";
+  if (/Linux/.test(ua)) return "Linux";
+  return "";
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
-  if (!REDIS_URL || !REDIS_TOKEN) {
+  if (!configured) {
     return res.status(503).json({
       error: "Penyimpanan belum disiapkan. Hubungkan database Upstash Redis di dashboard Vercel.",
     });
@@ -64,7 +63,7 @@ module.exports = async function handler(req, res) {
 
   try {
     if (req.method === "GET") {
-      const [version, data] = await redis(["MGET", KEY_VERSION, KEY_DATA]);
+      const [version, data] = await redis(["MGET", KEYS.version, KEYS.data]);
       return res.status(200).json({ version: Number(version || 0), data: data ? JSON.parse(data) : null });
     }
 
@@ -76,7 +75,27 @@ module.exports = async function handler(req, res) {
       const json = JSON.stringify(body.data);
       if (json.length > MAX_BYTES) return res.status(413).json({ error: "Data terlalu besar." });
 
-      const [ok, version] = await redis(["EVAL", SAVE_SCRIPT, "3", KEY_VERSION, KEY_DATA, KEY_HISTORY, String(body.baseVersion), json]);
+      const [current, oldJson] = await redis(["MGET", KEYS.version, KEYS.data]);
+      const currentVersion = Number(current || 0);
+      if (currentVersion !== body.baseVersion) {
+        return res.status(409).json({ error: "conflict", version: currentVersion });
+      }
+
+      const editor = typeof body.editor === "string" ? body.editor.trim().slice(0, 60) : "";
+      const diff = oldJson ? describeChanges(JSON.parse(oldJson), body.data) : { changes: [{ kind: "edit", text: "Data awal disimpan" }], more: 0 };
+      const entry = JSON.stringify({
+        v: body.baseVersion + 1,
+        t: new Date().toISOString(),
+        by: editor,
+        device: deviceName(req.headers["user-agent"]),
+        changes: diff.changes,
+        more: diff.more,
+      });
+
+      const [ok, version] = await redis([
+        "EVAL", SAVE_SCRIPT, "4", KEYS.version, KEYS.data, KEYS.history, KEYS.log,
+        String(body.baseVersion), json, entry,
+      ]);
       if (!ok) return res.status(409).json({ error: "conflict", version });
       return res.status(200).json({ version });
     }
