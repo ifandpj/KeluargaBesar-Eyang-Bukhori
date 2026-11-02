@@ -165,6 +165,10 @@ input[type=text],input[type=password],select{width:100%;min-width:0;padding:8px 
 #save-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:2000;width:max-content;max-width:calc(100vw - 32px);display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px 10px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--border);box-shadow:0 10px 30px var(--shadow)}
 #save-msg{font-size:14px;font-weight:600;flex:1 1 200px;min-width:0}
 #editor-name{width:auto;flex:1 1 160px;padding:6px 10px;font-size:14px}
+.ed-foot{flex-wrap:wrap;align-items:center}
+#ed-editor{width:auto;flex:1 1 180px;padding:6px 10px;font-size:14px}
+#ed-msg{flex-basis:100%;margin:0;text-align:right}
+#ed-msg:empty{display:none}
 .top-actions{display:flex;gap:8px;flex-wrap:wrap}
 .card-wide{width:min(640px,100%)}
 .pin-row{display:flex;gap:8px;margin-top:6px}
@@ -243,7 +247,12 @@ input[type=text],input[type=password],select{width:100%;min-width:0;padding:8px 
       <button id="ed-close" class="icon-btn" type="button" aria-label="Tutup">✕</button>
     </div>
     <div class="card-body" id="ed-body"></div>
-    <div class="card-foot"><button id="ed-done" class="btn primary small" type="button">Selesai</button></div>
+    <div class="card-foot ed-foot">
+      <input type="text" id="ed-editor" maxlength="60" placeholder="Nama Anda (pengedit)" aria-label="Nama Anda, untuk catatan perubahan" autocomplete="name">
+      <button id="ed-done" class="btn small" type="button">Tutup</button>
+      <button id="ed-save" class="btn small primary" type="button">💾 Simpan</button>
+      <p id="ed-msg" class="help" role="alert"></p>
+    </div>
   </div>
 </div>
 
@@ -487,17 +496,24 @@ $("anc-edit").addEventListener("click",function(){var id=ancId;closeAncestry();s
 function setEditMode(on){
   editMode=on;$("app").classList.toggle("editing",on);
   $("btn-edit").textContent=on?"✓ Selesai Edit":"✏️ Mode Edit";
-  $("hint").textContent=on?"Mode edit: klik nama untuk mengubah nama, menambah anak atau pasangan, atau menghapus.":"Klik nama di pohon untuk melihat jalur silsilah. Klik tombol warna untuk daftar per generasi.";
+  $("hint").textContent=on?"Mode edit: klik nama untuk mengubah nama, menambah anak atau pasangan, atau menghapus, lalu klik Simpan.":"Klik nama di pohon untuk melihat jalur silsilah. Klik tombol warna untuk daftar per generasi.";
 }
 $("btn-edit").addEventListener("click",function(){setEditMode(!editMode);});
 
-function openEditor(id){reindex();editingId=id;renderEditor();$("ed-overlay").hidden=false;var f=$("ed-name");if(f)f.focus();}
+function openEditor(id){reindex();editingId=id;renderEditor();$("ed-msg").textContent="";$("ed-editor").value=$("editor-name").value;$("ed-overlay").hidden=false;var f=$("ed-name");if(f)f.focus();}
 function closeEditor(){
   var id=editingId;$("ed-overlay").hidden=true;editingId=null;renderTree();updateSaveBar();
   if(id)requestAnimationFrame(function(){highlight("p:"+id,false);});
 }
 $("ed-close").addEventListener("click",closeEditor);
 $("ed-done").addEventListener("click",closeEditor);
+$("ed-save").addEventListener("click",function(){
+  var name=$("ed-editor").value.trim();
+  if(!name){$("ed-msg").textContent="Isi nama Anda dulu supaya tercatat di log.";$("ed-editor").focus();return;}
+  $("editor-name").value=name;closeEditor();
+  if(isDirty())$("btn-save").click();
+  else{showSaveMessage("Tidak ada perubahan untuk disimpan.");clearTimeout(hideTimer);hideTimer=setTimeout(updateSaveBar,2500);}
+});
 $("ed-overlay").addEventListener("click",function(e){if(e.target===this)closeEditor();});
 
 function section(title){var s=el("div");s.appendChild(el("p","section-label",title));return s;}
