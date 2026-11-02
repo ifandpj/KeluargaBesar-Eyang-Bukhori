@@ -1,681 +1,624 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>Silsilah Keluarga Eyang Bukhori</title>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Silsilah Keluarga Eyang Bukhori</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #222; }
-h2 { text-align:center; padding:18px 0 6px; font-size:20px; letter-spacing:0.5px; color:#2c3e50; }
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+[hidden]{display:none!important}
+/* Layout: judul + tombol generasi di atas, kanvas pohon yang bisa digeser, panel samping dan dialog di atasnya */
+:root{
+  --bg:#eef2f5; --surface:#ffffff; --surface-2:#f5f7f9; --fg:#1f2d3a; --muted:#647487;
+  --border:#d5dde5; --line:#8a96a3; --accent:#2c3e50; --accent-fg:#ffffff;
+  --danger:#b3261e; --focus:#ff6f00; --scrim:rgba(15,25,35,.45); --shadow:rgba(20,35,50,.16);
+  --node-fg:#1f2d3a;
+  --root-bg:#ffffff; --root-bd:#2c3e50;
+  --anak-bg:#ffcdd2; --anak-bd:#c62828;
+  --menantu-bg:#bbdefb; --menantu-bd:#1565c0;
+  --cucu-bg:#fff9c4; --cucu-bd:#f9a825;
+  --cicit-bg:#c8e6c9; --cicit-bd:#2e7d32;
+  --bao-bg:#e1bee7; --bao-bd:#6a1b9a;
+  --jw-bg:#e0e0e0; --jw-bd:#757575;
+  --font-display:"Bitter",Georgia,"Times New Roman",serif;
+  --font-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121a21; --surface:#1b252e; --surface-2:#22303b; --fg:#e4ebf1; --muted:#9aa9b7;
+  --border:#304050; --line:#7d8a97; --accent:#a9c7e4; --accent-fg:#0f1a24;
+  --danger:#ff8a80; --scrim:rgba(0,0,0,.6); --shadow:rgba(0,0,0,.45);
+  --root-bg:#e9eef3; --root-bd:#a9c7e4; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#121a21; --surface:#1b252e; --surface-2:#22303b; --fg:#e4ebf1; --muted:#9aa9b7;
+  --border:#304050; --line:#7d8a97; --accent:#a9c7e4; --accent-fg:#0f1a24;
+  --danger:#ff8a80; --scrim:rgba(0,0,0,.6); --shadow:rgba(0,0,0,.45);
+  --root-bg:#e9eef3; --root-bd:#a9c7e4; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px}
+#app{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 96px;display:flex;flex-direction:column;gap:12px}
+button{font:inherit}
 
-.legend { text-align:center; margin-bottom:6px; }
-.legend-btn {
-  padding:7px 16px; margin:4px; border-radius:20px; display:inline-block;
-  font-size:12px; font-weight:700; cursor:pointer; border:2px solid transparent;
-  user-select:none; transition:transform .15s,box-shadow .15s;
-  box-shadow:0 2px 6px rgba(0,0,0,.10);
-}
-.legend-btn:hover { transform:scale(1.07); box-shadow:0 4px 12px rgba(0,0,0,.15); }
-.legend-btn.active { box-shadow:0 0 0 3px #2c3e50; transform:scale(1.05); }
-.btn-anak    { background:#ffcdd2; border-color:#c62828; color:#7b1212; }
-.btn-menantu { background:#bbdefb; border-color:#1565c0; color:#0d3c6e; }
-.btn-cucu    { background:#fff9c4; border-color:#f9a825; color:#7a5a00; }
-.btn-cicit   { background:#c8e6c9; border-color:#2e7d32; color:#1b4a1e; }
-.btn-bao     { background:#e1bee7; border-color:#6a1b9a; color:#3e0d5c; }
-.btn-janggawareng { background:#e0e0e0; border-color:#757575; color:#333; }
-.hint { text-align:center; font-size:11px; color:#999; margin-bottom:8px; }
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.eyebrow{margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{margin:2px 0 0;font-family:var(--font-display);font-size:clamp(22px,4vw,30px);line-height:1.2;color:var(--fg);text-wrap:balance}
+.hint{margin:0;font-size:13px;color:var(--muted)}
+#app.editing .hint{color:var(--fg);font-weight:600}
 
-#gen-panel {
-  display:none; position:fixed; top:0; right:0; width:340px; height:100vh;
-  background:#fff; box-shadow:-4px 0 24px rgba(0,0,0,.15); z-index:1000;
-  flex-direction:column; overflow:hidden;
-}
-#gen-panel.open { display:flex; }
-#panel-header { padding:16px 18px 12px; border-bottom:1px solid #e0e0e0; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
-#panel-title { font-size:15px; font-weight:700; color:#2c3e50; }
-#panel-count { font-size:12px; color:#888; margin-top:2px; }
-#panel-close { cursor:pointer; font-size:20px; color:#888; padding:4px 8px; border-radius:6px; line-height:1; border:none; background:none; }
-#panel-close:hover { background:#f0f0f0; color:#333; }
-#panel-search { padding:10px 14px; border-bottom:1px solid #e8e8e8; flex-shrink:0; }
-#panel-search input { width:100%; padding:7px 12px; border:1px solid #ddd; border-radius:20px; font-size:13px; outline:none; }
-#panel-search input:focus { border-color:#888; }
-#panel-list { overflow-y:auto; flex:1; padding:8px 0; }
-.panel-item { padding:10px 18px; font-size:13px; border-bottom:1px solid #f0f0f0; display:flex; align-items:flex-start; gap:10px; }
-.panel-item:hover { background:#f7f9fb; }
-.item-num { font-size:11px; color:#bbb; font-weight:600; min-width:24px; padding-top:1px; }
-.item-name { font-weight:600; color:#222; line-height:1.4; }
-.item-parent { font-size:11px; color:#888; margin-top:2px; font-style:italic; }
-.panel-color-bar { width:4px; border-radius:2px; align-self:stretch; min-height:32px; flex-shrink:0; }
-#panel-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,.18); z-index:999; }
-#panel-overlay.open { display:block; }
+.btn{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--fg);font-weight:600;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--line)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.danger{color:var(--danger);border-color:var(--danger);background:transparent}
+.btn.small{padding:6px 11px;font-size:13px}
+.btn.icon{padding:4px 9px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,.legend-btn:focus-visible,.node:focus-visible,.link:focus-visible,.icon-btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+#app.editing #btn-edit{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.link{background:none;border:none;padding:0;color:var(--fg);font-weight:600;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
+.link:hover{text-decoration-color:var(--fg)}
 
-/* ── ANCESTRY POPUP ── */
-#ancestry-overlay {
-  display:none; position:fixed; inset:0; background:rgba(0,0,0,.50);
-  z-index:3000; align-items:center; justify-content:center;
-}
-#ancestry-overlay.open { display:flex; }
-#ancestry-card {
-  background:#fff; border-radius:18px; width:min(440px,94vw);
-  box-shadow:0 24px 70px rgba(0,0,0,.30); overflow:hidden;
-  animation:popIn .2s ease;
-}
-@keyframes popIn { from{transform:scale(.86);opacity:0} to{transform:scale(1);opacity:1} }
-#ancestry-head {
-  padding:20px 22px 16px; display:flex; align-items:flex-start;
-  justify-content:space-between; border-bottom:1px solid #eee;
-}
-#ancestry-name { font-size:18px; font-weight:800; color:#2c3e50; line-height:1.3; }
-#ancestry-role-badge {
-  display:inline-block; margin-top:5px; padding:3px 12px;
-  border-radius:20px; font-size:11px; font-weight:700;
-}
-#ancestry-close { cursor:pointer; font-size:24px; color:#aaa; border:none; background:none; padding:0 4px; line-height:1; margin-left:10px; flex-shrink:0; }
-#ancestry-close:hover { color:#333; }
-#ancestry-body { padding:18px 22px 22px; max-height:70vh; overflow-y:auto; }
-.ancestry-label { font-size:10px; font-weight:700; color:#aaa; letter-spacing:.8px; text-transform:uppercase; margin-bottom:12px; }
-.chain { display:flex; flex-direction:column; }
-.chain-step { display:flex; align-items:flex-start; gap:14px; position:relative; }
-.chain-step:not(:last-child)::after {
-  content:''; position:absolute; left:15px; top:36px;
-  width:2px; height:calc(100% - 12px);
-  background:linear-gradient(to bottom,#ddd 60%,transparent);
-}
-.chain-dot {
-  width:32px; height:32px; border-radius:50%; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:15px; margin-top:2px; border:2px solid rgba(255,255,255,.8);
-  box-shadow:0 2px 8px rgba(0,0,0,.15); z-index:1;
-}
-.chain-text { padding-bottom:22px; }
-.chain-rel { font-size:10px; font-weight:700; color:#aaa; letter-spacing:.4px; text-transform:uppercase; line-height:1; }
-.chain-person { font-size:14px; font-weight:700; color:#2c3e50; margin-top:3px; line-height:1.3; }
-.chain-step.is-target .chain-dot { width:38px; height:38px; font-size:18px; }
-.chain-step.is-target .chain-person { font-size:16px; }
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.legend-btn{padding:7px 14px;border-radius:20px;border:2px solid;font-size:13px;font-weight:700;cursor:pointer;color:var(--node-fg);transition:transform .15s,box-shadow .15s;box-shadow:0 1px 4px var(--shadow)}
+.legend-btn:hover{transform:translateY(-1px)}
+.legend-btn.active{box-shadow:0 0 0 3px var(--fg)}
+.legend-btn .count{font-variant-numeric:tabular-nums;opacity:.7;margin-left:2px}
 
-/* Tree */
-.container { width:100%; height:82vh; overflow:auto; }
-.tree { min-width:max-content; padding:30px 40px 60px; display:inline-block; }
-.root         { background:#fff;    border:2px solid #2c3e50; color:#2c3e50; }
-.anak         { background:#ffcdd2; border:2px solid #c62828; }
-.menantu      { background:#bbdefb; border:2px solid #1565c0; }
-.cucu         { background:#fff9c4; border:2px solid #f9a825; }
-.cicit        { background:#c8e6c9; border:2px solid #2e7d32; }
-.bao          { background:#e1bee7; border:2px solid #6a1b9a; }
-.janggawareng { background:#e0e0e0; border:2px solid #757575; color:#333; }
-.node {
-  padding:6px 11px; border-radius:8px; display:inline-block;
-  white-space:nowrap; font-size:12.5px; line-height:1.4;
-  box-shadow:0 1px 3px rgba(0,0,0,.12);
-  cursor:pointer; transition:transform .12s,box-shadow .12s;
-}
-.node:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.20); }
-.node.highlighted { outline:3px solid #ff6f00; outline-offset:2px; z-index:5; position:relative; }
-.node small { display:block; font-size:10px; color:#555; margin-top:1px; }
-.couple { display:inline-flex; align-items:center; gap:0; }
-.couple .node:first-child { border-right:none; border-radius:8px 0 0 8px; }
-.couple .node:last-child  { border-left:none;  border-radius:0 8px 8px 0; }
-.couple-sep { display:inline-flex; align-items:center; background:#888; color:#fff; font-size:11px; padding:0 5px; align-self:stretch; z-index:1; font-weight:bold; }
-.tree ul { display:flex; justify-content:center; position:relative; list-style:none; margin:0; padding:0; }
-.tree li { display:flex; flex-direction:column; align-items:center; position:relative; padding:0 8px; }
-.tree ul.children-wrap { padding-top:28px; }
-.li-inner { display:flex; flex-direction:column; align-items:center; }
-.stem { width:2px; background:#888; height:22px; flex-shrink:0; }
-.multi-children-outer { position:relative; display:flex; flex-direction:column; align-items:center; }
-.multi-h-line { height:2px; background:#888; position:absolute; top:0; pointer-events:none; }
-.spouse-columns-wrap { display:flex; align-items:flex-start; justify-content:center; gap:0; position:relative; }
-.spouse-col { display:flex; flex-direction:column; align-items:center; padding:0 20px; }
-.col-stem { width:2px; background:#888; height:22px; flex-shrink:0; }
-.spouse-divider { width:3px; align-self:stretch; background:repeating-linear-gradient(to bottom,#bbb 0,#bbb 7px,transparent 7px,transparent 13px); margin:0 6px; border-radius:2px; min-height:60px; }
-.col-label { font-size:10px; color:#999; margin-bottom:5px; font-style:italic; font-weight:600; white-space:nowrap; }
+.root{background:var(--root-bg);border-color:var(--root-bd);color:var(--node-fg)}
+.anak{background:var(--anak-bg);border-color:var(--anak-bd);color:var(--node-fg)}
+.menantu{background:var(--menantu-bg);border-color:var(--menantu-bd);color:var(--node-fg)}
+.cucu{background:var(--cucu-bg);border-color:var(--cucu-bd);color:var(--node-fg)}
+.cicit{background:var(--cicit-bg);border-color:var(--cicit-bd);color:var(--node-fg)}
+.bao{background:var(--bao-bg);border-color:var(--bao-bd);color:var(--node-fg)}
+.janggawareng{background:var(--jw-bg);border-color:var(--jw-bd);color:var(--node-fg)}
+
+.banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--focus);font-size:14px}
+.banner span{flex:1 1 240px;min-width:0}
+
+/* Pohon */
+.tree-wrap{height:clamp(420px,76vh,1400px);overflow:auto;background:var(--surface-2);border:1px solid var(--border);border-radius:12px}
+.tree{min-width:max-content;padding:28px 40px 60px;display:inline-block}
+.tree ul{display:flex;justify-content:center;position:relative;list-style:none;margin:0;padding:0}
+.tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding:0 8px}
+.tree ul.children-wrap{padding-top:28px;position:relative}
+.li-inner{display:flex;flex-direction:column;align-items:center}
+.node{padding:6px 11px;border-radius:8px;border:2px solid;display:inline-block;white-space:nowrap;font-size:13px;line-height:1.35;box-shadow:0 1px 3px var(--shadow);cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative}
+.node:hover{transform:translateY(-2px);box-shadow:0 4px 14px var(--shadow)}
+.node small{display:block;font-size:10.5px;opacity:.72;margin-top:1px}
+.node.highlighted{outline:3px solid var(--focus);outline-offset:2px;z-index:5}
+#app.editing .node{border-style:dashed}
+.couple{display:inline-flex;align-items:stretch}
+.couple>.node{border-radius:0}
+.couple>.node:not(:first-child){border-left:none}
+.couple>.node:not(:last-child){border-right:none}
+.couple>.node:first-child{border-radius:8px 0 0 8px}
+.couple>.node:last-child{border-radius:0 8px 8px 0}
+.couple-sep{display:inline-flex;align-items:center;background:var(--line);color:var(--surface);font-size:11px;padding:0 5px;font-weight:700}
+.stem,.col-stem{width:2px;background:var(--line);height:22px;flex-shrink:0}
+.line{position:absolute;background:var(--line);pointer-events:none}
+.line-h{top:0;height:2px}
+.line-v{top:0;width:2px;height:28px;transform:translateX(-50%)}
+.multi-children-outer{position:relative;display:flex;flex-direction:column;align-items:center}
+.multi-h-line{height:2px;background:var(--line);position:absolute;top:0;pointer-events:none}
+.spouse-columns-wrap{display:flex;align-items:flex-start;justify-content:center;position:relative}
+.spouse-col{display:flex;flex-direction:column;align-items:center;padding:0 20px}
+.spouse-divider{width:3px;align-self:stretch;background:repeating-linear-gradient(to bottom,var(--border) 0,var(--border) 7px,transparent 7px,transparent 13px);margin:0 6px;border-radius:2px;min-height:60px}
+.col-label{font-size:11px;color:var(--muted);margin-bottom:5px;font-style:italic;font-weight:600;white-space:nowrap}
+.col-empty{font-size:11px;color:var(--muted)}
+
+/* Panel generasi */
+#panel-scrim{position:fixed;inset:0;background:var(--scrim);z-index:999}
+#gen-panel{position:fixed;top:0;right:0;width:min(360px,100vw);height:100%;background:var(--surface);box-shadow:-4px 0 24px var(--shadow);z-index:1000;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.panel-head{padding:16px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+#panel-title{margin:0;font-family:var(--font-display);font-size:18px}
+#panel-count{font-size:13px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.icon-btn{cursor:pointer;font-size:20px;color:var(--muted);padding:2px 8px;border-radius:6px;line-height:1;border:none;background:none}
+.icon-btn:hover{background:var(--surface-2);color:var(--fg)}
+.panel-search{padding:10px 14px;border-bottom:1px solid var(--border)}
+#panel-list{overflow-y:auto;flex:1;padding:6px 0;margin:0;list-style:none}
+.panel-item{display:flex;align-items:flex-start;gap:10px;width:100%;padding:10px 18px;border:none;border-bottom:1px solid var(--border);background:none;color:var(--fg);text-align:left;cursor:pointer}
+.panel-item:hover{background:var(--surface-2)}
+.panel-bar{width:4px;border-radius:2px;align-self:stretch;min-height:32px;flex-shrink:0;border:none}
+.item-num{font-size:11px;color:var(--muted);font-weight:600;min-width:24px;padding-top:2px;font-variant-numeric:tabular-nums}
+.item-name{font-weight:600;line-height:1.35}
+.item-parent{font-size:12px;color:var(--muted);margin-top:2px;font-style:italic}
+.panel-empty{padding:24px;text-align:center;color:var(--muted);font-size:14px}
+
+/* Dialog */
+.overlay{position:fixed;inset:0;background:var(--scrim);z-index:3000;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.card{background:var(--surface);color:var(--fg);border-radius:16px;width:min(480px,100%);max-height:100%;display:flex;flex-direction:column;box-shadow:0 24px 70px var(--shadow);animation:popIn .18s ease}
+@keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.card-head{padding:18px 20px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border)}
+.card-title{margin:0;font-family:var(--font-display);font-size:20px;line-height:1.25;overflow-wrap:anywhere}
+.card-sub{margin-top:6px;font-size:13px;color:var(--muted)}
+.badge{display:inline-block;margin-top:6px;padding:3px 11px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid}
+.card-body{padding:16px 20px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:18px}
+.card-foot{padding:12px 20px 16px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+
+.section-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+input[type=text],select{width:100%;min-width:0;padding:8px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit}
+.help{margin:5px 0 0;font-size:12.5px;color:var(--muted)}
+.union-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.union-row input{flex:1 1 160px}
+.group-label{font-size:13px;font-weight:600;color:var(--muted);margin:8px 0 4px}
+.child-list{margin:0;padding:0 0 0 22px;display:flex;flex-direction:column;gap:4px}
+.child-row{padding-left:2px}
+.child-row>div{display:flex;align-items:center;gap:6px}
+.child-row .link{flex:1;min-width:0;overflow-wrap:anywhere}
+.add-child{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.add-child input{flex:1 1 180px}
+.add-child select{flex:1 1 140px;width:auto}
+
+.chain{display:flex;flex-direction:column}
+.chain-step{display:flex;align-items:flex-start;gap:14px;position:relative}
+.chain-step:not(:last-child)::after{content:"";position:absolute;left:15px;top:36px;width:2px;height:calc(100% - 12px);background:var(--border)}
+.chain-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;margin-top:2px;border:2px solid;z-index:1}
+.chain-text{padding-bottom:20px;min-width:0}
+.chain-rel{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.chain-person{font-size:15px;font-weight:700;margin-top:3px;line-height:1.3;overflow-wrap:anywhere}
+.chain-step.is-target .chain-dot{width:38px;height:38px;font-size:17px}
+.chain-step.is-target .chain-person{font-size:17px}
+
+#save-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:2000;width:max-content;max-width:calc(100vw - 32px);display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px 10px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--border);box-shadow:0 10px 30px var(--shadow)}
+#save-msg{font-size:14px;font-weight:600;flex:1 1 200px;min-width:0}
+
+@media (max-width:520px){.tree{padding:20px 16px 40px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.tree-status{margin:40px;color:var(--muted);font-size:15px}
 </style>
 </head>
 <body>
-<h2>🌳 Silsilah Keluarga Besar Eyang Bukhori</h2>
-<div class="legend" id="legend">
-  <span class="legend-btn btn-anak"         data-role="anak"        >🔴 Anak</span>
-  <span class="legend-btn btn-menantu"      data-role="menantu"     >🔵 Menantu</span>
-  <span class="legend-btn btn-cucu"         data-role="cucu"        >🟡 Cucu</span>
-  <span class="legend-btn btn-cicit"        data-role="cicit"       >🟢 Cicit</span>
-  <span class="legend-btn btn-bao"          data-role="bao"         >🟣 Bao</span>
-  <span class="legend-btn btn-janggawareng" data-role="janggawareng">⚪ Janggawareng</span>
-</div>
-<p class="hint">💡 Klik nama di pohon untuk melihat jalur silsilah · Klik tombol warna untuk daftar per generasi</p>
-
-<div id="panel-overlay"></div>
-<div id="gen-panel">
-  <div id="panel-header">
-    <div><div id="panel-title"></div><div id="panel-count"></div></div>
-    <button id="panel-close">✕</button>
+<div id="app">
+<header class="top">
+  <div>
+    <p class="eyebrow">Silsilah Keluarga Besar</p>
+    <h1>Eyang Bukhori</h1>
   </div>
-  <div id="panel-search"><input type="text" id="search-input" placeholder="🔍  Cari nama..."></div>
+  <button id="btn-edit" class="btn" type="button">✏️ Mode Edit</button>
+</header>
+<div id="draft-banner" class="banner" hidden>
+  <span id="draft-msg">Ada perubahan dari sesi sebelumnya yang belum disimpan.</span>
+  <button id="btn-draft-restore" class="btn small primary" type="button">Pulihkan</button>
+  <button id="btn-draft-drop" class="btn small" type="button">Buang</button>
+</div>
+<nav class="legend" aria-label="Daftar per generasi">
+  <button type="button" class="legend-btn anak" data-role="anak">🔴 Anak <span class="count"></span></button>
+  <button type="button" class="legend-btn menantu" data-role="menantu">🔵 Menantu <span class="count"></span></button>
+  <button type="button" class="legend-btn cucu" data-role="cucu">🟡 Cucu <span class="count"></span></button>
+  <button type="button" class="legend-btn cicit" data-role="cicit">🟢 Cicit <span class="count"></span></button>
+  <button type="button" class="legend-btn bao" data-role="bao">🟣 Bao <span class="count"></span></button>
+  <button type="button" class="legend-btn janggawareng" data-role="janggawareng">⚪ Janggawareng <span class="count"></span></button>
+</nav>
+<p class="hint" id="hint">Klik nama di pohon untuk melihat jalur silsilah. Klik tombol warna untuk daftar per generasi.</p>
+<div class="tree-wrap"><div class="tree" id="tree"><p class="tree-status" id="tree-status">Memuat silsilah…</p></div></div>
+
+<div id="panel-scrim" hidden></div>
+<aside id="gen-panel" hidden aria-labelledby="panel-title">
+  <div class="panel-head">
+    <div><h2 id="panel-title"></h2><div id="panel-count"></div></div>
+    <button id="panel-close" class="icon-btn" type="button" aria-label="Tutup daftar">✕</button>
+  </div>
+  <div class="panel-search"><input type="text" id="search-input" placeholder="Cari nama…" aria-label="Cari nama"></div>
   <div id="panel-list"></div>
-</div>
+</aside>
 
-<div id="ancestry-overlay">
-  <div id="ancestry-card">
-    <div id="ancestry-head">
-      <div>
-        <div id="ancestry-name"></div>
-        <span id="ancestry-role-badge"></span>
-      </div>
-      <button id="ancestry-close">✕</button>
+<div id="anc-overlay" class="overlay" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="anc-name">
+    <div class="card-head">
+      <div><h2 id="anc-name" class="card-title"></h2><span id="anc-badge" class="badge"></span></div>
+      <button id="anc-close" class="icon-btn" type="button" aria-label="Tutup">✕</button>
     </div>
-    <div id="ancestry-body">
-      <div class="ancestry-label">📜 Jalur Silsilah</div>
-      <div class="chain" id="ancestry-chain"></div>
+    <div class="card-body">
+      <div><p class="section-label">Jalur silsilah</p><div class="chain" id="anc-chain"></div></div>
     </div>
+    <div class="card-foot" id="anc-foot"><button id="anc-edit" class="btn small" type="button">✏️ Ubah data ini</button></div>
   </div>
 </div>
 
-<div class="container"><div class="tree" id="tree"></div></div>
+<div id="ed-overlay" class="overlay" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="ed-title">
+    <div class="card-head">
+      <div><h2 id="ed-title" class="card-title"></h2><span id="ed-badge" class="badge"></span><div id="ed-sub" class="card-sub"></div></div>
+      <button id="ed-close" class="icon-btn" type="button" aria-label="Tutup">✕</button>
+    </div>
+    <div class="card-body" id="ed-body"></div>
+    <div class="card-foot"><button id="ed-done" class="btn primary small" type="button">Selesai</button></div>
+  </div>
+</div>
 
+<div id="save-bar" role="status" hidden>
+  <span id="save-msg">Ada perubahan yang belum disimpan.</span>
+  <button id="btn-reload" class="btn small" type="button" hidden>Muat versi terbaru</button>
+  <button id="btn-discard" class="btn small" type="button">Batalkan</button>
+  <button id="btn-save" class="btn small primary" type="button">Simpan untuk semua</button>
+</div>
+</div>
 <script>
-const data = {
-name:"Eyang Buhari + Nenek Sawirah",
-children:[
-{name:"1. Nasuhi + Runti + Uni",children:[
-  {name:"Rusniah + Oding (Alm)",children:[
-    {name:"Kayim + Ecih",children:[{name:"Alfira Ramadhani"},{name:"Alfian Fahri Ramadhan"}]},
-    {name:"Nani Suryani + Saphari",children:[{name:"Jenny Putra Nugraha"}]}
-  ]},
-  {name:"Usadi + Dasmini",children:[
-    {name:"Daryono + Rukmini",children:[{name:"Naomi Oktaviani Putri"},{name:"Naura Kanza Anida"},{name:"Maudi"}]},
-    {name:"Meli Lisnawati Lestari + Kiki Rahmat Slamet",children:[{name:"Salsa Ramadhanis"}]},
-    {name:"Ifan Dwipriana Julistia"}
-  ]},
-  {name:"Mintarsih + Rohman (Alm)",children:[
-    {name:"Ayiep Nurmansyah + Suminem",children:[{name:"Bagas P.R"}]},
-    {name:"Amim Hermansyah + Sri Murtiningsih",children:[{name:"Jumadi Hermansyah"},{name:"Syarifudin Hermansyah"},{name:"Fazri Alfarizqi Hermansyah"},{name:"Humaira Yasmine Murtiningsih"}]},
-    {name:"Tri Minarni (Alm) + Danil",children:[{name:"Rita Ristiana Putri"},{name:"Moch Fardan Niats"}]}
-  ]}
-]},
-{name:"2. Sasmi + Jumadi",children:[
-  {name:"Imaesari (Alm) + Aan Suparman (Alm)",children:[
-    {name:"Dede + Uun",children:[{name:"Indah"},{name:"Vijay"},{name:"Dhafita"}]},
-    {name:"Henda + Dasih Wijiati",children:[{name:"Azahra Anindya Kirani"}]}
-  ]},
-  {name:"Sumarno (Alm) + Siti",children:[
-    {name:"Rully Susilowati + Zainal Abidin",children:[{name:"Abi Masykurrozi"},{name:"⁠Nadine Febrina"}]},
-    {name:"Julis Sundawan + Uday",children:[{name:"Zivana Khanza Azzahra"}]},
-    {name:"Nirma"}
-  ]},
-  {name:"Dana Sutoni + Suparmiati",children:[
-    {name:"Eva + Ario",children:[{name:"Abiyasa"}]},
-    {name:"Widodo + Dewi",children:[{name:"Zahra"},{name:"Alisa (Alm)"},{name:"Faza"}]},
-    {name:"Agus Tri Darmawanto + Oktaviana Mahmudah",children:[{name:"Muhammad Nadhif Arsyad Baihaqi"},{name:"Muhammad Farzan Hamid Alfarezi"}]}
-  ]},
-  {name:"Saidiman + Ruti",children:[
-    {name:"Yusep + Maya",children:[{name:"Adlie Fairuz"},{name:"Daniswara Aradhana"},{name:"Haura Shanum"}]},
-    {name:"Lukmansah"}
-  ]},
-  {name:"Eti + Waryudi (Alm)",children:[
-    {name:"Lilis + Adi",children:[{name:"Satria"},{name:"Cantika"}]},
-    {name:"Atin Purnama Sari + Dori",children:[{name:"Dzihan Maulana Hadhori"},{name:"Zahran Hamizan Hadhor"}]},
-    {name:"Apriyanto Nur Risqi + Astuti",children:[{name:"Abidzar Nur Risqi"}]}
-  ]},
-  {name:"Yayah + Hari",children:[
-    {name:"Pian Setianto + Siska Fransiska",children:[{name:"Zainul Abidin"},{name:"Avika Khoirul Nisa"},{name:"Aviva Khayra"}]},
-    {name:"Hani Mulyati + Iskandar Hadi Winata",children:[{name:"Averroes Mulia Ishwinata"}]},
-    {name:"Cici Halicia + Sutiyono Budiyanto"}
-  ]},
-  {name:"Umaryadi + Yulia Asih",children:[{name:"Nasywaa Ananda Nurmalia"}]}
-]},
-{name:"3. Lasih + Samji",children:[
-  {name:"Sudani + Rum'aeni",children:[
-    {name:"Andri Suandana + Halimah",children:[{name:"Muhammad Azzam Alfatih"}]},
-    {name:"Indra + Denisa Nur Anggraeni",children:[{name:"Narendra Kaivan Adyatama"}]}
-  ]},
-  {name:"Kayung + Rahman",children:[
-    {name:"kucum Sumiati + Tubagus Hamdani Al faih", children:[{name:"R, awlya Sekar wangi"},{name:"Tubagus Restu Aimammaliki"},{name:"R,Putri Arum Kusuma Puspita Enjeli"}]},
-    {name:"Junawan + Lisdawanti",children:[{name:"Fiora Nahla Aisyah"}]},
-    {name:"Siti Nurhayani + Muhammad Umar Baehaqi",children:[{name:"Zara Emila Humaira"}]},
-    {name:"Ayu"}
-  ]}
-]},
-{name:"4. Mahlana",multiSpouse:[
-  {spouse:"Empat",spouseLabel:"Istri Pertama",children:[
-    {name:"Mulyeh (Alm) + Wasmo (Alm)",children:[
-      {name:"Imas Permasih + Suriandi Putra",children:[{name:"Atthar Al Fikri Tanjung"},{name:"Dhawy Adeeva"}]},
-      {name:"Sri Sumarni + Inta",children:[{name:"Raufal Mutaqi"},{name:"Fauzan Maulana"}]}
-    ]}
-  ]},
-  {spouse:"Noeklim",spouseLabel:"Istri Kedua",children:[
-    {name:"Jumtifah (Alm) + Komarudin",children:[
-      {name:"Ernawati + Ali Usman",children:[{name:"Natasha Alya Usman"},{name:"Rafli Maladi Usman"},{name:"Arsakha Virendra Usman"}]}
-    ]}
-  ]}
-]},
-{name:"5. Rumti",multiSpouse:[
-  {spouse:"Jakim",spouseLabel:"Suami Pertama",children:[
-    {name:"Mianah + Sabur (Alm)",children:[
-      {name:"Oni Ruslani + Eni Rohaeni",children:[{name:"M. Zaidan Ghony"},{name:"M. Wildani Ghony"},{name:"Ozil El Shaarawy Ghony"}]},
-      {name:"Junaeni Meniasih + Suami",children:[{name:"Najmah Mufidah"},{name:"Wulan Maulida"},{name:"Khalisa Almeera"}]},
-      {name:"Icih Minarsih + Hery Setia Budi",children:[{name:"Ifra Faiha Mikayla"},{name:"Hadzkadina Faiha Nashira"}]}
-    ]}
-  ]},
-  {spouse:"Dahlan",spouseLabel:"Suami Kedua",children:[
-    {name:"Asminah + Idrus",children:[{name:" Iwan + Komariah",children:[{name:" Marwan Awaludin + Titi santi", children:[{name:"Vier"},{name:"Cila"}]},{name:"Sri Budiarti"},{name:"David Haiqal"}]},{name:"Arin Yulianti + Suami",children:[{name:"Erviko"}]},{name:"Rositawati + Suami", children:[{name:"Vivi Yunita Aulia"},{name:"Nazzri Ruwaid Hendra"}]},{name:"Surya Wijaya ( Oyok) + Puput"},{name:"Abdul Majid"}]},
-    {name:"Suharmin (Alm)"},
-    {name:"Timi + Jaka",children:[{name:"Reno"},{name:"Iyan"}]},
-    {name:"Jumiardi + Sawi",children:[{name:"Yudha Saputra"},{name:"Oktaviani Wulandari(Alm)+Ervin Anggara",children:[{name:"Hafizah"}]},{name:"Maya Setya Dewi (Alm)"},{name:"Nur Cahyani"},{name:"M Fery Prayogo"}]},
-    {name:"Dede + Rita (Alm)",children:[
-      {name:"Ridwan + Afrilia Agterina",children:[{name:"Adskhan Syadat"}]},
-      {name:"Nurlita Herliawati Pratiwi + Alfi",children:[{name:"Refan"}]},
-      {name:"Yoga"}
-    ]}
-  ]}
-]},
-{name:"6. Armini + Naimin",children:[
-  {name:"Iing Rosiin (Alm) + Iyas",children:[
-    {name:"Rendi Septian + Nuraeni Septiawati",children:[{name:"Rania Artanya Rinjani"},{name:"Noureen Maulidya Rinjani"},{name:"Ready Noor Asyifa Rinjani"}]},
-    {name:"Raisa Mutiarani + Bobby Septiansyah",children:[{name:"Saby Sakhi Salsabila"},{name:"Aisha Sabina Prameswari"}]},
-    {name:"Ristiya Ferlita (Alm)"}
-  ]},
-  {name:"Cicih Sri Kurniasarih + Sutono",children:[
-    {name:"Attik Elvattia + Ahmad Nur Ali",children:[{name:"Nailah Huwaida Alita"},{name:"Nafisah Khayyira Aliya"}]},
-    {name:"Alin Eksak Fidilat + Hendra Wijaya", children:[{name:"Zaf Tajammul Qaiz Wijaya"},{name:"Zeeshan Mumtadz Tsaqib Wijaya"}]},{name:"Anggit + Aldi"}
-  ]},
-  {name:"Yaya + Heni",children:[{name:"Ibnu"},{name:"Adzra Aqila Kinanti"},{name:"Azkayra"},{name:"Sofia"}]},
-  {name:"Titin Suprihatin (Alm)"}
-]}, 
-{name:"7. Soheni + Sainan",children:[
-  {name:"Dadang Sugandi (Alm) + Kartini",children:[
-    {name:"Ashri Salassidini + Amin",children:[{name:"Alifah"},{name:"Alif"}]},
-    {name:"Annissa Asyahida"},{name:"Asy Syifa Mujahidah"},{name:"Abizar Riski Azha"}
-  ]},
-  {name:"Enok Sugiarti (Alm) + Suami",children:[{name:"Alwasri Nur Akbar"}]},
-  {name:"Jajang Suhendar (Alm) + Eka",children:[{name:"M. Amim"},{name:"Nabila"},{name:"Rizky"}]},
-  {name:"Ida + Tuban",children:[
-    {name:"Euis Wulandari + Andika Enggal Prakoso",children:[{name:"Naura Annanta Prakoso"}]},
-    {name:"Malika alma rahmawati"}
-  ]},
-  {name:"Samsul + Nita",children:[{name:"Qwina"},{name:"Qatan"}]},
-  {name:"Dudi + Lisnawati",children:[{name:"Chelsea Rahma Putri"}]}
-]},
-{name:"8. Sanudi + Awanti",children:[
-  {name:"Ratih (Alm) + Eka (Alm)",children:[{name:"Bayu + Revi Nur Fitriani"},{name:"Gina"}]},
-  {name:"Imas (Alm) + Sartoyo",children:[{name:"Deden (Alm)"},{name:"Yusril"}]},
-  {name:"Nani + Sodikin (Alm)",children:[{name:"Rizky"},{name:"Denisa"}]},
-  {name:"Dodi + Atik",children:[{name:"Nenden"}]},
-  {name:"Dian Udayana + Ii Juarsih",children:[{name:"Bambang Yoga Mahesa"},{name:"Yudha Lingga Buana"},{name:"Giandra Arka Prawira"}]},
-  {name:"Rita + Otib",children:[{name:"Rido"},{name:"Fathurohman / Ipay"},{name:"Raiga"}]},
-  {name:"Linda + M. Andrianto"},
-  {name:"Anita",multiSpouse:[
-    {spouse:"Muhammad Dwi Arifianto (Alm)",spouseLabel:"Suami Pertama",children:[{name:"Azalia Fadhillah Arifianto"}]},
-    {spouse:"Kifli",spouseLabel:"Suami Kedua",children:[{name:"Mufti Farizan Thaqif"}]}
-  ]}
-]},
-{name:"9. Nuryamah + Rusja",children:[
-  {name:"Nuryati (Alm) + Dodo (Alm)",children:[
-    {name:"Rinda Deliani + Ari Juhari",children:[{name:"Arda Athaya Arsenio"},{name:"Airi Ebrahim Abhinara"}]},
-    {name:"Vina Novianti + Hary Robiansah",children:[{name:"Ghavi Firzand Arrobiansah"}]}
-  ]},
-  {name:"Suhandi (Alm)"},
-  {name:"Royanti (Alm) + Jupri",children:[
-    {name:"Septia Ningsih + Ryan",children:[{name:"Nasya"},{name:"Rafka"}]},
-    {name:"Rosita Dewi + Faisal",children:[{name:"Muhammad Kenzo Farode"}]},
-    {name:"Tika + Iqbal"},{name:"Mega"},{name:"Gina"},{name:"Gita"}
-  ]},
-  {name:"Iin + Suroto",children:[{name:"Muhammad Gilang Pratama"},{name:"Muhammad Davi Putranto"},{name:"Adisya Khanza Almira"}]}
-]}
-]};
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var DRAFT_KEY="silsilah-eyang-bukhori-draft";
 
-/* ── Ancestry Map ── */
-// nodeMap: nodeName -> { depth, ancestors: [{fullName, depth}], isSpouse, spouseOf }
-// For each node with "+" we also register the spouse separately
-const nodeMap = new Map();
-const ROLE_LABELS  = ["Akar","Anak","Cucu","Cicit","Bao","Janggawareng","Udeg-udeg"];
-const ROLE_EMOJI   = ["🌳","🔴","🟡","🟢","🟣","⚪","⚪"];
-const ROLE_BG      = ["#fff","#ffcdd2","#fff9c4","#c8e6c9","#e1bee7","#e0e0e0","#e0e0e0"];
-const ROLE_FG      = ["#2c3e50","#c62828","#d4a000","#2e7d32","#6a1b9a","#757575","#757575"];
-// relation labels from the PERSON's perspective (how they relate to ancestor above)
-const CHILD_OF = ["","Anak dari","Anak dari","Anak dari","Anak dari","Anak dari","Anak dari"];
-// generation label as seen from root
-const GEN_LABEL = ["Akar","Anak","Cucu","Cicit","Bao","Janggawareng","Udeg-udeg"];
+var GEN=["Akar","Anak","Cucu","Cicit","Bao","Janggawareng","Udeg-udeg"];
+var REL_FROM_SELF=["","Anak dari","Cucu dari","Cicit dari","Bao dari","Janggawareng dari","Udeg-udeg dari"];
+var ROLES=["root","anak","cucu","cicit","bao","janggawareng"];
+var EMOJI={root:"🌳",anak:"🔴",cucu:"🟡",cicit:"🟢",bao:"🟣",janggawareng:"⚪",menantu:"🔵"};
+var ROLE_CFG={anak:"Daftar Anak",menantu:"Daftar Menantu",cucu:"Daftar Cucu",cicit:"Daftar Cicit",bao:"Daftar Bao",janggawareng:"Daftar Janggawareng"};
 
-function firstName(n){ const p=n.indexOf("+"); return p!==-1?n.slice(0,p).trim():n.trim(); }
-function spouseName(n){ const p=n.indexOf("+"); return p!==-1?n.slice(p+1).trim():null; }
+function genLabel(d){return GEN[d]||("Keturunan ke-"+d);}
+function roleOf(d){return ROLES[Math.min(d,5)];}
+function newId(){return "p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+function button(text,cls,onClick){var b=el("button",cls,text);b.type="button";if(onClick)b.addEventListener("click",onClick);return b;}
+function textInput(id,value,placeholder,onInput){var i=el("input");i.type="text";i.id=id;i.value=value||"";i.placeholder=placeholder||"";i.autocomplete="off";if(onInput)i.addEventListener("input",function(){onInput(i.value);});return i;}
 
-function walkData(node, depth, ancestors){
-  // ancestors = [{fullName, depth}, ...] — each item is the FULL couple name of that generation
-  const selfFull = node.name; // e.g. "Kayim + Ecih"
-
-  // register the whole node (used when clicking the left/main person)
-  nodeMap.set(selfFull, { depth, ancestors:[...ancestors], isSpouse:false });
-
-  // also register the spouse (right side of "+") separately
-  const sp = spouseName(selfFull);
-  if(sp){
-    // spouse is "Menantu" — same depth, same ancestors, but flagged
-    nodeMap.set("__spouse__"+selfFull, { depth, ancestors:[...ancestors], isSpouse:true, spouseOf:selfFull });
+/* ── Data ── */
+// Bentuk data: {id, name, unions:[{spouse, label, children:[...]}]}
+function normalize(n){
+  n.name=(n.name||"").trim()||"(tanpa nama)";
+  if(n.unions){
+    n.unions=n.unions.filter(function(u){u.spouse=(u.spouse||"").trim();u.label=(u.label||"").trim();u.children=u.children||[];return u.spouse||u.children.length;});
+    n.unions.forEach(function(u){u.children.forEach(normalize);});
+    if(!n.unions.length)delete n.unions;
   }
-
-  // children inherit ancestors including this node's full name
-  const nextAnc = [...ancestors, {fullName:selfFull, depth}];
-  if(node.multiSpouse){
-    node.multiSpouse.forEach(s=>s.children.forEach(c=>walkData(c,depth+1,nextAnc)));
-  } else if(node.children){
-    node.children.forEach(c=>walkData(c,depth+1,nextAnc));
-  }
+  return n;
 }
-walkData(data,0,[]);
+function canonical(d){return JSON.stringify(normalize(JSON.parse(JSON.stringify(d))));}
+var SAVED=null,data=null,version=0,serverReady=true;
+var index=new Map(),gen={anak:[],menantu:[],cucu:[],cicit:[],bao:[],janggawareng:[]};
+var editMode=false,canWrite=true,curRole=null,editingId=null;
 
-/* ── Collect for side panel ── */
-const genData={anak:[],menantu:[],cucu:[],cicit:[],bao:[],janggawareng:[]};
-const roleMap2={1:"anak",2:"cucu",3:"cicit",4:"bao",5:"janggawareng"};
-function collectMembers(node,depth,parentName){
-  if(node.multiSpouse){
-    const role=roleMap2[depth];
-    if(role) genData[role].push({name:firstName(node.name),parent:parentName});
-    node.multiSpouse.forEach(s=>{
-      genData.menantu.push({name:s.spouse+" ("+s.spouseLabel+")",parent:"Pasangan "+firstName(node.name)});
-      s.children.forEach(c=>collectMembers(c,depth+1,firstName(node.name)));
+function coupleName(node,i){var u=(node.unions||[])[i];return u&&u.spouse?node.name+" + "+u.spouse:node.name;}
+function reindex(){
+  index=new Map();
+  (function walk(node,depth,parent,ui,anc){
+    index.set(node.id,{node:node,parent:parent,unionIdx:ui,depth:depth,ancestors:anc});
+    (node.unions||[]).forEach(function(u,i){
+      var step={name:coupleName(node,i),depth:depth};
+      u.children.forEach(function(c){walk(c,depth+1,node,i,anc.concat([step]));});
     });
-    return;
-  }
-  if(depth===0){if(node.children)node.children.forEach(c=>collectMembers(c,1,firstName(node.name)));return;}
-  const plus=node.name.indexOf("+");
-  const selfN=plus!==-1?node.name.slice(0,plus).trim():node.name.trim();
-  const spouseN=plus!==-1?node.name.slice(plus+1).trim():"";
-  const role=roleMap2[depth];
-  if(role) genData[role].push({name:selfN,parent:parentName});
-  if(spouseN) genData.menantu.push({name:spouseN,parent:"Pasangan "+selfN});
-  if(node.children) node.children.forEach(c=>collectMembers(c,depth+1,selfN));
+  })(data,0,null,-1,[]);
 }
-collectMembers(data,0,"");
+function countDesc(n){var c=0;(n.unions||[]).forEach(function(u){u.children.forEach(function(k){c+=1+countDesc(k);});});return c;}
 
-/* ── Side panel ── */
-const roleCfg={
-  anak:{label:"🔴 Daftar Anak",color:"#c62828",bg:"#ffcdd2"},
-  menantu:{label:"🔵 Daftar Menantu",color:"#1565c0",bg:"#bbdefb"},
-  cucu:{label:"🟡 Daftar Cucu",color:"#f9a825",bg:"#fff9c4"},
-  cicit:{label:"🟢 Daftar Cicit",color:"#2e7d32",bg:"#c8e6c9"},
-  bao:{label:"🟣 Daftar Bao",color:"#6a1b9a",bg:"#e1bee7"},
-  janggawareng:{label:"⚪ Daftar Janggawareng",color:"#757575",bg:"#e0e0e0"},
-};
-let curRole=null;
+/* ── Pohon ── */
+function nodeEl(name,label,cls,key){
+  var d=el("div","node "+cls);d.appendChild(el("div",null,name));
+  if(label)d.appendChild(el("small",null,label));
+  d.dataset.key=key;d.tabIndex=0;d.setAttribute("role","button");return d;
+}
+function childrenUl(children,depth){var ul=el("ul","children-wrap");children.forEach(function(c){ul.appendChild(buildTree(c,depth));});return ul;}
+function buildTree(node,depth){
+  var li=el("li"),inner=el("div","li-inner");li.appendChild(inner);
+  var unions=node.unions||[],self=nodeEl(node.name,genLabel(depth),roleOf(depth),"p:"+node.id);
+  var spCls=depth===0?"root":"menantu";
+  if(unions.length>=2){
+    var row=el("div","couple");
+    row.appendChild(nodeEl(unions[0].spouse||"?",unions[0].label||"Pasangan 1",spCls,"s:"+node.id+":0"));
+    row.appendChild(el("div","couple-sep","+"));row.appendChild(self);
+    unions.slice(1).forEach(function(u,j){
+      row.appendChild(el("div","couple-sep","+"));
+      row.appendChild(nodeEl(u.spouse||"?",u.label||"Pasangan "+(j+2),spCls,"s:"+node.id+":"+(j+1)));
+    });
+    inner.appendChild(row);
+    if(unions.some(function(u){return u.children.length;})){
+      inner.appendChild(el("div","stem"));
+      var outer=el("div","multi-children-outer");outer.appendChild(el("div","multi-h-line"));
+      var cw=el("div","spouse-columns-wrap");
+      unions.forEach(function(u,i){
+        if(i>0)cw.appendChild(el("div","spouse-divider"));
+        var col=el("div","spouse-col");col.appendChild(el("div","col-stem"));
+        col.appendChild(el("div","col-label","Anak dari "+(u.label||u.spouse||"pasangan "+(i+1))));
+        col.appendChild(u.children.length?childrenUl(u.children,depth+1):el("div","col-empty","Belum ada anak"));
+        cw.appendChild(col);
+      });
+      outer.appendChild(cw);inner.appendChild(outer);
+    }
+  } else {
+    var u=unions[0];
+    if(u&&u.spouse){
+      var c=el("div","couple");c.appendChild(self);c.appendChild(el("div","couple-sep","+"));
+      c.appendChild(nodeEl(u.spouse,depth===0?"Akar":"Menantu",spCls,"s:"+node.id+":0"));inner.appendChild(c);
+    } else inner.appendChild(self);
+    if(u&&u.children.length){inner.appendChild(el("div","stem"));inner.appendChild(childrenUl(u.children,depth+1));}
+  }
+  return li;
+}
+function fixLines(){
+  document.querySelectorAll("#tree .children-wrap").forEach(function(ul){
+    ul.querySelectorAll(":scope > .line").forEach(function(x){x.remove();});
+    var lis=Array.prototype.filter.call(ul.children,function(x){return x.tagName==="LI";});
+    var ur=ul.getBoundingClientRect();if(!lis.length||!ur.width)return;
+    var cs=lis.map(function(li){var r=li.querySelector(".couple,.node").getBoundingClientRect();return (r.left+r.width/2-ur.left)/ur.width*100;});
+    if(cs.length>1){var h=el("div","line line-h");h.style.left=cs[0]+"%";h.style.right=(100-cs[cs.length-1])+"%";ul.appendChild(h);}
+    cs.forEach(function(c){var v=el("div","line line-v");v.style.left=c+"%";ul.appendChild(v);});
+  });
+  document.querySelectorAll("#tree .multi-children-outer").forEach(function(outer){
+    var hl=outer.querySelector(":scope > .multi-h-line"),cols=outer.querySelectorAll(":scope > .spouse-columns-wrap > .spouse-col");
+    if(!hl)return;if(cols.length<2){hl.style.width="0";return;}
+    var or=outer.getBoundingClientRect();
+    var cs=Array.prototype.map.call(cols,function(c){var r=c.getBoundingClientRect();return r.left+r.width/2-or.left;});
+    hl.style.left=Math.min.apply(null,cs)+"px";hl.style.width=(Math.max.apply(null,cs)-Math.min.apply(null,cs))+"px";
+  });
+}
+function renderTree(){
+  normalize(data);reindex();
+  var tree=$("tree");tree.textContent="";
+  var ul=el("ul");ul.appendChild(buildTree(data,0));tree.appendChild(ul);
+  requestAnimationFrame(function(){requestAnimationFrame(fixLines);});
+  collect();
+}
+function clearHighlight(){document.querySelectorAll("#tree .node.highlighted").forEach(function(n){n.classList.remove("highlighted");});}
+function highlight(key,scroll){
+  clearHighlight();var n=document.querySelector('#tree [data-key="'+key+'"]');if(!n)return;
+  n.classList.add("highlighted");if(scroll)n.scrollIntoView({behavior:"smooth",block:"center",inline:"center"});
+}
+function activate(n){
+  var key=n.dataset.key;highlight(key,false);
+  if(editMode)openEditor(key.split(":")[1]);else openAncestry(key);
+}
+$("tree").addEventListener("click",function(e){var n=e.target.closest(".node[data-key]");if(n)activate(n);});
+$("tree").addEventListener("keydown",function(e){
+  if(e.key!=="Enter"&&e.key!==" ")return;var n=e.target.closest(".node[data-key]");if(n){e.preventDefault();activate(n);}
+});
+
+/* ── Panel per generasi ── */
+function collect(){
+  gen={anak:[],menantu:[],cucu:[],cicit:[],bao:[],janggawareng:[]};
+  index.forEach(function(e,id){
+    if(e.depth===0)return;
+    gen[roleOf(e.depth)].push({name:e.node.name,parent:coupleName(e.parent,e.unionIdx),key:"p:"+id});
+    (e.node.unions||[]).forEach(function(u,i){
+      if(u.spouse)gen.menantu.push({name:u.spouse+(u.label?" ("+u.label+")":""),parent:"Pasangan "+e.node.name,key:"s:"+id+":"+i});
+    });
+  });
+  document.querySelectorAll(".legend-btn").forEach(function(b){b.querySelector(".count").textContent=gen[b.dataset.role].length;});
+  if(curRole)filterList();
+}
 function openPanel(role){
-  curRole=role; const cfg=roleCfg[role], items=genData[role];
-  document.getElementById("panel-title").textContent=cfg.label;
-  document.getElementById("panel-count").textContent=items.length+" orang";
-  document.getElementById("search-input").value="";
-  renderList(items,cfg);
-  document.getElementById("gen-panel").classList.add("open");
-  document.getElementById("panel-overlay").classList.add("open");
-  document.querySelectorAll(".legend-btn").forEach(b=>b.classList.remove("active"));
-  document.querySelector('.legend-btn[data-role="'+role+'"]').classList.add("active");
+  curRole=role;$("panel-title").textContent=EMOJI[role]+" "+ROLE_CFG[role];$("search-input").value="";
+  filterList();$("gen-panel").hidden=false;$("panel-scrim").hidden=false;
+  document.querySelectorAll(".legend-btn").forEach(function(b){b.classList.toggle("active",b.dataset.role===role);});
 }
 function closePanel(){
-  document.getElementById("gen-panel").classList.remove("open");
-  document.getElementById("panel-overlay").classList.remove("open");
-  document.querySelectorAll(".legend-btn").forEach(b=>b.classList.remove("active"));
-  curRole=null;
+  $("gen-panel").hidden=true;$("panel-scrim").hidden=true;curRole=null;
+  document.querySelectorAll(".legend-btn").forEach(function(b){b.classList.remove("active");});
 }
-function renderList(items,cfg){
-  const list=document.getElementById("panel-list"); list.innerHTML="";
-  if(!items.length){list.innerHTML='<div style="padding:24px;text-align:center;color:#aaa;font-size:13px;">Tidak ada data</div>';return;}
-  items.forEach((item,i)=>{
-    const div=document.createElement("div"); div.className="panel-item";
-    div.innerHTML='<div class="panel-color-bar" style="background:'+cfg.color+';"></div><div><div class="item-num">'+(i+1)+'</div></div><div><div class="item-name">'+item.name+'</div>'+(item.parent?'<div class="item-parent">↳ '+item.parent+'</div>':'')+'</div>';
-    list.appendChild(div);
+function filterList(){
+  var q=$("search-input").value.toLowerCase();
+  var items=gen[curRole].filter(function(i){return i.name.toLowerCase().indexOf(q)>-1||i.parent.toLowerCase().indexOf(q)>-1;});
+  $("panel-count").textContent=items.length+" orang";
+  var list=$("panel-list");list.textContent="";
+  if(!items.length){list.appendChild(el("div","panel-empty","Tidak ada data"));return;}
+  items.forEach(function(item,i){
+    var b=button(null,"panel-item",function(){closePanel();highlight(item.key,true);});
+    var bar=el("span","panel-bar");bar.style.background="var(--"+(curRole==="janggawareng"?"jw":curRole)+"-bd)";b.appendChild(bar);
+    b.appendChild(el("span","item-num",String(i+1)));
+    var t=el("span");t.appendChild(el("div","item-name",item.name));
+    if(item.parent)t.appendChild(el("div","item-parent","↳ "+item.parent));
+    b.appendChild(t);list.appendChild(b);
   });
 }
-document.getElementById("search-input").addEventListener("input",function(){
-  if(!curRole)return;
-  const q=this.value.toLowerCase(),cfg=roleCfg[curRole];
-  const filtered=genData[curRole].filter(i=>i.name.toLowerCase().includes(q)||(i.parent&&i.parent.toLowerCase().includes(q)));
-  document.getElementById("panel-count").textContent=filtered.length+" orang";
-  renderList(filtered,cfg);
-});
-document.getElementById("panel-close").addEventListener("click",closePanel);
-document.getElementById("panel-overlay").addEventListener("click",closePanel);
-document.querySelectorAll(".legend-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{const role=btn.dataset.role;if(curRole===role){closePanel();return;}openPanel(role);});
+$("search-input").addEventListener("input",function(){if(curRole)filterList();});
+$("panel-close").addEventListener("click",closePanel);
+$("panel-scrim").addEventListener("click",closePanel);
+document.querySelectorAll(".legend-btn").forEach(function(b){
+  b.addEventListener("click",function(){if(curRole===b.dataset.role)closePanel();else openPanel(b.dataset.role);});
 });
 
-/* ── Ancestry Popup ── */
-// key: for main person use node.name; for spouse use "__spouse__"+node.name
+/* ── Jalur silsilah ── */
+var ancId=null;
 function openAncestry(key){
-  const entry=nodeMap.get(key); if(!entry)return;
-  const {depth,ancestors,isSpouse,spouseOf}=entry;
-
-  // Who is being shown?
-  let displayName, isMenuantu=false;
-  if(isSpouse){
-    displayName = spouseName(spouseOf) || key.replace("__spouse__","");
-    isMenuantu = true;
-  } else {
-    displayName = firstName(key);
-  }
-
-  // ── Determine display role ──
-  // For menantu: label = "Menantu"
-  // For others: label = GEN_LABEL[depth]
-  const dispDepth = Math.min(depth,6);
-  const roleLabelText = isMenuantu ? "Menantu" : GEN_LABEL[dispDepth];
-  const badgeBg = isMenuantu?"#bbdefb":ROLE_BG[dispDepth];
-  const badgeFg = isMenuantu?"#1565c0":ROLE_FG[dispDepth];
-
-  // Header
-  document.getElementById("ancestry-name").textContent = displayName;
-  const badge = document.getElementById("ancestry-role-badge");
-  badge.textContent = roleLabelText;
-  badge.style.cssText = "background:"+badgeBg+";color:"+badgeFg+";border:1.5px solid "+badgeFg+";";
-
-  const chain = document.getElementById("ancestry-chain"); chain.innerHTML="";
-
-  // ── Build full chain: ancestors + self ──
-  // ancestors = [{fullName, depth}, ...] starting from root (depth=0)
-  // We want each row to show:
-  //   [dot + name]
-  //   [small label below = "Anak/Cucu/Cicit/Bao dari <parent above>"]
-  //
-  // Layout (top to bottom):
-  //   Eyang Buhari + Sawirah       ← no label above (it's the root)
-  //     └ Anak dari Eyang...
-  //   Nasuhi + Runti
-  //     └ Cucu dari Nasuhi...
-  //   Rusniah + Oding
-  //     └ Cucu dari Rusniah...   ← Nani is CUCU (depth 2), same as Rusniah is depth 1
-  //   👤 Nani Suryani
-
-  // Build the full list of steps: all ancestors + self
-  // Each step: { fullName, depth, isTarget, isMenuantu }
-  const steps = [];
-  ancestors.forEach(a => steps.push({fullName:a.fullName, depth:a.depth, isTarget:false, isMt:false}));
-
-  // self
-  if(isMenuantu){
-    // menantu shares same depth & parent as main person
-    // fullName for display = just their own name
-    steps.push({fullName:displayName, depth:depth, isTarget:true, isMt:true});
-  } else {
-    steps.push({fullName:displayName, depth:depth, isTarget:true, isMt:false});
-  }
-
-  // selfDepth = depth of the person clicked (or their spouse's node)
-  const selfDepth = depth;
-  // REL_FROM_SELF[dist]: how to describe an ancestor that is `dist` levels above self
-  // dist=1 → self is their child ("Anak dari")
-  // dist=2 → self is their grandchild ("Cucu dari")
-  const REL_FROM_SELF = ["","Anak dari","Cucu dari","Cicit dari","Bao dari","Janggawareng dari","Udeg-udeg dari"];
-
-  steps.forEach((step, i)=>{
-    const d = Math.min(step.depth,6);
-    const isMt = step.isMt;
-    const bg = isMt?"#bbdefb":ROLE_BG[d];
-    const fg = isMt?"#1565c0":ROLE_FG[d];
-    const emoji = isMt?"🔵":ROLE_EMOJI[d];
-
-    // Label = how the CLICKED PERSON relates to this ancestor row
-    // dist = selfDepth - step.depth  (how many levels above self is this ancestor)
-    const dist = selfDepth - step.depth;
-    let labelAbove = "";
-    if(step.isTarget){
-      // self row: show their generation label
-      if(isMt){
-        labelAbove = "Menantu dari " + (i>0?steps[i-1].fullName:"");
-      } else if(depth===0){
-        labelAbove = "🌳 Eyang / Akar";
-      } else {
-        labelAbove = GEN_LABEL[d] + " dari " + (i>0?steps[i-1].fullName:"");
-      }
-    } else if(dist===0){
-      labelAbove = "🌳 Eyang / Akar";
-    } else {
-      // ancestor row: label = "Anak/Cucu/Cicit dari <ancestor above this one>"
-      const rel = REL_FROM_SELF[Math.min(dist,6)] || "Keturunan dari";
-      labelAbove = rel + " " + (i>0?steps[i-1].fullName:"");
-    }
-
-    const div = document.createElement("div");
-    div.className = "chain-step" + (step.isTarget?" is-target":"");
-
-    const dotSize = step.isTarget?"width:38px;height:38px;font-size:18px;":"";
-    const nameStyle = step.isTarget?"font-size:16px;color:"+fg+";":"";
-    const labelStyle = step.isTarget?"color:"+fg+";":"";
-
-    div.innerHTML=
-      '<div class="chain-dot" style="background:'+bg+';color:'+fg+';'+dotSize+'">'+emoji+'</div>'+
-      '<div class="chain-text">'+
-        '<div class="chain-rel" style="'+labelStyle+'">'+labelAbove+'</div>'+
-        '<div class="chain-person" style="'+nameStyle+'">'+(step.isTarget?'👤 ':'')+step.fullName+'</div>'+
-      '</div>';
-    chain.appendChild(div);
+  var p=key.split(":"),e=index.get(p[1]);if(!e)return;
+  ancId=p[1];
+  var isSp=p[0]==="s",d=e.depth,isMt=isSp&&d>0;
+  var name=isSp?e.node.unions[+p[2]].spouse:e.node.name;
+  $("anc-name").textContent=name;
+  var badge=$("anc-badge");badge.className="badge "+(isMt?"menantu":roleOf(d));
+  badge.textContent=isMt?"Menantu":genLabel(d);
+  var steps=e.ancestors.map(function(a){return {name:a.name,depth:a.depth,role:roleOf(a.depth)};});
+  if(isMt)steps.push({name:e.node.name,depth:d,role:roleOf(d)});
+  steps.push({name:name,depth:d,role:isMt?"menantu":roleOf(d),target:true});
+  var chain=$("anc-chain");chain.textContent="";
+  steps.forEach(function(s,i){
+    var prev=i>0?steps[i-1].name:"",lab;
+    if(s.depth===0)lab="Eyang / Akar";
+    else if(s.target&&isMt)lab="Menantu · pasangan "+prev;
+    else if(s.target||(isMt&&i===steps.length-2))lab=genLabel(s.depth)+" dari "+prev;
+    else lab=(REL_FROM_SELF[Math.min(d-s.depth,6)]||"Keturunan dari")+" "+prev;
+    var row=el("div","chain-step"+(s.target?" is-target":""));
+    row.appendChild(el("div","chain-dot "+s.role,EMOJI[s.role]));
+    var t=el("div","chain-text");t.appendChild(el("div","chain-rel",lab));
+    t.appendChild(el("div","chain-person",(s.target?"👤 ":"")+s.name));
+    row.appendChild(t);chain.appendChild(row);
   });
+  $("anc-foot").hidden=!canWrite;
+  $("anc-overlay").hidden=false;$("anc-close").focus();
+}
+function closeAncestry(){$("anc-overlay").hidden=true;clearHighlight();}
+$("anc-close").addEventListener("click",closeAncestry);
+$("anc-overlay").addEventListener("click",function(e){if(e.target===this)closeAncestry();});
+$("anc-edit").addEventListener("click",function(){var id=ancId;closeAncestry();setEditMode(true);openEditor(id);});
 
-  document.getElementById("ancestry-overlay").classList.add("open");
+/* ── Mode edit (hanya untuk yang punya akses edit) ── */
+function setEditMode(on){
+  editMode=on;$("app").classList.toggle("editing",on);
+  $("btn-edit").textContent=on?"✓ Selesai Edit":"✏️ Mode Edit";
+  $("hint").textContent=on?"Mode edit: klik nama untuk mengubah nama, menambah anak atau pasangan, atau menghapus.":"Klik nama di pohon untuk melihat jalur silsilah. Klik tombol warna untuk daftar per generasi.";
+}
+$("btn-edit").addEventListener("click",function(){setEditMode(!editMode);});
+
+function openEditor(id){reindex();editingId=id;renderEditor();$("ed-overlay").hidden=false;var f=$("ed-name");if(f)f.focus();}
+function closeEditor(){
+  var id=editingId;$("ed-overlay").hidden=true;editingId=null;renderTree();updateSaveBar();
+  if(id)requestAnimationFrame(function(){highlight("p:"+id,false);});
+}
+$("ed-close").addEventListener("click",closeEditor);
+$("ed-done").addEventListener("click",closeEditor);
+$("ed-overlay").addEventListener("click",function(e){if(e.target===this)closeEditor();});
+
+function section(title){var s=el("div");s.appendChild(el("p","section-label",title));return s;}
+function unionName(u,i){return u.label||u.spouse||"pasangan "+(i+1);}
+function renderEditor(){
+  var e=index.get(editingId);if(!e){closeEditor();return;}
+  var n=e.node,d=e.depth;n.unions=n.unions||[];
+  $("ed-title").textContent=n.name||"(tanpa nama)";
+  var badge=$("ed-badge");badge.className="badge "+roleOf(d);badge.textContent=genLabel(d);
+  var sub=$("ed-sub");sub.textContent="";
+  if(e.parent){
+    sub.appendChild(document.createTextNode("Anak dari "));
+    var pid=e.parent.id;sub.appendChild(button(coupleName(e.parent,e.unionIdx),"link",function(){openEditor(pid);}));
+  }
+  var body=$("ed-body");body.textContent="";
+
+  var f=el("div","field");var lb=el("label",null,"Nama");lb.htmlFor="ed-name";f.appendChild(lb);
+  f.appendChild(textInput("ed-name",n.name,"Nama lengkap",function(v){n.name=v;$("ed-title").textContent=v||"(tanpa nama)";changed();}));
+  f.appendChild(el("p","help","Tambahkan (Alm) di belakang nama bila sudah wafat."));
+  body.appendChild(f);
+
+  var sp=section(d===0?"Pasangan":"Pasangan (menantu)");
+  n.unions.forEach(function(u,i){
+    var row=el("div","union-row");
+    var si=textInput("ed-sp-"+i,u.spouse,"Nama pasangan",function(v){u.spouse=v;changed();});
+    si.setAttribute("aria-label","Nama pasangan "+(i+1));row.appendChild(si);
+    if(n.unions.length>1){var li=textInput("ed-lb-"+i,u.label,"Keterangan, mis. Istri Kedua",function(v){u.label=v;changed();});li.setAttribute("aria-label","Keterangan pasangan "+(i+1));row.appendChild(li);}
+    var rm=button("Hapus","btn small",function(){n.unions.splice(i,1);changed();renderEditor();});
+    if(u.children.length){rm.disabled=true;rm.title="Pasangan ini punya anak. Hapus anaknya dulu.";}
+    row.appendChild(rm);sp.appendChild(row);
+  });
+  if(!n.unions.some(function(u){return u.spouse;}))sp.appendChild(el("p","help","Belum ada pasangan."));
+  sp.appendChild(button(n.unions.some(function(u){return u.spouse;})?"+ Tambah pasangan lain":"+ Tambah pasangan","btn small",function(){
+    var empty=n.unions.findIndex(function(u){return !u.spouse;});
+    if(empty<0){n.unions.push({spouse:"",label:"",children:[]});empty=n.unions.length-1;}
+    renderEditor();$("ed-sp-"+empty).focus();
+  }));
+  body.appendChild(sp);
+
+  var total=n.unions.reduce(function(s,u){return s+u.children.length;},0);
+  var an=section("Anak ("+total+")");
+  n.unions.forEach(function(u,ui){
+    if(!u.children.length)return;
+    if(n.unions.length>1)an.appendChild(el("div","group-label","Dari "+unionName(u,ui)));
+    var list=el("ol","child-list");
+    u.children.forEach(function(c,ci){
+      var li=el("li","child-row"),wrap=el("div");
+      wrap.appendChild(button(c.name,"link",function(){openEditor(c.id);}));
+      var up=button("↑","btn icon",function(){u.children.splice(ci-1,0,u.children.splice(ci,1)[0]);changed();renderEditor();});
+      var dn=button("↓","btn icon",function(){u.children.splice(ci+1,0,u.children.splice(ci,1)[0]);changed();renderEditor();});
+      up.disabled=ci===0;dn.disabled=ci===u.children.length-1;
+      up.setAttribute("aria-label","Naikkan urutan "+c.name);dn.setAttribute("aria-label","Turunkan urutan "+c.name);
+      wrap.appendChild(up);wrap.appendChild(dn);li.appendChild(wrap);list.appendChild(li);
+    });
+    an.appendChild(list);
+  });
+  if(!total)an.appendChild(el("p","help","Belum ada anak."));
+  var form=el("form","add-child");
+  var ci=textInput("ed-child","","Nama anak baru");ci.setAttribute("aria-label","Nama anak baru");form.appendChild(ci);
+  var withSpouse=n.unions.filter(function(u){return u.spouse||u.children.length;});
+  var sel=null;
+  if(withSpouse.length>1){
+    sel=el("select");sel.id="ed-child-union";sel.setAttribute("aria-label","Anak dari pasangan");
+    n.unions.forEach(function(u,i){if(!u.spouse&&!u.children.length)return;var o=el("option",null,"dari "+unionName(u,i));o.value=String(i);sel.appendChild(o);});
+    form.appendChild(sel);
+  }
+  var sb=el("button","btn small primary","+ Tambah anak");sb.type="submit";form.appendChild(sb);
+  form.addEventListener("submit",function(ev){
+    ev.preventDefault();var v=ci.value.trim();if(!v){ci.focus();return;}
+    var target=sel?n.unions[+sel.value]:withSpouse[0];
+    if(!target){target={spouse:"",label:"",children:[]};n.unions.push(target);}
+    target.children.push({id:newId(),name:v});
+    reindex();changed();renderEditor();$("ed-child").focus();
+  });
+  an.appendChild(form);
+  body.appendChild(an);
+
+  if(d>0){
+    var dz=section("Hapus"),desc=countDesc(n);
+    var del=button("Hapus "+(n.name||"orang ini")+(desc?" beserta "+desc+" keturunannya":""),"btn small danger",function(){
+      if(!del.dataset.armed){del.dataset.armed="1";del.textContent="Yakin? Klik sekali lagi untuk menghapus";return;}
+      var arr=e.parent.unions[e.unionIdx].children;arr.splice(arr.indexOf(n),1);changed();closeEditor();
+    });
+    dz.appendChild(del);body.appendChild(dz);
+  }
 }
 
-function closeAncestry(){
-  document.getElementById("ancestry-overlay").classList.remove("open");
-  document.querySelectorAll(".node.highlighted").forEach(n=>n.classList.remove("highlighted"));
+/* ── Simpan ── */
+function writeDraft(json){try{if(json==null)localStorage.removeItem(DRAFT_KEY);else localStorage.setItem(DRAFT_KEY,json);}catch(e){}}
+function readDraft(){try{return localStorage.getItem(DRAFT_KEY);}catch(e){return null;}}
+function changed(){writeDraft(JSON.stringify(data));updateSaveBar();}
+function isDirty(){return canonical(data)!==SAVED;}
+function updateSaveBar(){
+  var dirty=canWrite&&isDirty();$("save-bar").hidden=!dirty;
+  if(dirty){$("save-msg").textContent="Ada perubahan yang belum disimpan.";$("btn-save").disabled=false;$("btn-save").hidden=false;$("btn-discard").hidden=false;$("btn-reload").hidden=true;resetDiscard();}
+  else writeDraft(null);
 }
-document.getElementById("ancestry-close").addEventListener("click",closeAncestry);
-document.getElementById("ancestry-overlay").addEventListener("click",function(e){
-  if(e.target===this)closeAncestry();
+function resetDiscard(){var b=$("btn-discard");delete b.dataset.armed;b.textContent="Batalkan";}
+$("btn-discard").addEventListener("click",function(){
+  var b=this;if(!b.dataset.armed){b.dataset.armed="1";b.textContent="Klik lagi untuk membuang";return;}
+  data=JSON.parse(SAVED);writeDraft(null);renderTree();updateSaveBar();
+});
+function showSaveMessage(text,opts){
+  opts=opts||{};$("save-bar").hidden=false;$("save-msg").textContent=text;
+  $("btn-save").hidden=!opts.retry;$("btn-save").disabled=false;
+  $("btn-discard").hidden=!opts.retry;$("btn-reload").hidden=!opts.reload;
+}
+var hideTimer=null;
+$("btn-save").addEventListener("click",function(){
+  if(!serverReady){showSaveMessage("Penyimpanan online belum disiapkan, jadi perubahan belum bisa disimpan.",{retry:true});return;}
+  var json=canonical(data);
+  writeDraft(json);$("btn-save").disabled=true;$("save-msg").textContent="Menyimpan…";
+  fetch("/api/family",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({baseVersion:version,data:JSON.parse(json)})})
+    .then(function(r){return r.json().catch(function(){return {};}).then(function(b){return {status:r.status,body:b};});})
+    .then(function(res){
+      if(res.status===200){
+        SAVED=json;version=res.body.version;data=JSON.parse(json);writeDraft(null);
+        renderTree();showSaveMessage("Tersimpan. Semua orang sekarang melihat data ini.");
+        clearTimeout(hideTimer);hideTimer=setTimeout(updateSaveBar,3000);return;
+      }
+      if(res.status===409){
+        showSaveMessage("Ada orang lain yang menyimpan lebih dulu. Muat versi terbaru, lalu ulangi perubahan Anda.",{reload:true});return;
+      }
+      showSaveMessage((res.body&&res.body.error)||"Gagal menyimpan. Coba lagi.",{retry:true});
+    },function(){showSaveMessage("Tidak ada koneksi. Coba lagi.",{retry:true});});
+});
+$("btn-reload").addEventListener("click",function(){location.reload();});
+
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Escape")return;
+  if(!$("ed-overlay").hidden)closeEditor();else if(!$("anc-overlay").hidden)closeAncestry();else if(curRole)closePanel();
 });
 
-/* ── Build Tree ── */
-function splitCouple(name){
-  if(!name.includes("+"))return null;
-  const parts=name.split("+");
-  return{left:parts[0].trim(),right:parts.slice(1).join("+").trim()};
-}
-function getLabel(d){return["","Anak","Cucu","Cicit","Bao","Janggawareng","Udeg-udeg"][d]||"Turunan";}
-function getRole(d){return["root","anak","cucu","cicit","bao","janggawareng","janggawareng"][Math.min(d,6)];}
-
-function attachClick(el,key){
-  el.addEventListener("click",function(e){
-    e.stopPropagation();
-    document.querySelectorAll(".node.highlighted").forEach(n=>n.classList.remove("highlighted"));
-    el.classList.add("highlighted");
-    openAncestry(key);
+/* ── Mulai ── */
+function fetchJson(url){return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});}
+function loadData(){
+  // Data terbaru dari server; kalau database masih kosong, pakai data awal dari data/family.json
+  return fetchJson("/api/family").then(function(j){
+    if(j&&j.data)return {data:j.data,version:j.version};
+    return fetchJson("data/family.json").then(function(d){return {data:d,version:j.version||0};});
+  },function(){
+    serverReady=false;
+    return fetchJson("data/family.json").then(function(d){return {data:d,version:0};});
   });
 }
-
-function makeNodeEl(node,depth){
-  const split=depth===0?null:splitCouple(node.name);
-  const role=getRole(depth),label=getLabel(depth);
-  if(split){
-    const w=document.createElement("div");w.className="couple";
-    const l=document.createElement("div");l.className="node "+role;l.innerHTML="<div>"+split.left+"</div><small>"+label+"</small>";
-    const s=document.createElement("div");s.className="couple-sep";s.textContent="+";
-    const r=document.createElement("div");r.className="node menantu";r.innerHTML="<div>"+split.right+"</div><small>Menantu</small>";
-    // left = main person (e.g. Kayim), right = spouse (e.g. Ecih)
-    attachClick(l, node.name);                   // main person key
-    attachClick(r, "__spouse__"+node.name);       // spouse key
-    w.appendChild(l);w.appendChild(s);w.appendChild(r);return w;
-  }
-  const d2=document.createElement("div");d2.className="node "+role;
-  d2.innerHTML="<div>"+node.name+"</div>"+(label?"<small>"+label+"</small>":"");
-  attachClick(d2,node.name);
-  return d2;
+function start(loaded){
+  SAVED=canonical(loaded.data);data=JSON.parse(SAVED);version=loaded.version;
+  renderTree();
+  var draft=readDraft();if(!draft)return;
+  var dj=null;try{dj=canonical(JSON.parse(draft));}catch(e){}
+  if(!dj||dj===SAVED){writeDraft(null);return;}
+  $("draft-banner").hidden=false;
+  $("btn-draft-restore").onclick=function(){data=JSON.parse(dj);$("draft-banner").hidden=true;setEditMode(true);renderTree();updateSaveBar();};
+  $("btn-draft-drop").onclick=function(){writeDraft(null);$("draft-banner").hidden=true;};
 }
-
-function buildTree(node,depth){
-  const li=document.createElement("li");
-  const inner=document.createElement("div");inner.className="li-inner";
-
-  if(node.multiSpouse){
-    const role=getRole(depth),label=getLabel(depth);
-    const row=document.createElement("div");row.style.cssText="display:inline-flex;align-items:center;gap:0;";
-    const sp1=document.createElement("div");sp1.className="node menantu";sp1.style.cssText="border-radius:8px 0 0 8px;border-right:none;";
-    sp1.innerHTML="<div>"+node.multiSpouse[0].spouse+"</div><small>"+node.multiSpouse[0].spouseLabel+"</small>";
-    const s1=document.createElement("div");s1.className="couple-sep";s1.textContent="+";
-    const cn=document.createElement("div");cn.className="node "+role;cn.style.cssText="border-radius:0;border-left:none;border-right:none;";
-    cn.innerHTML="<div>"+node.name+"</div>"+(label?"<small>"+label+"</small>":"");
-    attachClick(cn,node.name);
-    const s2=document.createElement("div");s2.className="couple-sep";s2.textContent="+";
-    const sp2=document.createElement("div");sp2.className="node menantu";sp2.style.cssText="border-radius:0 8px 8px 0;border-left:none;";
-    sp2.innerHTML="<div>"+node.multiSpouse[1].spouse+"</div><small>"+node.multiSpouse[1].spouseLabel+"</small>";
-    row.appendChild(sp1);row.appendChild(s1);row.appendChild(cn);row.appendChild(s2);row.appendChild(sp2);
-    inner.appendChild(row);
-    const ms=document.createElement("div");ms.className="stem";inner.appendChild(ms);
-    const ow=document.createElement("div");ow.className="multi-children-outer";
-    const hl=document.createElement("div");hl.className="multi-h-line";ow.appendChild(hl);
-    const cw=document.createElement("div");cw.className="spouse-columns-wrap";
-    node.multiSpouse.forEach((s,i)=>{
-      if(i===1){const dv=document.createElement("div");dv.className="spouse-divider";cw.appendChild(dv);}
-      const col=document.createElement("div");col.className="spouse-col";
-      const cs=document.createElement("div");cs.className="col-stem";col.appendChild(cs);
-      const lb=document.createElement("div");lb.className="col-label";lb.textContent="Anak dari "+s.spouseLabel;col.appendChild(lb);
-      const ul=document.createElement("ul");ul.className="children-wrap";
-      if(s.children.length===1)ul.classList.add("single-child");
-      s.children.forEach(c=>ul.appendChild(buildTree(c,depth+1)));
-      col.appendChild(ul);cw.appendChild(col);
-    });
-    ow.appendChild(cw);inner.appendChild(ow);
-  } else {
-    inner.appendChild(makeNodeEl(node,depth));
-    if(node.children&&node.children.length>0){
-      const st=document.createElement("div");st.className="stem";inner.appendChild(st);
-      const ul=document.createElement("ul");ul.className="children-wrap";
-      if(node.children.length===1)ul.classList.add("single-child");
-      node.children.forEach(c=>ul.appendChild(buildTree(c,depth+1)));
-      inner.appendChild(ul);
-    }
-  }
-  li.appendChild(inner);return li;
-}
-
-function fixLines(){
-  document.querySelectorAll(".children-wrap").forEach(ul=>{
-    if(ul.classList.contains("single-child"))return;
-    const lis=Array.from(ul.querySelectorAll(":scope > li"));if(lis.length<2)return;
-    const ur=ul.getBoundingClientRect();
-    const fn=lis[0].querySelector(".node,.couple"),ln=lis[lis.length-1].querySelector(".node,.couple");
-    if(!fn||!ln)return;
-    const fr=fn.getBoundingClientRect(),lr=ln.getBoundingClientRect();
-    const lp=((fr.left+fr.width/2)-ur.left)/ur.width*100,rp=((lr.left+lr.width/2)-ur.left)/ur.width*100;
-    const line=document.createElement("div");
-    line.style.cssText="position:absolute;top:0;left:"+lp+"%;right:"+(100-rp)+"%;height:2px;background:#888;pointer-events:none;";
-    ul.appendChild(line);
-    lis.forEach(li=>{
-      const n=li.querySelector(".node,.couple");if(!n)return;
-      const nr=n.getBoundingClientRect(),c=((nr.left+nr.width/2)-ur.left)/ur.width*100;
-      const d=document.createElement("div");
-      d.style.cssText="position:absolute;top:0;left:"+c+"%;width:2px;height:28px;background:#888;transform:translateX(-50%);pointer-events:none;";
-      ul.appendChild(d);
-    });
-  });
-  document.querySelectorAll(".multi-children-outer").forEach(outer=>{
-    const hl=outer.querySelector(".multi-h-line"),cols=outer.querySelectorAll(".spouse-col");
-    if(cols.length<2||!hl)return;
-    const or=outer.getBoundingClientRect();
-    const centers=Array.from(cols).map(c=>{const r=c.getBoundingClientRect();return r.left+r.width/2-or.left;});
-    hl.style.cssText="position:absolute;top:0;left:"+Math.min(...centers)+"px;width:"+(Math.max(...centers)-Math.min(...centers))+"px;height:2px;background:#888;pointer-events:none;";
-  });
-}
-
-const rootUl=document.createElement("ul");
-rootUl.appendChild(buildTree(data,0));
-document.getElementById("tree").appendChild(rootUl);
-requestAnimationFrame(()=>requestAnimationFrame(fixLines));
-const sty=document.createElement("style");
-sty.textContent=".children-wrap{position:relative;}.children-wrap::before{display:none!important;}.children-wrap>li::before{display:none!important;}.multi-children-outer{position:relative;}";
-document.head.appendChild(sty);
+loadData().then(start,function(){
+  $("tree-status").textContent="Data silsilah gagal dimuat. Periksa koneksi lalu muat ulang halaman.";
+});
+var rt=null;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(fixLines,150);});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if(data)fixLines();});
+})();
 </script>
 </body>
 </html>

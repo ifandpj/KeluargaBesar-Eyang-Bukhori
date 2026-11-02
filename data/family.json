@@ -1,0 +1,1800 @@
+{
+ "id": "p1",
+ "name": "Eyang Buhari",
+ "unions": [
+  {
+   "spouse": "Nenek Sawirah",
+   "label": "",
+   "children": [
+    {
+     "id": "p2",
+     "name": "1. Nasuhi",
+     "unions": [
+      {
+       "spouse": "Runti + Uni",
+       "label": "",
+       "children": [
+        {
+         "id": "p3",
+         "name": "Rusniah",
+         "unions": [
+          {
+           "spouse": "Oding (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p4",
+             "name": "Kayim",
+             "unions": [
+              {
+               "spouse": "Ecih",
+               "label": "",
+               "children": [
+                {
+                 "id": "p5",
+                 "name": "Alfira Ramadhani"
+                },
+                {
+                 "id": "p6",
+                 "name": "Alfian Fahri Ramadhan"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p7",
+             "name": "Nani Suryani",
+             "unions": [
+              {
+               "spouse": "Saphari",
+               "label": "",
+               "children": [
+                {
+                 "id": "p8",
+                 "name": "Jenny Putra Nugraha"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p9",
+         "name": "Usadi",
+         "unions": [
+          {
+           "spouse": "Dasmini",
+           "label": "",
+           "children": [
+            {
+             "id": "pa",
+             "name": "Daryono",
+             "unions": [
+              {
+               "spouse": "Rukmini",
+               "label": "",
+               "children": [
+                {
+                 "id": "pb",
+                 "name": "Naomi Oktaviani Putri"
+                },
+                {
+                 "id": "pc",
+                 "name": "Naura Kanza Anida"
+                },
+                {
+                 "id": "pd",
+                 "name": "Maudi"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "pe",
+             "name": "Meli Lisnawati Lestari",
+             "unions": [
+              {
+               "spouse": "Kiki Rahmat Slamet",
+               "label": "",
+               "children": [
+                {
+                 "id": "pf",
+                 "name": "Salsa Ramadhanis"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "pg",
+             "name": "Ifan Dwipriana Julistia"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "ph",
+         "name": "Mintarsih",
+         "unions": [
+          {
+           "spouse": "Rohman (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "pi",
+             "name": "Ayiep Nurmansyah",
+             "unions": [
+              {
+               "spouse": "Suminem",
+               "label": "",
+               "children": [
+                {
+                 "id": "pj",
+                 "name": "Bagas P.R"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "pk",
+             "name": "Amim Hermansyah",
+             "unions": [
+              {
+               "spouse": "Sri Murtiningsih",
+               "label": "",
+               "children": [
+                {
+                 "id": "pl",
+                 "name": "Jumadi Hermansyah"
+                },
+                {
+                 "id": "pm",
+                 "name": "Syarifudin Hermansyah"
+                },
+                {
+                 "id": "pn",
+                 "name": "Fazri Alfarizqi Hermansyah"
+                },
+                {
+                 "id": "po",
+                 "name": "Humaira Yasmine Murtiningsih"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "pp",
+             "name": "Tri Minarni (Alm)",
+             "unions": [
+              {
+               "spouse": "Danil",
+               "label": "",
+               "children": [
+                {
+                 "id": "pq",
+                 "name": "Rita Ristiana Putri"
+                },
+                {
+                 "id": "pr",
+                 "name": "Moch Fardan Niats"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "ps",
+     "name": "2. Sasmi",
+     "unions": [
+      {
+       "spouse": "Jumadi",
+       "label": "",
+       "children": [
+        {
+         "id": "pt",
+         "name": "Imaesari (Alm)",
+         "unions": [
+          {
+           "spouse": "Aan Suparman (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "pu",
+             "name": "Dede",
+             "unions": [
+              {
+               "spouse": "Uun",
+               "label": "",
+               "children": [
+                {
+                 "id": "pv",
+                 "name": "Indah"
+                },
+                {
+                 "id": "pw",
+                 "name": "Vijay"
+                },
+                {
+                 "id": "px",
+                 "name": "Dhafita"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "py",
+             "name": "Henda",
+             "unions": [
+              {
+               "spouse": "Dasih Wijiati",
+               "label": "",
+               "children": [
+                {
+                 "id": "pz",
+                 "name": "Azahra Anindya Kirani"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p10",
+         "name": "Sumarno (Alm)",
+         "unions": [
+          {
+           "spouse": "Siti",
+           "label": "",
+           "children": [
+            {
+             "id": "p11",
+             "name": "Rully Susilowati",
+             "unions": [
+              {
+               "spouse": "Zainal Abidin",
+               "label": "",
+               "children": [
+                {
+                 "id": "p12",
+                 "name": "Abi Masykurrozi"
+                },
+                {
+                 "id": "p13",
+                 "name": "Nadine Febrina"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p14",
+             "name": "Julis Sundawan",
+             "unions": [
+              {
+               "spouse": "Uday",
+               "label": "",
+               "children": [
+                {
+                 "id": "p15",
+                 "name": "Zivana Khanza Azzahra"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p16",
+             "name": "Nirma"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p17",
+         "name": "Dana Sutoni",
+         "unions": [
+          {
+           "spouse": "Suparmiati",
+           "label": "",
+           "children": [
+            {
+             "id": "p18",
+             "name": "Eva",
+             "unions": [
+              {
+               "spouse": "Ario",
+               "label": "",
+               "children": [
+                {
+                 "id": "p19",
+                 "name": "Abiyasa"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p1a",
+             "name": "Widodo",
+             "unions": [
+              {
+               "spouse": "Dewi",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1b",
+                 "name": "Zahra"
+                },
+                {
+                 "id": "p1c",
+                 "name": "Alisa (Alm)"
+                },
+                {
+                 "id": "p1d",
+                 "name": "Faza"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p1e",
+             "name": "Agus Tri Darmawanto",
+             "unions": [
+              {
+               "spouse": "Oktaviana Mahmudah",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1f",
+                 "name": "Muhammad Nadhif Arsyad Baihaqi"
+                },
+                {
+                 "id": "p1g",
+                 "name": "Muhammad Farzan Hamid Alfarezi"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p1h",
+         "name": "Saidiman",
+         "unions": [
+          {
+           "spouse": "Ruti",
+           "label": "",
+           "children": [
+            {
+             "id": "p1i",
+             "name": "Yusep",
+             "unions": [
+              {
+               "spouse": "Maya",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1j",
+                 "name": "Adlie Fairuz"
+                },
+                {
+                 "id": "p1k",
+                 "name": "Daniswara Aradhana"
+                },
+                {
+                 "id": "p1l",
+                 "name": "Haura Shanum"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p1m",
+             "name": "Lukmansah"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p1n",
+         "name": "Eti",
+         "unions": [
+          {
+           "spouse": "Waryudi (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p1o",
+             "name": "Lilis",
+             "unions": [
+              {
+               "spouse": "Adi",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1p",
+                 "name": "Satria"
+                },
+                {
+                 "id": "p1q",
+                 "name": "Cantika"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p1r",
+             "name": "Atin Purnama Sari",
+             "unions": [
+              {
+               "spouse": "Dori",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1s",
+                 "name": "Dzihan Maulana Hadhori"
+                },
+                {
+                 "id": "p1t",
+                 "name": "Zahran Hamizan Hadhor"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p1u",
+             "name": "Apriyanto Nur Risqi",
+             "unions": [
+              {
+               "spouse": "Astuti",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1v",
+                 "name": "Abidzar Nur Risqi"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p1w",
+         "name": "Yayah",
+         "unions": [
+          {
+           "spouse": "Hari",
+           "label": "",
+           "children": [
+            {
+             "id": "p1x",
+             "name": "Pian Setianto",
+             "unions": [
+              {
+               "spouse": "Siska Fransiska",
+               "label": "",
+               "children": [
+                {
+                 "id": "p1y",
+                 "name": "Zainul Abidin"
+                },
+                {
+                 "id": "p1z",
+                 "name": "Avika Khoirul Nisa"
+                },
+                {
+                 "id": "p20",
+                 "name": "Aviva Khayra"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p21",
+             "name": "Hani Mulyati",
+             "unions": [
+              {
+               "spouse": "Iskandar Hadi Winata",
+               "label": "",
+               "children": [
+                {
+                 "id": "p22",
+                 "name": "Averroes Mulia Ishwinata"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p23",
+             "name": "Cici Halicia",
+             "unions": [
+              {
+               "spouse": "Sutiyono Budiyanto",
+               "label": "",
+               "children": []
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p24",
+         "name": "Umaryadi",
+         "unions": [
+          {
+           "spouse": "Yulia Asih",
+           "label": "",
+           "children": [
+            {
+             "id": "p25",
+             "name": "Nasywaa Ananda Nurmalia"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p26",
+     "name": "3. Lasih",
+     "unions": [
+      {
+       "spouse": "Samji",
+       "label": "",
+       "children": [
+        {
+         "id": "p27",
+         "name": "Sudani",
+         "unions": [
+          {
+           "spouse": "Rum'aeni",
+           "label": "",
+           "children": [
+            {
+             "id": "p28",
+             "name": "Andri Suandana",
+             "unions": [
+              {
+               "spouse": "Halimah",
+               "label": "",
+               "children": [
+                {
+                 "id": "p29",
+                 "name": "Muhammad Azzam Alfatih"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p2a",
+             "name": "Indra",
+             "unions": [
+              {
+               "spouse": "Denisa Nur Anggraeni",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2b",
+                 "name": "Narendra Kaivan Adyatama"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p2c",
+         "name": "Kayung",
+         "unions": [
+          {
+           "spouse": "Rahman",
+           "label": "",
+           "children": [
+            {
+             "id": "p2d",
+             "name": "kucum Sumiati",
+             "unions": [
+              {
+               "spouse": "Tubagus Hamdani Al faih",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2e",
+                 "name": "R, awlya Sekar wangi"
+                },
+                {
+                 "id": "p2f",
+                 "name": "Tubagus Restu Aimammaliki"
+                },
+                {
+                 "id": "p2g",
+                 "name": "R,Putri Arum Kusuma Puspita Enjeli"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p2h",
+             "name": "Junawan",
+             "unions": [
+              {
+               "spouse": "Lisdawanti",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2i",
+                 "name": "Fiora Nahla Aisyah"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p2j",
+             "name": "Siti Nurhayani",
+             "unions": [
+              {
+               "spouse": "Muhammad Umar Baehaqi",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2k",
+                 "name": "Zara Emila Humaira"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p2l",
+             "name": "Ayu"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p2m",
+     "name": "4. Mahlana",
+     "unions": [
+      {
+       "spouse": "Empat",
+       "label": "Istri Pertama",
+       "children": [
+        {
+         "id": "p2n",
+         "name": "Mulyeh (Alm)",
+         "unions": [
+          {
+           "spouse": "Wasmo (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p2o",
+             "name": "Imas Permasih",
+             "unions": [
+              {
+               "spouse": "Suriandi Putra",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2p",
+                 "name": "Atthar Al Fikri Tanjung"
+                },
+                {
+                 "id": "p2q",
+                 "name": "Dhawy Adeeva"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p2r",
+             "name": "Sri Sumarni",
+             "unions": [
+              {
+               "spouse": "Inta",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2s",
+                 "name": "Raufal Mutaqi"
+                },
+                {
+                 "id": "p2t",
+                 "name": "Fauzan Maulana"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "spouse": "Noeklim",
+       "label": "Istri Kedua",
+       "children": [
+        {
+         "id": "p2u",
+         "name": "Jumtifah (Alm)",
+         "unions": [
+          {
+           "spouse": "Komarudin",
+           "label": "",
+           "children": [
+            {
+             "id": "p2v",
+             "name": "Ernawati",
+             "unions": [
+              {
+               "spouse": "Ali Usman",
+               "label": "",
+               "children": [
+                {
+                 "id": "p2w",
+                 "name": "Natasha Alya Usman"
+                },
+                {
+                 "id": "p2x",
+                 "name": "Rafli Maladi Usman"
+                },
+                {
+                 "id": "p2y",
+                 "name": "Arsakha Virendra Usman"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p2z",
+     "name": "5. Rumti",
+     "unions": [
+      {
+       "spouse": "Jakim",
+       "label": "Suami Pertama",
+       "children": [
+        {
+         "id": "p30",
+         "name": "Mianah",
+         "unions": [
+          {
+           "spouse": "Sabur (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p31",
+             "name": "Oni Ruslani",
+             "unions": [
+              {
+               "spouse": "Eni Rohaeni",
+               "label": "",
+               "children": [
+                {
+                 "id": "p32",
+                 "name": "M. Zaidan Ghony"
+                },
+                {
+                 "id": "p33",
+                 "name": "M. Wildani Ghony"
+                },
+                {
+                 "id": "p34",
+                 "name": "Ozil El Shaarawy Ghony"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p35",
+             "name": "Junaeni Meniasih",
+             "unions": [
+              {
+               "spouse": "Suami",
+               "label": "",
+               "children": [
+                {
+                 "id": "p36",
+                 "name": "Najmah Mufidah"
+                },
+                {
+                 "id": "p37",
+                 "name": "Wulan Maulida"
+                },
+                {
+                 "id": "p38",
+                 "name": "Khalisa Almeera"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p39",
+             "name": "Icih Minarsih",
+             "unions": [
+              {
+               "spouse": "Hery Setia Budi",
+               "label": "",
+               "children": [
+                {
+                 "id": "p3a",
+                 "name": "Ifra Faiha Mikayla"
+                },
+                {
+                 "id": "p3b",
+                 "name": "Hadzkadina Faiha Nashira"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "spouse": "Dahlan",
+       "label": "Suami Kedua",
+       "children": [
+        {
+         "id": "p3c",
+         "name": "Asminah",
+         "unions": [
+          {
+           "spouse": "Idrus",
+           "label": "",
+           "children": [
+            {
+             "id": "p3d",
+             "name": "Iwan",
+             "unions": [
+              {
+               "spouse": "Komariah",
+               "label": "",
+               "children": [
+                {
+                 "id": "p3e",
+                 "name": "Marwan Awaludin",
+                 "unions": [
+                  {
+                   "spouse": "Titi santi",
+                   "label": "",
+                   "children": [
+                    {
+                     "id": "p3f",
+                     "name": "Vier"
+                    },
+                    {
+                     "id": "p3g",
+                     "name": "Cila"
+                    }
+                   ]
+                  }
+                 ]
+                },
+                {
+                 "id": "p3h",
+                 "name": "Sri Budiarti"
+                },
+                {
+                 "id": "p3i",
+                 "name": "David Haiqal"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p3j",
+             "name": "Arin Yulianti",
+             "unions": [
+              {
+               "spouse": "Suami",
+               "label": "",
+               "children": [
+                {
+                 "id": "p3k",
+                 "name": "Erviko"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p3l",
+             "name": "Rositawati",
+             "unions": [
+              {
+               "spouse": "Suami",
+               "label": "",
+               "children": [
+                {
+                 "id": "p3m",
+                 "name": "Vivi Yunita Aulia"
+                },
+                {
+                 "id": "p3n",
+                 "name": "Nazzri Ruwaid Hendra"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p3o",
+             "name": "Surya Wijaya ( Oyok)",
+             "unions": [
+              {
+               "spouse": "Puput",
+               "label": "",
+               "children": []
+              }
+             ]
+            },
+            {
+             "id": "p3p",
+             "name": "Abdul Majid"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p3q",
+         "name": "Suharmin (Alm)"
+        },
+        {
+         "id": "p3r",
+         "name": "Timi",
+         "unions": [
+          {
+           "spouse": "Jaka",
+           "label": "",
+           "children": [
+            {
+             "id": "p3s",
+             "name": "Reno"
+            },
+            {
+             "id": "p3t",
+             "name": "Iyan"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p3u",
+         "name": "Jumiardi",
+         "unions": [
+          {
+           "spouse": "Sawi",
+           "label": "",
+           "children": [
+            {
+             "id": "p3v",
+             "name": "Yudha Saputra"
+            },
+            {
+             "id": "p3w",
+             "name": "Oktaviani Wulandari(Alm)",
+             "unions": [
+              {
+               "spouse": "Ervin Anggara",
+               "label": "",
+               "children": [
+                {
+                 "id": "p3x",
+                 "name": "Hafizah"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p3y",
+             "name": "Maya Setya Dewi (Alm)"
+            },
+            {
+             "id": "p3z",
+             "name": "Nur Cahyani"
+            },
+            {
+             "id": "p40",
+             "name": "M Fery Prayogo"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p41",
+         "name": "Dede",
+         "unions": [
+          {
+           "spouse": "Rita (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p42",
+             "name": "Ridwan",
+             "unions": [
+              {
+               "spouse": "Afrilia Agterina",
+               "label": "",
+               "children": [
+                {
+                 "id": "p43",
+                 "name": "Adskhan Syadat"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p44",
+             "name": "Nurlita Herliawati Pratiwi",
+             "unions": [
+              {
+               "spouse": "Alfi",
+               "label": "",
+               "children": [
+                {
+                 "id": "p45",
+                 "name": "Refan"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p46",
+             "name": "Yoga"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p47",
+     "name": "6. Armini",
+     "unions": [
+      {
+       "spouse": "Naimin",
+       "label": "",
+       "children": [
+        {
+         "id": "p48",
+         "name": "Iing Rosiin (Alm)",
+         "unions": [
+          {
+           "spouse": "Iyas",
+           "label": "",
+           "children": [
+            {
+             "id": "p49",
+             "name": "Rendi Septian",
+             "unions": [
+              {
+               "spouse": "Nuraeni Septiawati",
+               "label": "",
+               "children": [
+                {
+                 "id": "p4a",
+                 "name": "Rania Artanya Rinjani"
+                },
+                {
+                 "id": "p4b",
+                 "name": "Noureen Maulidya Rinjani"
+                },
+                {
+                 "id": "p4c",
+                 "name": "Ready Noor Asyifa Rinjani"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p4d",
+             "name": "Raisa Mutiarani",
+             "unions": [
+              {
+               "spouse": "Bobby Septiansyah",
+               "label": "",
+               "children": [
+                {
+                 "id": "p4e",
+                 "name": "Saby Sakhi Salsabila"
+                },
+                {
+                 "id": "p4f",
+                 "name": "Aisha Sabina Prameswari"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p4g",
+             "name": "Ristiya Ferlita (Alm)"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p4h",
+         "name": "Cicih Sri Kurniasarih",
+         "unions": [
+          {
+           "spouse": "Sutono",
+           "label": "",
+           "children": [
+            {
+             "id": "p4i",
+             "name": "Attik Elvattia",
+             "unions": [
+              {
+               "spouse": "Ahmad Nur Ali",
+               "label": "",
+               "children": [
+                {
+                 "id": "p4j",
+                 "name": "Nailah Huwaida Alita"
+                },
+                {
+                 "id": "p4k",
+                 "name": "Nafisah Khayyira Aliya"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p4l",
+             "name": "Alin Eksak Fidilat",
+             "unions": [
+              {
+               "spouse": "Hendra Wijaya",
+               "label": "",
+               "children": [
+                {
+                 "id": "p4m",
+                 "name": "Zaf Tajammul Qaiz Wijaya"
+                },
+                {
+                 "id": "p4n",
+                 "name": "Zeeshan Mumtadz Tsaqib Wijaya"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p4o",
+             "name": "Anggit",
+             "unions": [
+              {
+               "spouse": "Aldi",
+               "label": "",
+               "children": []
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p4p",
+         "name": "Yaya",
+         "unions": [
+          {
+           "spouse": "Heni",
+           "label": "",
+           "children": [
+            {
+             "id": "p4q",
+             "name": "Ibnu"
+            },
+            {
+             "id": "p4r",
+             "name": "Adzra Aqila Kinanti"
+            },
+            {
+             "id": "p4s",
+             "name": "Azkayra"
+            },
+            {
+             "id": "p4t",
+             "name": "Sofia"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p4u",
+         "name": "Titin Suprihatin (Alm)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p4v",
+     "name": "7. Soheni",
+     "unions": [
+      {
+       "spouse": "Sainan",
+       "label": "",
+       "children": [
+        {
+         "id": "p4w",
+         "name": "Dadang Sugandi (Alm)",
+         "unions": [
+          {
+           "spouse": "Kartini",
+           "label": "",
+           "children": [
+            {
+             "id": "p4x",
+             "name": "Ashri Salassidini",
+             "unions": [
+              {
+               "spouse": "Amin",
+               "label": "",
+               "children": [
+                {
+                 "id": "p4y",
+                 "name": "Alifah"
+                },
+                {
+                 "id": "p4z",
+                 "name": "Alif"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p50",
+             "name": "Annissa Asyahida"
+            },
+            {
+             "id": "p51",
+             "name": "Asy Syifa Mujahidah"
+            },
+            {
+             "id": "p52",
+             "name": "Abizar Riski Azha"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p53",
+         "name": "Enok Sugiarti (Alm)",
+         "unions": [
+          {
+           "spouse": "Suami",
+           "label": "",
+           "children": [
+            {
+             "id": "p54",
+             "name": "Alwasri Nur Akbar"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p55",
+         "name": "Jajang Suhendar (Alm)",
+         "unions": [
+          {
+           "spouse": "Eka",
+           "label": "",
+           "children": [
+            {
+             "id": "p56",
+             "name": "M. Amim"
+            },
+            {
+             "id": "p57",
+             "name": "Nabila"
+            },
+            {
+             "id": "p58",
+             "name": "Rizky"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p59",
+         "name": "Ida",
+         "unions": [
+          {
+           "spouse": "Tuban",
+           "label": "",
+           "children": [
+            {
+             "id": "p5a",
+             "name": "Euis Wulandari",
+             "unions": [
+              {
+               "spouse": "Andika Enggal Prakoso",
+               "label": "",
+               "children": [
+                {
+                 "id": "p5b",
+                 "name": "Naura Annanta Prakoso"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p5c",
+             "name": "Malika alma rahmawati"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5d",
+         "name": "Samsul",
+         "unions": [
+          {
+           "spouse": "Nita",
+           "label": "",
+           "children": [
+            {
+             "id": "p5e",
+             "name": "Qwina"
+            },
+            {
+             "id": "p5f",
+             "name": "Qatan"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5g",
+         "name": "Dudi",
+         "unions": [
+          {
+           "spouse": "Lisnawati",
+           "label": "",
+           "children": [
+            {
+             "id": "p5h",
+             "name": "Chelsea Rahma Putri"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p5i",
+     "name": "8. Sanudi",
+     "unions": [
+      {
+       "spouse": "Awanti",
+       "label": "",
+       "children": [
+        {
+         "id": "p5j",
+         "name": "Ratih (Alm)",
+         "unions": [
+          {
+           "spouse": "Eka (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p5k",
+             "name": "Bayu",
+             "unions": [
+              {
+               "spouse": "Revi Nur Fitriani",
+               "label": "",
+               "children": []
+              }
+             ]
+            },
+            {
+             "id": "p5l",
+             "name": "Gina"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5m",
+         "name": "Imas (Alm)",
+         "unions": [
+          {
+           "spouse": "Sartoyo",
+           "label": "",
+           "children": [
+            {
+             "id": "p5n",
+             "name": "Deden (Alm)"
+            },
+            {
+             "id": "p5o",
+             "name": "Yusril"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5p",
+         "name": "Nani",
+         "unions": [
+          {
+           "spouse": "Sodikin (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p5q",
+             "name": "Rizky"
+            },
+            {
+             "id": "p5r",
+             "name": "Denisa"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5s",
+         "name": "Dodi",
+         "unions": [
+          {
+           "spouse": "Atik",
+           "label": "",
+           "children": [
+            {
+             "id": "p5t",
+             "name": "Nenden"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5u",
+         "name": "Dian Udayana",
+         "unions": [
+          {
+           "spouse": "Ii Juarsih",
+           "label": "",
+           "children": [
+            {
+             "id": "p5v",
+             "name": "Bambang Yoga Mahesa"
+            },
+            {
+             "id": "p5w",
+             "name": "Yudha Lingga Buana"
+            },
+            {
+             "id": "p5x",
+             "name": "Giandra Arka Prawira"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p5y",
+         "name": "Rita",
+         "unions": [
+          {
+           "spouse": "Otib",
+           "label": "",
+           "children": [
+            {
+             "id": "p5z",
+             "name": "Rido"
+            },
+            {
+             "id": "p60",
+             "name": "Fathurohman / Ipay"
+            },
+            {
+             "id": "p61",
+             "name": "Raiga"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p62",
+         "name": "Linda",
+         "unions": [
+          {
+           "spouse": "M. Andrianto",
+           "label": "",
+           "children": []
+          }
+         ]
+        },
+        {
+         "id": "p63",
+         "name": "Anita",
+         "unions": [
+          {
+           "spouse": "Muhammad Dwi Arifianto (Alm)",
+           "label": "Suami Pertama",
+           "children": [
+            {
+             "id": "p64",
+             "name": "Azalia Fadhillah Arifianto"
+            }
+           ]
+          },
+          {
+           "spouse": "Kifli",
+           "label": "Suami Kedua",
+           "children": [
+            {
+             "id": "p65",
+             "name": "Mufti Farizan Thaqif"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "p66",
+     "name": "9. Nuryamah",
+     "unions": [
+      {
+       "spouse": "Rusja",
+       "label": "",
+       "children": [
+        {
+         "id": "p67",
+         "name": "Nuryati (Alm)",
+         "unions": [
+          {
+           "spouse": "Dodo (Alm)",
+           "label": "",
+           "children": [
+            {
+             "id": "p68",
+             "name": "Rinda Deliani",
+             "unions": [
+              {
+               "spouse": "Ari Juhari",
+               "label": "",
+               "children": [
+                {
+                 "id": "p69",
+                 "name": "Arda Athaya Arsenio"
+                },
+                {
+                 "id": "p6a",
+                 "name": "Airi Ebrahim Abhinara"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p6b",
+             "name": "Vina Novianti",
+             "unions": [
+              {
+               "spouse": "Hary Robiansah",
+               "label": "",
+               "children": [
+                {
+                 "id": "p6c",
+                 "name": "Ghavi Firzand Arrobiansah"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p6d",
+         "name": "Suhandi (Alm)"
+        },
+        {
+         "id": "p6e",
+         "name": "Royanti (Alm)",
+         "unions": [
+          {
+           "spouse": "Jupri",
+           "label": "",
+           "children": [
+            {
+             "id": "p6f",
+             "name": "Septia Ningsih",
+             "unions": [
+              {
+               "spouse": "Ryan",
+               "label": "",
+               "children": [
+                {
+                 "id": "p6g",
+                 "name": "Nasya"
+                },
+                {
+                 "id": "p6h",
+                 "name": "Rafka"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p6i",
+             "name": "Rosita Dewi",
+             "unions": [
+              {
+               "spouse": "Faisal",
+               "label": "",
+               "children": [
+                {
+                 "id": "p6j",
+                 "name": "Muhammad Kenzo Farode"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "id": "p6k",
+             "name": "Tika",
+             "unions": [
+              {
+               "spouse": "Iqbal",
+               "label": "",
+               "children": []
+              }
+             ]
+            },
+            {
+             "id": "p6l",
+             "name": "Mega"
+            },
+            {
+             "id": "p6m",
+             "name": "Gina"
+            },
+            {
+             "id": "p6n",
+             "name": "Gita"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "id": "p6o",
+         "name": "Iin",
+         "unions": [
+          {
+           "spouse": "Suroto",
+           "label": "",
+           "children": [
+            {
+             "id": "p6p",
+             "name": "Muhammad Gilang Pratama"
+            },
+            {
+             "id": "p6q",
+             "name": "Muhammad Davi Putranto"
+            },
+            {
+             "id": "p6r",
+             "name": "Adisya Khanza Almira"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
