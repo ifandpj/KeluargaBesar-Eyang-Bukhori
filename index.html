@@ -497,7 +497,14 @@ function setEditMode(on){
   $("btn-edit").textContent=on?"✓ Selesai Edit":"✏️ Mode Edit";
   $("hint").textContent=on?"Mode edit: klik nama untuk mengubah nama, menambah anak atau pasangan, atau menghapus, lalu klik Simpan.":"Klik nama di pohon untuk melihat jalur silsilah. Klik tombol warna untuk daftar per generasi.";
 }
-$("btn-edit").addEventListener("click",function(){setEditMode(!editMode);});
+// Selesai Edit ikut menyimpan; tanpa nama pengedit, tetap di mode edit dan minta nama dulu
+$("btn-edit").addEventListener("click",function(){
+  if(editMode&&isDirty()){
+    if(!$("editor-name").value.trim()){showSaveMessage("Isi nama Anda, lalu klik Simpan supaya perubahan tidak hilang.",{retry:true});$("editor-name").focus();return;}
+    $("btn-save").click();
+  }
+  setEditMode(!editMode);
+});
 
 function openEditor(id){reindex();editingId=id;renderEditor();$("ed-msg").textContent="";$("ed-editor").value=$("editor-name").value;$("ed-overlay").hidden=false;var f=$("ed-name");if(f)f.focus();}
 function closeEditor(){
