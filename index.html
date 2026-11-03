@@ -249,8 +249,7 @@ input[type=text],input[type=password],select{width:100%;min-width:0;padding:8px 
     <div class="card-body" id="ed-body"></div>
     <div class="card-foot ed-foot">
       <input type="text" id="ed-editor" maxlength="60" placeholder="Nama Anda (pengedit)" aria-label="Nama Anda, untuk catatan perubahan" autocomplete="name">
-      <button id="ed-done" class="btn small" type="button">Tutup</button>
-      <button id="ed-save" class="btn small primary" type="button">💾 Simpan</button>
+            <button id="ed-save" class="btn small primary" type="button">💾 Simpan</button>
       <p id="ed-msg" class="help" role="alert"></p>
     </div>
   </div>
@@ -505,16 +504,24 @@ function closeEditor(){
   var id=editingId;$("ed-overlay").hidden=true;editingId=null;renderTree();updateSaveBar();
   if(id)requestAnimationFrame(function(){highlight("p:"+id,false);});
 }
-$("ed-close").addEventListener("click",closeEditor);
-$("ed-done").addEventListener("click",closeEditor);
-$("ed-save").addEventListener("click",function(){
+// Nama pengedit wajib diisi sebelum perubahan disimpan (untuk log)
+function editorNameOk(){
   var name=$("ed-editor").value.trim();
-  if(!name){$("ed-msg").textContent="Isi nama Anda dulu supaya tercatat di log.";$("ed-editor").focus();return;}
-  $("editor-name").value=name;closeEditor();
-  if(isDirty())$("btn-save").click();
-  else{showSaveMessage("Tidak ada perubahan untuk disimpan.");clearTimeout(hideTimer);hideTimer=setTimeout(updateSaveBar,2500);}
+  if(!name){$("ed-msg").textContent="Isi nama Anda dulu supaya perubahan tersimpan dan tercatat di log.";$("ed-editor").focus();return false;}
+  $("editor-name").value=name;return true;
+}
+// Menutup jendela edit selalu menyimpan perubahan, supaya tidak hilang saat halaman dimuat ulang
+function finishEditing(){
+  if(!isDirty()){closeEditor();return;}
+  if(!editorNameOk())return;
+  closeEditor();$("btn-save").click();
+}
+$("ed-close").addEventListener("click",finishEditing);
+$("ed-save").addEventListener("click",function(){
+  if(isDirty()){finishEditing();return;}
+  closeEditor();showSaveMessage("Tidak ada perubahan untuk disimpan.");clearTimeout(hideTimer);hideTimer=setTimeout(updateSaveBar,2500);
 });
-$("ed-overlay").addEventListener("click",function(e){if(e.target===this)closeEditor();});
+$("ed-overlay").addEventListener("click",function(e){if(e.target===this)finishEditing();});
 
 function section(title){var s=el("div");s.appendChild(el("p","section-label",title));return s;}
 function unionName(u,i){return u.label||u.spouse||"pasangan "+(i+1);}
@@ -595,7 +602,8 @@ function renderEditor(){
     var dz=section("Hapus"),desc=countDesc(n);
     var del=button("Hapus "+(n.name||"orang ini")+(desc?" beserta "+desc+" keturunannya":""),"btn small danger",function(){
       if(!del.dataset.armed){del.dataset.armed="1";del.textContent="Yakin? Klik sekali lagi untuk menghapus";return;}
-      var arr=e.parent.unions[e.unionIdx].children;arr.splice(arr.indexOf(n),1);changed();closeEditor();
+      if(!editorNameOk())return;
+      var arr=e.parent.unions[e.unionIdx].children;arr.splice(arr.indexOf(n),1);changed();closeEditor();$("btn-save").click();
     });
     dz.appendChild(del);body.appendChild(dz);
   }
@@ -703,7 +711,7 @@ try{$("editor-name").value=localStorage.getItem(NAME_KEY)||"";}catch(e){}
 
 document.addEventListener("keydown",function(e){
   if(e.key!=="Escape")return;
-  if(!$("log-overlay").hidden)closeLog();else if(!$("ed-overlay").hidden)closeEditor();else if(!$("anc-overlay").hidden)closeAncestry();else if(curRole)closePanel();
+  if(!$("log-overlay").hidden)closeLog();else if(!$("ed-overlay").hidden)finishEditing();else if(!$("anc-overlay").hidden)closeAncestry();else if(curRole)closePanel();
 });
 
 /* ── Mulai ── */
